@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,588 +6,291 @@
   <title>Rwanda Connect</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --blue: #00a1de;
-      --blue-dark: #0077a8;
-      --green: #20603d;
-      --green-dark: #15462c;
-      --gold: #fad201;
-      --ink: #10221a;
-      --muted: #5b6b64;
-      --bg: #f3f7f5;
-      --card: #ffffff;
-      --line: #dce8e1;
-      --shadow: 0 14px 36px rgba(16, 34, 26, 0.08);
+      --bg: #05070c;
+      --panel: rgba(12, 18, 28, 0.82);
+      --line: rgba(120, 230, 200, 0.18);
+      --text: #e8f6f1;
+      --muted: #8aa39a;
+      --mint: #5ef0c0;
+      --gold: #f4d35e;
+      --blue: #4cc9f0;
     }
-
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
-      font-family: "Outfit", Arial, sans-serif;
-      background: var(--bg);
-      color: var(--ink);
-      line-height: 1.5;
+      font-family: "Space Grotesk", Arial, sans-serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(76, 201, 240, 0.12), transparent 28%),
+        radial-gradient(circle at 90% 0%, rgba(94, 240, 192, 0.1), transparent 30%),
+        linear-gradient(180deg, #071019 0%, #05070c 100%);
+      color: var(--text);
+      min-height: 100vh;
     }
-    button, input, select { font-family: inherit; }
-
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: linear-gradient(rgba(94,240,192,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(94,240,192,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+    header, footer, section { position: relative; z-index: 1; }
     header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 6%;
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(16px);
       position: sticky;
       top: 0;
-      z-index: 30;
-      background: rgba(255,255,255,0.94);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--line);
-      padding: 14px 6%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
     }
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      color: var(--green);
-      text-decoration: none;
-      font-size: 19px;
+    .logo { font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-size: 13px; color: var(--mint); text-decoration: none; }
+    nav { display: flex; gap: 16px; flex-wrap: wrap; }
+    nav a { color: var(--text); text-decoration: none; font-size: 14px; }
+    .langs { display: flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+    .langs button {
+      background: transparent;
+      color: var(--text);
+      border: 0;
+      padding: 8px 10px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      cursor: pointer;
     }
-    .flag-dot {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: conic-gradient(from 180deg, var(--blue) 0 50%, var(--gold) 50% 70%, var(--green) 70% 100%);
-      box-shadow: inset 0 0 0 2px #fff;
-    }
-    nav { display: flex; gap: 18px; flex-wrap: wrap; }
-    nav a {
-      color: var(--ink);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 15px;
-    }
-    nav a:hover { color: var(--blue-dark); }
-
-    .hero {
-      padding: 64px 6% 44px;
-      background:
-        radial-gradient(circle at 88% 8%, rgba(250,210,1,0.26), transparent 26%),
-        linear-gradient(180deg, #e7f6fb 0%, var(--bg) 100%);
-    }
-    .badge {
-      display: inline-block;
-      background: #fff;
-      border: 1px solid var(--line);
-      color: var(--green);
-      font-weight: 700;
-      font-size: 13px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      margin-bottom: 14px;
-    }
-    h1 {
-      font-size: clamp(34px, 6vw, 58px);
-      line-height: 1.06;
-      max-width: 760px;
-      margin-bottom: 12px;
-    }
-    h1 span { color: var(--blue-dark); }
-    .lead {
-      font-size: 18px;
-      color: var(--muted);
-      max-width: 580px;
-      margin-bottom: 26px;
-    }
-
-    .controls {
+    .langs button.active { background: var(--mint); color: #05140e; }
+    .hero { padding: 72px 6% 40px; }
+    .kicker { font-family: "JetBrains Mono", monospace; color: var(--gold); font-size: 12px; margin-bottom: 14px; }
+    h1 { font-size: clamp(36px, 7vw, 76px); line-height: 0.95; max-width: 900px; margin-bottom: 16px; }
+    .lead { max-width: 640px; color: var(--muted); font-size: 18px; margin-bottom: 28px; }
+    .search {
       display: grid;
       grid-template-columns: 1.4fr 0.7fr 0.7fr auto;
-      gap: 10px;
-      max-width: 920px;
-      background: #fff;
-      padding: 10px;
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-    }
-    .controls input, .controls select {
+      gap: 8px;
+      max-width: 880px;
+      background: var(--panel);
       border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 13px 14px;
-      font-size: 15px;
-      background: #fff;
-      color: var(--ink);
-      outline: none;
-      width: 100%;
+      padding: 8px;
+      border-radius: 16px;
     }
-    .controls input:focus, .controls select:focus {
-      border-color: var(--blue);
-    }
-    .btn {
-      border: none;
-      border-radius: 12px;
-      background: var(--green);
-      color: #fff;
-      font-weight: 700;
-      cursor: pointer;
-      padding: 13px 20px;
-    }
-    .btn:hover { background: var(--green-dark); }
-    .btn.ghost {
-      background: #eef6f1;
-      color: var(--green);
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 12px;
-      max-width: 640px;
-      margin-top: 28px;
-    }
-    .stat {
-      background: rgba(255,255,255,0.8);
-      border-radius: 14px;
-      padding: 14px;
-    }
-    .stat strong {
-      display: block;
-      font-size: 22px;
-      color: var(--green);
-    }
-
+    input, select, button.act { font: inherit; border: 0; border-radius: 10px; padding: 13px 12px; }
+    input, select { background: #0b121b; color: var(--text); }
+    button.act { background: var(--mint); color: #052016; font-weight: 700; cursor: pointer; }
+    .stats { display: flex; gap: 22px; margin-top: 22px; flex-wrap: wrap; color: var(--muted); }
+    .stats b { color: var(--text); display: block; font-size: 22px; }
     section { padding: 48px 6%; }
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 16px;
-      margin-bottom: 22px;
-      flex-wrap: wrap;
-    }
-    h2 { font-size: 30px; }
-    .hint { color: var(--muted); }
-
-    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
-    .chip {
-      border: 1px solid var(--line);
-      background: #fff;
-      color: var(--ink);
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-weight: 700;
-      font-size: 13px;
-      cursor: pointer;
-    }
-    .chip.active {
-      background: var(--green);
-      color: #fff;
-      border-color: var(--green);
-    }
-
-    .cards, .listings {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 16px;
-    }
-    .card, .listing, .about-box {
-      background: var(--card);
-      border-radius: 18px;
-      box-shadow: var(--shadow);
-    }
-    .card {
-      padding: 22px 18px;
-      cursor: pointer;
-      border: 1px solid transparent;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-    .card:hover, .listing:hover { transform: translateY(-5px); border-color: #cfe8db; }
-    .icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 16px;
-      display: grid;
-      place-items: center;
-      font-size: 24px;
-      background: #eef8f2;
-      margin-bottom: 12px;
-    }
-    .card p, .listing p, .muted { color: var(--muted); font-size: 14px; }
-
-    .listing {
-      overflow: hidden;
-      cursor: pointer;
-      border: 1px solid transparent;
-      transition: transform 0.2s ease, border-color 0.2s ease;
-    }
-    .banner {
-      height: 88px;
-      display: grid;
-      place-items: center;
-      font-size: 32px;
-    }
-    .listing-body { padding: 16px; }
-    .tag {
-      display: inline-block;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--blue-dark);
-      background: #e7f6fb;
-      padding: 4px 8px;
-      border-radius: 999px;
-      margin-bottom: 8px;
-    }
-    .meta { font-size: 13px; color: var(--muted); margin-top: 6px; }
-
-    .empty {
-      display: none;
-      text-align: center;
-      padding: 28px;
-      color: var(--muted);
-      background: #fff;
-      border-radius: 16px;
-    }
-
-    .layout {
-      display: grid;
-      grid-template-columns: 1.5fr 0.9fr;
-      gap: 18px;
-      align-items: start;
-    }
-    .detail {
-      position: sticky;
-      top: 88px;
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-      padding: 22px;
-      min-height: 280px;
-    }
-    .detail h3 { font-size: 24px; margin: 8px 0 8px; }
-    .kv { margin-top: 14px; display: grid; gap: 8px; }
-    .kv div {
-      background: #f4f8f6;
-      border-radius: 12px;
-      padding: 10px 12px;
-    }
-    .kv strong { display: block; font-size: 12px; color: var(--muted); }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 18px;
-    }
-    .about-box { padding: 24px; }
-    .cities { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-    .city {
-      background: #eef8f2;
-      color: var(--green);
-      font-weight: 700;
-      padding: 7px 11px;
-      border-radius: 999px;
-      font-size: 13px;
-    }
-
-    footer {
-      background: var(--ink);
-      color: #fff;
-      padding: 32px 6%;
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    footer p { opacity: 0.8; }
-
-    @media (max-width: 900px) {
-      .controls, .layout, .about-grid { grid-template-columns: 1fr; }
+    h2 { font-size: 32px; margin-bottom: 8px; }
+    .muted { color: var(--muted); }
+    .cats, .grid { display: grid; gap: 12px; }
+    .cats { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); margin-top: 20px; }
+    .grid { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+    .card, .job { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
+    .card { cursor: pointer; }
+    .card:hover { border-color: var(--mint); }
+    .tag { display: inline-block; color: var(--blue); font-family: "JetBrains Mono", monospace; font-size: 11px; margin-bottom: 8px; }
+    .layout { display: grid; grid-template-columns: 1.4fr 0.8fr; gap: 16px; }
+    .detail { position: sticky; top: 84px; min-height: 240px; }
+    .empty { display: none; text-align: center; padding: 24px; color: var(--muted); }
+    footer { border-top: 1px solid var(--line); padding: 24px 6%; color: var(--muted); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    @media (max-width: 800px) {
+      .search, .layout { grid-template-columns: 1fr; }
       .detail { position: static; }
-    }
-    @media (max-width: 640px) {
-      header { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
 <body>
   <header>
-    <a class="logo" href="#home">
-      <span class="flag-dot" aria-hidden="true"></span>
-      Rwanda Connect
-    </a>
+    <a class="logo" href="#top">Rwanda Connect</a>
     <nav>
-      <a href="#home">Home</a>
-      <a href="#services">Services</a>
-      <a href="#listings">Listings</a>
-      <a href="#about">About</a>
+      <a href="#jobs" data-i18n="navJobs">Jobs</a>
+      <a href="#services" data-i18n="navServices">Services</a>
+      <a href="#about" data-i18n="navAbout">About</a>
     </nav>
+    <div class="langs">
+      <button id="langEn" type="button" onclick="setLang('en')">EN</button>
+      <button id="langRw" type="button" onclick="setLang('rw')">RW</button>
+      <button id="langFr" type="button" onclick="setLang('fr')">FR</button>
+    </div>
   </header>
 
-  <section class="hero" id="home">
-    <div class="badge">Find services across Rwanda</div>
-    <h1>Search hotels, hospitals, food, jobs, and more in <span>one place</span></h1>
-    <p class="lead">Filter by city and service type, then open a listing to see location and contact notes.</p>
-
-    <div class="controls">
-      <input id="searchInput" type="text" placeholder="Search a place or service...">
-      <select id="citySelect" aria-label="Choose a city">
-        <option value="all">All cities</option>
-      </select>
-      <select id="typeSelect" aria-label="Choose a service">
-        <option value="all">All services</option>
-      </select>
-      <button class="btn" type="button" onclick="applyFilters(true)">Search</button>
+  <section class="hero" id="top">
+    <p class="kicker" data-i18n="kicker">JOBS + SERVICES // RWANDA</p>
+    <h1 data-i18n="title">Find work. Find services. Stay connected.</h1>
+    <p class="lead" data-i18n="lead">A future-ready directory for people in Rwanda who need a job, a hospital, transport, or a local service in one search.</p>
+    <div class="search">
+      <input id="q" type="search" placeholder="Search jobs or services">
+      <select id="city"><option value="all">All cities</option></select>
+      <select id="type"><option value="all">All types</option></select>
+      <button class="act" type="button" onclick="apply(true)" data-i18n="search">Search</button>
     </div>
-
     <div class="stats">
-      <div class="stat"><strong id="statCount">0</strong> listings</div>
-      <div class="stat"><strong>6</strong> service types</div>
-      <div class="stat"><strong>7</strong> cities</div>
+      <div><b id="count">0</b><span data-i18n="statItems">listings</span></div>
+      <div><b>7</b><span data-i18n="statCities">cities</span></div>
+      <div><b>EN/RW/FR</b><span data-i18n="statLang">languages</span></div>
     </div>
+  </section>
+
+  <section id="jobs">
+    <h2 data-i18n="jobsTitle">Jobs first</h2>
+    <p class="muted" data-i18n="jobsLead">Start with work opportunities, then open nearby services.</p>
+    <div class="cats" id="jobCats"></div>
   </section>
 
   <section id="services">
-    <div class="section-head">
+    <h2 data-i18n="listTitle">Jobs and services</h2>
+    <p class="muted" data-i18n="listLead">Tap a card. Use the language switch anytime.</p>
+    <div class="layout" style="margin-top:18px;">
       <div>
-        <h2>Explore services</h2>
-        <p class="hint">Tap a card to filter the listings below.</p>
+        <div class="grid" id="grid"></div>
+        <p class="empty" id="empty" data-i18n="empty">No match. Try job, hospital, bus, or market.</p>
       </div>
-    </div>
-    <div class="cards" id="serviceCards"></div>
-  </section>
-
-  <section id="listings">
-    <div class="section-head">
-      <div>
-        <h2 id="listTitle">Featured listings</h2>
-        <p class="hint" id="listHint">Showing public sample places you can look up.</p>
-      </div>
-      <div class="chips" id="quickChips"></div>
-    </div>
-
-    <div class="layout">
-      <div>
-        <div class="listings" id="listingGrid"></div>
-        <p class="empty" id="emptyState">No matching listings. Try another city or service.</p>
-      </div>
-      <aside class="detail" id="detailPanel">
-        <span class="tag">Welcome</span>
-        <h3>Pick a listing</h3>
-        <p class="muted">Choose a card on the left to see the city, service type, and a short note.</p>
-      </aside>
+      <aside class="job detail" id="detail"></aside>
     </div>
   </section>
 
   <section id="about">
-    <div class="about-grid">
-      <div class="about-box">
-        <h2>About Rwanda Connect</h2>
-        <p>This is a simple directory for everyday services. It helps you start a search for hotels, restaurants, healthcare, transport, jobs, and businesses in Rwanda.</p>
-        <div class="cities">
-          <span class="city">Kigali</span>
-          <span class="city">Musanze</span>
-          <span class="city">Huye</span>
-          <span class="city">Rubavu</span>
-          <span class="city">Karongi</span>
-          <span class="city">Rwamagana</span>
-          <span class="city">Nyagatare</span>
-        </div>
-      </div>
-      <div class="about-box">
-        <h3>How to use it</h3>
-        <p>1. Type a word like hospital or hotel.<br>2. Choose a city from the menu.<br>3. Open a listing to read the details.</p>
-        <br>
-        <button class="btn" type="button" onclick="document.getElementById('searchInput').focus()">Start searching</button>
-        <button class="btn ghost" type="button" onclick="resetFilters()" style="margin-left:8px;">Reset filters</button>
-      </div>
-    </div>
+    <h2 data-i18n="aboutTitle">About this site</h2>
+    <p class="muted" data-i18n="aboutBody">Rwanda Connect helps people discover jobs and useful services in one place. It is a learning project in development, with sample public listings.</p>
   </section>
 
   <footer>
-    <div>
-      <strong>Rwanda Connect</strong>
-      <p>A starter directory for services across Rwanda. Sample listings are for learning and discovery.</p>
-    </div>
-    <p>© 2026 Rwanda Connect</p>
+    <span>Rwanda Connect</span>
+    <span data-i18n="footer">Connect people to work and services across Rwanda.</span>
   </footer>
 
   <script>
-    const SERVICES = [
-      { id: "hotels", name: "Hotels", icon: "🏨", blurb: "Places to stay in cities and near parks.", color: "#d9f0ff" },
-      { id: "restaurants", name: "Restaurants", icon: "🍽️", blurb: "Cafes and restaurants for local and world food.", color: "#fff3c4" },
-      { id: "healthcare", name: "Healthcare", icon: "🏥", blurb: "Hospitals and clinics for care and emergencies.", color: "#d8f3e4" },
-      { id: "transport", name: "Transport", icon: "🚌", blurb: "Airport, buses, and travel options.", color: "#e4e9ff" },
-      { id: "jobs", name: "Jobs", icon: "💼", blurb: "Starter job boards and career offices.", color: "#f3e8ff" },
-      { id: "businesses", name: "Businesses", icon: "🛍️", blurb: "Markets, shops, and useful local places.", color: "#ffe8d9" }
-    ];
-
-    const CITIES = ["Kigali", "Musanze", "Huye", "Rubavu", "Karongi", "Rwamagana", "Nyagatare"];
-
-    const LISTINGS = [
-      { id: 1, name: "Kigali Serena Hotel", type: "hotels", city: "Kigali", area: "Kiyovu", note: "Well-known hotel with rooms, a garden pool, and restaurants.", contact: "Look up the hotel desk in Kiyovu." },
-      { id: 2, name: "Radisson Blu Hotel & Convention Centre", type: "hotels", city: "Kigali", area: "Kimihurura", note: "Modern hotel next to the Kigali Convention Centre dome.", contact: "Convention Centre roundabout, Kimihurura." },
-      { id: 3, name: "Hôtel des Mille Collines", type: "hotels", city: "Kigali", area: "City centre", note: "Historic city hotel with rooms, a pool, and meeting spaces.", contact: "KN 6 Ave, Kigali." },
-      { id: 4, name: "Five Volcanoes Boutique Hotel", type: "hotels", city: "Musanze", area: "Musanze", note: "Popular base for visits to Volcanoes National Park.", contact: "Musanze town area." },
-      { id: 5, name: "Lake Kivu Serena Hotel", type: "hotels", city: "Rubavu", area: "Gisenyi", note: "Lakeside hotel for trips to Lake Kivu.", contact: "Rubavu / Gisenyi waterfront." },
-      { id: 6, name: "Heaven Restaurant", type: "restaurants", city: "Kigali", area: "Kiyovu", note: "Kigali restaurant known for garden views and mixed menu dishes.", contact: "Kiyovu, Kigali." },
-      { id: 7, name: "Question Coffee", type: "restaurants", city: "Kigali", area: "Nyarutarama", note: "Cafe that roasts and serves Rwandan coffee.", contact: "Nyarutarama area." },
-      { id: 8, name: "Khana Khazana", type: "restaurants", city: "Kigali", area: "City centre", note: "Popular Indian restaurant in central Kigali.", contact: "KN 31 St, Kigali." },
-      { id: 9, name: "Repub Lounge", type: "restaurants", city: "Kigali", area: "Kimihurura", note: "Restaurant and lounge with mixed African and world dishes.", contact: "Kimihurura." },
-      { id: 10, name: "University Teaching Hospital of Kigali (CHUK)", type: "healthcare", city: "Kigali", area: "Nyarugenge", note: "Large public teaching hospital in Kigali.", contact: "Nyarugenge, Kigali." },
-      { id: 11, name: "King Faisal Hospital", type: "healthcare", city: "Kigali", area: "Kacyiru", note: "Major hospital for specialist and emergency care.", contact: "Kacyiru, Kigali." },
-      { id: 12, name: "University Teaching Hospital of Butare (CHUB)", type: "healthcare", city: "Huye", area: "Butare", note: "Main teaching hospital serving the Southern Province.", contact: "Huye / Butare." },
-      { id: 13, name: "Ruhengeri Referral Hospital", type: "healthcare", city: "Musanze", area: "Musanze", note: "Referral hospital for the Northern Province.", contact: "Musanze." },
-      { id: 14, name: "Kigali International Airport", type: "transport", city: "Kigali", area: "Kanombe", note: "Main airport for flights in and out of Rwanda.", contact: "Kanombe, Kigali." },
-      { id: 15, name: "Kigali Bus Services", type: "transport", city: "Kigali", area: "Citywide", note: "City buses use cashless cards. Check the current tap-and-go card rules.", contact: "City bus stops across Kigali." },
-      { id: 16, name: "Nyabugogo Taxi Park", type: "transport", city: "Kigali", area: "Nyabugogo", note: "Busy park for buses and shared taxis to other towns.", contact: "Nyabugogo, Kigali." },
-      { id: 17, name: "Volcanoes Express / Musanze buses", type: "transport", city: "Musanze", area: "Musanze park", note: "Common route between Kigali and Musanze.", contact: "Musanze bus park." },
-      { id: 18, name: "Rwanda Development Board careers", type: "jobs", city: "Kigali", area: "Kigali", note: "Public board that shares national programs and some job notices.", contact: "rdb.rw careers pages." },
-      { id: 19, name: "Kigali Employment Service Center", type: "jobs", city: "Kigali", area: "Kigali", note: "City point for job search help and skills notices.", contact: "Ask at Kigali City offices." },
-      { id: 20, name: "Huye University notice boards", type: "jobs", city: "Huye", area: "Campus", note: "Campus boards often list student work and local openings.", contact: "University of Rwanda, Huye." },
-      { id: 21, name: "Kimironko Market", type: "businesses", city: "Kigali", area: "Kimironko", note: "Large market for food, clothes, and household goods.", contact: "Kimironko, Gasabo." },
-      { id: 22, name: "Caplaki Craft Village", type: "businesses", city: "Kigali", area: "Gikondo", note: "Craft market for baskets, art, and souvenirs.", contact: "Gikondo, Kigali." },
-      { id: 23, name: "Huye Market", type: "businesses", city: "Huye", area: "Town centre", note: "Local market for food and everyday shopping.", contact: "Huye town." },
-      { id: 24, name: "Rubavu Waterfront shops", type: "businesses", city: "Rubavu", area: "Lake Kivu", note: "Shops and small businesses near the lake.", contact: "Rubavu waterfront." },
-      { id: 25, name: "Akagera visitor services", type: "businesses", city: "Rwamagana", area: "Eastern Province", note: "Starting point for park visits and local travel help.", contact: "Eastern Province / Akagera area." },
-      { id: 26, name: "Nyagatare town services", type: "businesses", city: "Nyagatare", area: "Town centre", note: "Shops and local offices in the cattle-farming region.", contact: "Nyagatare town." },
-      { id: 27, name: "Karongi lakeside lodges", type: "hotels", city: "Karongi", area: "Kibuye", note: "Lodges and guesthouses along Lake Kivu.", contact: "Karongi / Kibuye." },
-      { id: 28, name: "Home Stove Huye", type: "restaurants", city: "Huye", area: "Town", note: "Casual spot for local plates in Huye.", contact: "Huye town." }
-    ];
-
-    const searchInput = document.getElementById("searchInput");
-    const citySelect = document.getElementById("citySelect");
-    const typeSelect = document.getElementById("typeSelect");
-    const listingGrid = document.getElementById("listingGrid");
-    const emptyState = document.getElementById("emptyState");
-    const detailPanel = document.getElementById("detailPanel");
-    const listTitle = document.getElementById("listTitle");
-    const listHint = document.getElementById("listHint");
-
-    function serviceById(id) {
-      return SERVICES.find((s) => s.id === id);
-    }
-
-    function fillMenus() {
-      CITIES.forEach((city) => {
-        const opt = document.createElement("option");
-        opt.value = city;
-        opt.textContent = city;
-        citySelect.appendChild(opt);
-      });
-      SERVICES.forEach((service) => {
-        const opt = document.createElement("option");
-        opt.value = service.id;
-        opt.textContent = service.name;
-        typeSelect.appendChild(opt);
-      });
-    }
-
-    function renderServices() {
-      document.getElementById("serviceCards").innerHTML = SERVICES.map((s) => `
-        <article class="card" onclick="setType('${s.id}')">
-          <div class="icon">${s.icon}</div>
-          <h3>${s.name}</h3>
-          <p>${s.blurb}</p>
-        </article>
-      `).join("");
-
-      document.getElementById("quickChips").innerHTML = [
-        { id: "all", name: "All" },
-        ...SERVICES
-      ].map((s) => `<button class="chip${s.id === typeSelect.value ? " active" : ""}" type="button" onclick="setType('${s.id}')">${s.name}</button>`).join("");
-    }
-
-    function currentFilters() {
-      return {
-        q: searchInput.value.trim().toLowerCase(),
-        city: citySelect.value,
-        type: typeSelect.value
-      };
-    }
-
-    function filteredListings() {
-      const { q, city, type } = currentFilters();
-      return LISTINGS.filter((item) => {
-        const service = serviceById(item.type);
-        const blob = [item.name, item.city, item.area, item.note, service.name].join(" ").toLowerCase();
-        const matchQ = !q || blob.includes(q);
-        const matchCity = city === "all" || item.city === city;
-        const matchType = type === "all" || item.type === type;
-        return matchQ && matchCity && matchType;
-      });
-    }
-
-    function showDetail(id) {
-      const item = LISTINGS.find((x) => x.id === id);
-      if (!item) return;
-      const service = serviceById(item.type);
-      detailPanel.innerHTML = `
-        <span class="tag">${service.name}</span>
-        <h3>${item.name}</h3>
-        <p>${item.note}</p>
-        <div class="kv">
-          <div><strong>City</strong>${item.city}</div>
-          <div><strong>Area</strong>${item.area}</div>
-          <div><strong>How to find it</strong>${item.contact}</div>
-        </div>
-      `;
-    }
-
-    function applyFilters(scroll) {
-      const items = filteredListings();
-      const { q, city, type } = currentFilters();
-      const service = serviceById(type);
-      listTitle.textContent = service ? service.name : "Featured listings";
-      listHint.textContent = [
-        city !== "all" ? city : "All cities",
-        q ? `matching “${searchInput.value.trim()}”` : "sample public places"
-      ].join(" · ");
-      document.getElementById("statCount").textContent = items.length;
-      renderServices();
-
-      listingGrid.innerHTML = items.map((item) => {
-        const s = serviceById(item.type);
-        return `
-          <article class="listing" onclick="showDetail(${item.id})">
-            <div class="banner" style="background:${s.color}">${s.icon}</div>
-            <div class="listing-body">
-              <span class="tag">${s.name}</span>
-              <h3>${item.name}</h3>
-              <p class="meta">${item.city} · ${item.area}</p>
-            </div>
-          </article>
-        `;
-      }).join("");
-
-      emptyState.style.display = items.length ? "none" : "block";
-      if (items.length) showDetail(items[0].id);
-      else {
-        detailPanel.innerHTML = `<span class="tag">No results</span><h3>Try another search</h3><p class="muted">Use a city name or words like hotel, hospital, market, or bus.</p>`;
+    const I18N = {
+      en: {
+        navJobs:"Jobs", navServices:"Services", navAbout:"About",
+        kicker:"JOBS + SERVICES // RWANDA",
+        title:"Find work. Find services. Stay connected.",
+        lead:"A future-ready directory for people in Rwanda who need a job, a hospital, transport, or a local service in one search.",
+        search:"Search", searchPh:"Search jobs or services",
+        allCities:"All cities", allTypes:"All types",
+        statItems:"listings", statCities:"cities", statLang:"languages",
+        jobsTitle:"Jobs first", jobsLead:"Start with work opportunities, then open nearby services.",
+        listTitle:"Jobs and services", listLead:"Tap a card. Use the language switch anytime.",
+        empty:"No match. Try job, hospital, bus, or market.",
+        aboutTitle:"About this site",
+        aboutBody:"Rwanda Connect helps people discover jobs and useful services in one place. It is a learning project in development, with sample public listings.",
+        footer:"Connect people to work and services across Rwanda.",
+        area:"Area", find:"How to find it", noMatch:"No match",
+        job:"Jobs", health:"Health", travel:"Transport", shop:"Services",
+        jobBlurb:"Work and career notices", healthBlurb:"Hospitals and clinics",
+        travelBlurb:"Buses, taxis, airport", shopBlurb:"Markets and local help"
+      },
+      rw: {
+        navJobs:"Akazi", navServices:"Serivisi", navAbout:"Ibyerekeye",
+        kicker:"AKAZI + SERIVISI // U RWANDA",
+        title:"Shakisha akazi. Shakisha serivisi. Komeza uhuzwe.",
+        lead:"Urubuga rwo gushaka akazi, ivuriro, ingendo, cyangwa serivisi z'ahaho mu Rwanda.",
+        search:"Shakisha", searchPh:"Shakisha akazi cyangwa serivisi",
+        allCities:"Imijyi yose", allTypes:"Ibyiciro byose",
+        statItems:"ibikubiye", statCities:"imijyi", statLang:"indimi",
+        jobsTitle:"Akazi mbere", jobsLead:"Tangira ku kazi, hanyuma ufungure serivisi ziri hafi.",
+        listTitle:"Akazi na serivisi", listLead:"Kanda ikarita. Hindura ururimi igihe ushaka.",
+        empty:"Nta bihuye. Gerageza akazi, ivuriro, bisi, cyangwa isoko.",
+        aboutTitle:"Ibyerekeye uru rubuga",
+        aboutBody:"Rwanda Connect ifasha abantu gushaka akazi na serivisi zifasha. Ni umushinga wo kwiga ukiri gukorwa.",
+        footer:"Huza abantu n'akazi na serivisi mu Rwanda hose.",
+        area:"Akarere", find:"Uko uyisanga", noMatch:"Nta bihuye",
+        job:"Akazi", health:"Ubuzima", travel:"Ingendo", shop:"Serivisi",
+        jobBlurb:"Akazi n'umwuga", healthBlurb:"Ibitaro n'amavuriro",
+        travelBlurb:"Amabisi, amataksi, ikibuga", shopBlurb:"Amasoko n'ubufasha"
+      },
+      fr: {
+        navJobs:"Emplois", navServices:"Services", navAbout:"A propos",
+        kicker:"EMPLOIS + SERVICES // RWANDA",
+        title:"Trouver un travail. Trouver un service. Rester connecte.",
+        lead:"Un annuaire pour les personnes au Rwanda qui cherchent un emploi, un hopital, un transport ou un service local.",
+        search:"Rechercher", searchPh:"Rechercher un emploi ou un service",
+        allCities:"Toutes les villes", allTypes:"Tous les types",
+        statItems:"fiches", statCities:"villes", statLang:"langues",
+        jobsTitle:"L'emploi d'abord", jobsLead:"Commencez par le travail, puis ouvrez les services proches.",
+        listTitle:"Emplois et services", listLead:"Touchez une fiche. Changez de langue a tout moment.",
+        empty:"Aucun resultat. Essayez emploi, hopital, bus ou marche.",
+        aboutTitle:"A propos du site",
+        aboutBody:"Rwanda Connect aide a trouver des emplois et des services utiles au meme endroit. Projet d'apprentissage encore en cours.",
+        footer:"Relier les gens au travail et aux services au Rwanda.",
+        area:"Quartier", find:"Comment s'y rendre", noMatch:"Aucun resultat",
+        job:"Emplois", health:"Sante", travel:"Transport", shop:"Services",
+        jobBlurb:"Offres et orientation", healthBlurb:"Hopitaux et cliniques",
+        travelBlurb:"Bus, taxis, aeroport", shopBlurb:"Marches et aide locale"
       }
-      if (scroll) document.getElementById("listings").scrollIntoView();
+    };
+
+    const CITIES = ["Kigali","Musanze","Huye","Rubavu","Karongi","Rwamagana","Nyagatare"];
+    const TYPES = ["job","health","travel","shop"];
+    const ITEMS = [
+      {id:1,type:"job",city:"Kigali",area:{en:"Kigali",rw:"Kigali",fr:"Kigali"},name:{en:"Kigali Employment Service Center",rw:"Ikigo cy'akazi cya Kigali",fr:"Centre d'emploi de Kigali"},note:{en:"Help finding work and skills notices in the city.",rw:"Ifasha gushaka akazi n'amahugurwa mu mujyi.",fr:"Aide a trouver un emploi et des formations en ville."},find:{en:"Kigali City offices",rw:"Ibiro by'Umujyi wa Kigali",fr:"Bureaux de la Ville de Kigali"}},
+      {id:2,type:"job",city:"Kigali",area:{en:"Kigali",rw:"Kigali",fr:"Kigali"},name:{en:"RDB careers",rw:"Akazi kuri RDB",fr:"Carrieres RDB"},note:{en:"National programs and some public job notices.",rw:"Gahunda z'igihugu n'amakuru y'akazi.",fr:"Programmes nationaux et quelques offres publiques."},find:"rdb.rw"},
+      {id:3,type:"job",city:"Huye",area:{en:"Campus",rw:"Kaminuza",fr:"Campus"},name:{en:"University of Rwanda notice boards",rw:"Amabwiriza ya UR Huye",fr:"Tableaux de l'Universite du Rwanda"},note:{en:"Student work and local openings on campus.",rw:"Akazi k'abanyeshuri n'akazi k'ahaho.",fr:"Emplois etudiants et offres locales sur le campus."},find:"UR Huye"},
+      {id:4,type:"health",city:"Kigali",area:"Nyarugenge",name:{en:"CHUK Hospital",rw:"Ibitaro CHUK",fr:"Hopital CHUK"},note:{en:"Large public teaching hospital.",rw:"Ibitaro binini bya Leta.",fr:"Grand hopital public universitaire."},find:"Nyarugenge"},
+      {id:5,type:"health",city:"Kigali",area:"Kacyiru",name:{en:"King Faisal Hospital",rw:"Ibitaro King Faisal",fr:"Hopital King Faisal"},note:{en:"Specialist and emergency care.",rw:"Kuvura indwara zihariye n'ihutirwa.",fr:"Soins specialises et urgences."},find:"Kacyiru"},
+      {id:6,type:"health",city:"Musanze",area:"Musanze",name:{en:"Ruhengeri Referral Hospital",rw:"Ibitaro bya Ruhengeri",fr:"Hopital de reference de Ruhengeri"},note:{en:"Referral hospital for the north.",rw:"Ibitaro by'Amajyaruguru.",fr:"Hopital de reference du nord."},find:"Musanze"},
+      {id:7,type:"travel",city:"Kigali",area:"Kanombe",name:{en:"Kigali International Airport",rw:"Ikibuga cy'indege cya Kigali",fr:"Aeroport international de Kigali"},note:{en:"Main airport for flights in and out of Rwanda.",rw:"Ikibuga gikoreshwa cyane.",fr:"Principal aeroport du pays."},find:"Kanombe"},
+      {id:8,type:"travel",city:"Kigali",area:"Nyabugogo",name:{en:"Nyabugogo Taxi Park",rw:"Paki ya Nyabugogo",fr:"Gare de Nyabugogo"},note:{en:"Buses and shared taxis to other towns.",rw:"Amabisi n'amataksi jya mu yindi mijyi.",fr:"Bus et taxis vers d'autres villes."},find:"Nyabugogo"},
+      {id:9,type:"shop",city:"Kigali",area:"Kimironko",name:{en:"Kimironko Market",rw:"Isoko rya Kimironko",fr:"Marche de Kimironko"},note:{en:"Food, clothes, and household goods.",rw:"Ibiribwa, imyenda, ibikoresho.",fr:"Nourriture, vetements et articles menagers."},find:"Kimironko"},
+      {id:10,type:"shop",city:"Huye",area:{en:"Town centre",rw:"Hagati y'umujyi",fr:"Centre-ville"},name:{en:"Huye Market",rw:"Isoko rya Huye",fr:"Marche de Huye"},note:{en:"Everyday shopping in Huye.",rw:"Guhaha ibya buri munsi i Huye.",fr:"Courses du quotidien a Huye."},find:"Huye"},
+      {id:11,type:"job",city:"Rubavu",area:"Rubavu",name:{en:"Rubavu town job notices",rw:"Akazi i Rubavu",fr:"Offres a Rubavu"},note:{en:"Local work notices near Lake Kivu.",rw:"Akazi k'ahaho hafi y'Ikiyaga cya Kivu.",fr:"Offres locales pres du lac Kivu."},find:"Rubavu"},
+      {id:12,type:"shop",city:"Nyagatare",area:"Nyagatare",name:{en:"Nyagatare town services",rw:"Serivisi za Nyagatare",fr:"Services de Nyagatare"},note:{en:"Shops and local offices in the east.",rw:"Amaduka n'ibiro mu burasirazuba.",fr:"Commerces et bureaux dans l'est."},find:"Nyagatare"}
+    ];
+
+    let lang = localStorage.getItem("rc-lang2") || "en";
+    const qEl = document.getElementById("q");
+    const city = document.getElementById("city");
+    const type = document.getElementById("type");
+    function t(k){ return (I18N[lang] && I18N[lang][k]) || I18N.en[k] || k; }
+    function loc(v){ return v && typeof v === "object" ? (v[lang] || v.en) : v; }
+    function applyText(){
+      document.documentElement.lang = lang;
+      document.querySelectorAll("[data-i18n]").forEach(n => n.textContent = t(n.dataset.i18n));
+      qEl.placeholder = t("searchPh");
+      document.getElementById("langEn").classList.toggle("active", lang==="en");
+      document.getElementById("langRw").classList.toggle("active", lang==="rw");
+      document.getElementById("langFr").classList.toggle("active", lang==="fr");
     }
-
-    function setType(type) {
-      typeSelect.value = type;
-      applyFilters(true);
+    function menus(){
+      const cv = city.value || "all", tv = type.value || "all";
+      city.innerHTML = '<option value="all">'+t("allCities")+'</option>' + CITIES.map(c=>'<option value="'+c+'">'+c+'</option>').join("");
+      type.innerHTML = '<option value="all">'+t("allTypes")+'</option>' + TYPES.map(x=>'<option value="'+x+'">'+t(x)+'</option>').join("");
+      city.value = cv; type.value = tv;
     }
-
-    function resetFilters() {
-      searchInput.value = "";
-      citySelect.value = "all";
-      typeSelect.value = "all";
-      applyFilters(false);
+    function cats(){
+      document.getElementById("jobCats").innerHTML = TYPES.map((x,i)=>'<article class="card" onclick="setType(\''+x+'\')"><div class="tag">0'+(i+1)+'</div><h3>'+t(x)+'</h3><p class="muted">'+t(x+"Blurb")+'</p></article>').join("");
     }
-
-    searchInput.addEventListener("input", () => applyFilters(false));
-    searchInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") applyFilters(true);
-    });
-    citySelect.addEventListener("change", () => applyFilters(true));
-    typeSelect.addEventListener("change", () => applyFilters(true));
-
-    fillMenus();
-    applyFilters(false);
+    function filtered(){
+      const s = qEl.value.trim().toLowerCase();
+      return ITEMS.filter(i => {
+        const blob = [loc(i.name), i.city, loc(i.area), loc(i.note), t(i.type)].join(" ").toLowerCase();
+        return (!s || blob.includes(s)) && (city.value==="all"||i.city===city.value) && (type.value==="all"||i.type===type.value);
+      });
+    }
+    function show(id){
+      const i = ITEMS.find(x=>x.id===id);
+      document.getElementById("detail").innerHTML = '<div class="tag">'+t(i.type)+' · '+i.city+'</div><h3>'+loc(i.name)+'</h3><p>'+loc(i.note)+'</p><p class="muted" style="margin-top:10px"><b>'+t("area")+':</b> '+loc(i.area)+'<br><b>'+t("find")+':</b> '+loc(i.find)+'</p>';
+    }
+    function apply(scroll){
+      const items = filtered();
+      document.getElementById("count").textContent = items.length;
+      cats();
+      document.getElementById("grid").innerHTML = items.map(i=>'<article class="card" onclick="show('+i.id+')"><div class="tag">'+t(i.type)+'</div><h3>'+loc(i.name)+'</h3><p class="muted">'+i.city+' · '+loc(i.area)+'</p></article>').join("");
+      document.getElementById("empty").style.display = items.length ? "none" : "block";
+      if (items.length) show(items[0].id);
+      else document.getElementById("detail").innerHTML = '<h3>'+t("noMatch")+'</h3><p class="muted">'+t("empty")+'</p>';
+      if (scroll) document.getElementById("services").scrollIntoView();
+    }
+    function setType(v){ type.value=v; apply(true); }
+    function setLang(next){ lang=next; localStorage.setItem("rc-lang2", next); applyText(); menus(); apply(false); }
+    qEl.addEventListener("input", function(){ apply(false); });
+    qEl.addEventListener("keydown", function(e){ if(e.key==="Enter") apply(true); });
+    city.addEventListener("change", function(){ apply(true); });
+    type.addEventListener("change", function(){ apply(true); });
+    applyText(); menus(); apply(false);
   </script>
 </body>
 </html>
