@@ -1,46 +1,70 @@
-[README.md](https://github.com/user-attachments/files/31641155/README.md)
-# Rwanda Connect
+[README (2).md](https://github.com/user-attachments/files/31643136/README.2.md)[Uploading README (2)# Rwanda Connect
 
-A huge website that helps people in Rwanda find **jobs** and **everyday services**.
+A website that helps people in Rwanda find **jobs**, **services**, **businesses**, and **markets**.
 
-This project is two files:
+Files in this project:
 
-- `index.html` — the website
-- `README.md` — this project guide
+- `index.html` — the website. Name it exactly `index.html` (no space).
+- `README.md` — this guide.
 
-They are separate on purpose. The website is the product. This file is the instructions.
+People who need work can meet people who need workers. People who sell can meet people who buy.
 
-## What the site does
+## Host contact (use when a listing is missing or incomplete)
 
-Open `index.html` in a browser. People can:
+- Phone / WhatsApp: **+250 783 740 809**
+- Email: **mukashyakafrancine7@gmail.com**
 
-- Search jobs, hospitals, transport, markets, and other services
-- Filter by city and category
-- Switch language: English, Kinyarwanda, French
-- Open a listing to see a short note and how to find it
+If a job, shop, or service on the site has no working contact, write or call the host.
 
-The listings are sample public places for learning. This is not an official government job board.
+## Rooms on the website
 
-## How to run
+Each room is a coloured section on `index.html`.
 
-1. Put `index.html` and `README.md` in the same folder.
-2. Open `index.html`.
-3. To publish, upload both files to GitHub and turn on GitHub Pages.
+1. Home / Search
+2. Jobs and careers
+3. Services
+4. Businesses
+5. Markets and sellers
+6. Agriculture
+7. Tourism and hospitality
+8. Health
+9. Transport
+10. Education and skills
+11. Trades and construction
+12. Money and business help
+13. Post a job (recruit form)
+14. Help
 
-No install step. All design and language code is inside `index.html`.
+## Official public links
 
-## Languages
+- RDB careers: https://rdb.rw/careers/
+- RDB contact: https://rdb.rw/contact-us/
+- Civil service jobs: https://recruitment.mifotra.gov.rw/
+- Kora job portal: https://jobportal.kora.rw/
+- Job in Rwanda: https://www.jobinrwanda.com
+- Cyizere: https://www.cyizere.com/
+- REG vacancies: https://www.reg.rw/public-information/jobs/vacancies/
+- Irembo: https://irembo.gov.rw
+- Harambee Rwanda: https://harambee.rw/
+- Hanga Hubs: https://www.risa.gov.rw/projects/hanga-hubs
+- Kimironko Market online: https://kimironkomarket.rw/
 
-- English (`EN`)
-- Kinyarwanda (`RW`)
-- French (`FR`)
+## Official public contacts
 
-The chosen language is saved in the browser.
+- RDB: 1415, info@rdb.rw, support@rdb.rw, WhatsApp +250 788 321 555
+- RDB jobs: talentacquisition@rdb.rw
+- Irembo: 9099, support@irembo.com
+- REG: 2727
+- Site host: +250 783 740 809, mukashyakafrancine7@gmail.com
 
-## Status
+## How to publish
 
-In development. Next ideas: more job listings, business profiles, a simple map.
+1. Put `index.html` and `README.md` in the repo root.
+2. Do not name the site file `index . html`.
+3. GitHub Settings → Pages → branch `main` → folder `/ (root)`.
+4. Open `https://YOUR-USER.github.io/YOUR-REPO/`.
 
-## License
+The GitHub repo page shows this README. The website is the Pages link.
 
-Independent learning project.
+Listings mix official public pages with sample local places so the rooms can be used. Confirm official jobs on the official sites. This is a learning project, not a government job board.
+.md…]()
