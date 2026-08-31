@@ -1,432 +1,673 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rwanda Connect — Jobs, services and markets</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Umwanya — Rwanda Opportunity Hub</title>
+  <meta name="description" content="Umwanya is Rwanda's next-generation hub for jobs, tenders, internships and consultancy. Search thousands of structured opportunities from verified employers." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --ink:#1f2a24; --muted:#5b6b63; --paper:#f6f3ea; --card:#fffdf8; --line:#e4ddd0;
-      --green:#2f6b4f; --green-soft:#e7f1ea; --gold:#c9a227; --gold-soft:#f7efd4;
-      --sky:#3d6f8a; --sky-soft:#e7f2f6; --clay:#9a5b3c; --clay-soft:#f6ebe4;
+      --green: #0b7a3d;
+      --green-deep: #065c2c;
+      --blue: #0b6ea8;
+      --sky: #e8f4fb;
+      --gold: #e6b800;
+      --gold-soft: #fff4c2;
+      --ink: #0c1b2a;
+      --ink-2: #243447;
+      --mute: #5b6b7c;
+      --line: #dfe7ef;
+      --paper: #f5f8fb;
+      --white: #ffffff;
+      --danger: #c0392b;
+      --shadow: 0 10px 30px rgba(12, 27, 42, 0.08);
+      --radius: 16px;
     }
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{font-family:Arial,Helvetica,sans-serif;background:var(--paper);color:var(--ink)}
-    a{color:var(--green)}
-    header{position:sticky;top:0;z-index:30;background:rgba(246,243,234,.96);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 6%;flex-wrap:wrap}
-    .logo{font-weight:700;text-decoration:none;color:var(--ink)}.logo span{color:var(--green)}
-    nav{display:flex;gap:12px;flex-wrap:wrap;font-size:14px} nav a{text-decoration:none;color:var(--ink)}
-    .langs button,.act,select,input,textarea{font:inherit;border-radius:8px;border:1px solid var(--line)}
-    .langs button{background:#fff;padding:7px 10px;cursor:pointer}
-    .langs button.on{background:var(--green);color:#fff;border-color:var(--green)}
-    .hero{padding:48px 6% 28px;background:linear-gradient(180deg,#eef6f1,var(--paper))}
-    .kicker{color:var(--gold);font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
-    h1{font-size:clamp(28px,5vw,48px);max-width:820px;line-height:1.15;margin-bottom:12px}
-    .lead{max-width:720px;color:var(--muted);margin-bottom:22px}
-    .search{display:grid;grid-template-columns:1.5fr .7fr .7fr auto;gap:8px;background:#fff;padding:10px;border:1px solid var(--line);border-radius:12px;max-width:920px}
-    input,select,textarea{padding:12px;background:#fff;width:100%}
-    .act{background:var(--green);color:#fff;border:0;padding:12px 16px;cursor:pointer;font-weight:700}
-    .act.soft{background:var(--green-soft);color:var(--green)}
-    .act.warn{background:#8a3b2a}
-    .stats{display:flex;gap:22px;margin-top:16px;flex-wrap:wrap;color:var(--muted)}.stats b{display:block;color:var(--ink);font-size:20px}
-    section{padding:36px 6%}
-    .room{border-top:1px solid var(--line)}
-    .r-green{background:var(--green-soft)}.r-gold{background:var(--gold-soft)}.r-sky{background:var(--sky-soft)}.r-clay{background:var(--clay-soft)}
-    h2{margin-bottom:8px}.muted{color:var(--muted)}
-    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:16px}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;text-align:left}
-    .card:hover{border-color:var(--green)}
-    .photo{height:140px;display:flex;align-items:flex-end;padding:10px;color:#fff;font-size:13px;background-size:cover;background-position:center;text-shadow:0 1px 4px rgba(0,0,0,.55)}
-    .detail img.full{width:100%;height:220px;object-fit:cover;border-radius:12px;margin:0 0 14px;display:block}
-    .body{padding:14px}.tag{font-size:12px;color:var(--sky);margin-bottom:6px}
-    .card h3,.detail h3{font-size:18px;margin-bottom:6px}
-    .meta{font-size:13px;color:var(--muted);margin:8px 0}
-    .links{display:flex;gap:8px;flex-wrap:wrap}
-    .links a,.links button{font-size:13px;text-decoration:none;background:var(--green-soft);color:var(--green);border:0;padding:7px 9px;border-radius:8px;cursor:pointer}
-    form.box,.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;max-width:760px}
-    form.box label{display:block;font-size:13px;margin:10px 0 4px}
-    #jobMap{height:260px;width:100%;border-radius:12px;border:1px solid var(--line);margin:8px 0 12px;z-index:1}
-    .helpbox{background:#fff;border-left:4px solid var(--gold);padding:14px;border-radius:8px;margin-top:12px}
-    footer{padding:24px 6%;border-top:1px solid var(--line);color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-    .mask{display:none;position:fixed;inset:0;background:rgba(20,28,24,.45);z-index:40;padding:24px 6%;overflow:auto}
-    .mask.on{display:block}
-    .detail{background:#fff;border-radius:16px;max-width:760px;margin:40px auto;padding:22px;border:1px solid var(--line)}
-    .detail p{margin:8px 0;line-height:1.45}
-    @media(max-width:800px){.search{grid-template-columns:1fr}}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, system-ui, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.5;
+    }
+    button, input, select, textarea { font: inherit; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; }
+
+    .wrap { width: min(1180px, calc(100% - 32px)); margin-inline: auto; }
+
+    header.nav {
+      position: sticky; top: 0; z-index: 40;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px; gap: 16px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: -0.03em; }
+    .mark {
+      width: 34px; height: 34px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--blue), var(--green));
+      display: grid; place-items: center; color: #fff; font-size: 16px;
+      box-shadow: 0 6px 14px rgba(11,110,168,.28);
+    }
+    .brand span { font-size: 18px; }
+    .brand em { color: var(--green); font-style: normal; }
+    nav.links { display: flex; gap: 22px; font-size: 14px; font-weight: 500; color: var(--ink-2); }
+    nav.links a:hover { color: var(--green); }
+    .nav-cta { display: flex; gap: 8px; }
+    .btn {
+      border: 0; cursor: pointer; border-radius: 999px;
+      padding: 10px 16px; font-weight: 600; font-size: 14px;
+      transition: .18s ease;
+    }
+    .btn-ghost { background: transparent; color: var(--ink-2); }
+    .btn-ghost:hover { background: var(--sky); }
+    .btn-primary { background: var(--green); color: #fff; }
+    .btn-primary:hover { background: var(--green-deep); }
+    .btn-gold { background: var(--gold); color: #1a1400; }
+    .btn-gold:hover { filter: brightness(.95); }
+    .btn-outline { background: #fff; border: 1px solid var(--line); color: var(--ink); }
+    .menu-btn { display: none; }
+
+    .hero {
+      position: relative; overflow: hidden;
+      background:
+        radial-gradient(900px 400px at 10% -10%, rgba(11,110,168,.18), transparent 50%),
+        radial-gradient(700px 360px at 100% 0%, rgba(11,122,61,.16), transparent 46%),
+        linear-gradient(180deg, #fff, var(--paper));
+      padding: 64px 0 36px;
+    }
+    .hero h1 {
+      font-family: "Source Serif 4", Georgia, serif;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1.08; letter-spacing: -0.03em; max-width: 16ch;
+    }
+    .hero p.lead { margin-top: 14px; max-width: 52ch; color: var(--mute); font-size: 17px; }
+    .search-card {
+      margin-top: 28px; background: #fff; border: 1px solid var(--line);
+      border-radius: 18px; padding: 10px; box-shadow: var(--shadow);
+      display: grid; grid-template-columns: 1fr auto; gap: 8px;
+    }
+    .search-card input {
+      border: 0; outline: 0; padding: 14px 16px; width: 100%; background: transparent;
+    }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .chip {
+      border: 1px solid var(--line); background: #fff; color: var(--ink-2);
+      border-radius: 999px; padding: 7px 12px; font-size: 13px; cursor: pointer;
+    }
+    .chip.active, .chip:hover { border-color: var(--green); color: var(--green); background: #eef8f2; }
+
+    .stats {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+      margin: 28px 0 8px;
+    }
+    .stat {
+      background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px;
+    }
+    .stat b { display: block; font-size: 22px; letter-spacing: -0.03em; }
+    .stat span { color: var(--mute); font-size: 13px; }
+
+    .layout { display: grid; grid-template-columns: 280px 1fr; gap: 22px; padding: 18px 0 64px; }
+    .filters {
+      background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 18px; height: fit-content; position: sticky; top: 84px;
+    }
+    .filters h3 { font-size: 14px; margin-bottom: 12px; }
+    .filters label { display: block; font-size: 12px; color: var(--mute); margin: 12px 0 6px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; }
+    .filters select, .filters input {
+      width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: #fff;
+    }
+    .reset { margin-top: 14px; width: 100%; }
+
+    .toolbar { display: flex; justify-content: space-between; align-items: end; gap: 12px; margin-bottom: 14px; }
+    .toolbar h2 { font-size: 20px; letter-spacing: -0.03em; }
+    .toolbar small { color: var(--mute); }
+
+    .jobs { display: grid; gap: 12px; }
+    .card {
+      background: #fff; border: 1px solid var(--line); border-radius: 16px;
+      padding: 16px 18px; display: grid; grid-template-columns: auto 1fr auto; gap: 14px;
+      cursor: pointer; transition: .18s ease;
+    }
+    .card:hover { transform: translateY(-2px); box-shadow: var(--shadow); border-color: #c9dbe8; }
+    .logo {
+      width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center;
+      font-weight: 800; color: #fff; background: var(--blue); letter-spacing: -0.04em;
+    }
+    .logo.g { background: var(--green); }
+    .logo.y { background: #b8860b; }
+    .logo.n { background: #1f3b57; }
+    .meta h3 { font-size: 16px; letter-spacing: -0.02em; }
+    .meta .co { color: var(--ink-2); font-size: 13.5px; margin-top: 2px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+    .tag { font-size: 12px; background: var(--paper); color: var(--ink-2); border-radius: 999px; padding: 4px 8px; }
+    .side { text-align: right; min-width: 120px; }
+    .badge { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 4px 8px; border-radius: 999px; }
+    .badge.job { background: #e7f6ee; color: var(--green-deep); }
+    .badge.tender { background: #fff4c2; color: #7a5b00; }
+    .badge.internship { background: var(--sky); color: var(--blue); }
+    .badge.consultancy { background: #efe7ff; color: #5b3fa0; }
+    .deadline { display: block; margin-top: 8px; font-size: 12px; color: var(--mute); }
+    .deadline.soon { color: var(--danger); font-weight: 600; }
+    .flags { display: flex; gap: 6px; justify-content: flex-end; margin-bottom: 6px; }
+    .flag { font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 3px 7px; border-radius: 999px; }
+    .flag.feat { background: var(--gold-soft); color: #7a5b00; }
+    .flag.urg { background: #fde8e6; color: var(--danger); }
+
+    .empty { background: #fff; border: 1px dashed var(--line); border-radius: 16px; padding: 48px 20px; text-align: center; color: var(--mute); }
+
+    .sectors { padding: 10px 0 70px; }
+    .sectors h2 { font-family: "Source Serif 4", serif; font-size: 32px; letter-spacing: -0.03em; margin-bottom: 16px; }
+    .grid-sec { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+    .sec {
+      background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px;
+      cursor: pointer; min-height: 92px;
+    }
+    .sec:hover { border-color: var(--green); }
+    .sec b { display: block; font-size: 14px; }
+    .sec span { color: var(--mute); font-size: 12px; }
+
+    .cta-band {
+      background: linear-gradient(135deg, var(--ink), #12324d);
+      color: #fff; border-radius: 24px; padding: 36px; display: flex; justify-content: space-between; align-items: center; gap: 20px;
+      margin-bottom: 70px;
+    }
+    .cta-band h2 { font-family: "Source Serif 4", serif; font-size: 30px; letter-spacing: -0.03em; }
+    .cta-band p { color: #c9d7e4; margin-top: 6px; max-width: 48ch; }
+
+    footer {
+      background: #fff; border-top: 1px solid var(--line); padding: 36px 0 22px; color: var(--mute); font-size: 14px;
+    }
+    .foot { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 20px; margin-bottom: 22px; }
+    footer h4 { color: var(--ink); margin-bottom: 10px; }
+    footer ul { list-style: none; display: grid; gap: 6px; }
+    .copy { border-top: 1px solid var(--line); padding-top: 14px; display: flex; justify-content: space-between; gap: 12px; }
+
+    /* Drawer + modal */
+    .overlay {
+      position: fixed; inset: 0; background: rgba(12,27,42,.45); z-index: 60;
+      display: none; align-items: stretch; justify-content: flex-end;
+    }
+    .overlay.show { display: flex; }
+    .drawer {
+      width: min(560px, 100%); background: #fff; height: 100%; overflow: auto;
+      padding: 28px 24px 40px; box-shadow: -20px 0 50px rgba(0,0,0,.15);
+    }
+    .drawer h2 { font-size: 24px; letter-spacing: -0.03em; }
+    .drawer .co { margin: 6px 0 14px; color: var(--mute); }
+    .drawer p { margin: 10px 0; color: var(--ink-2); }
+    .drawer ul { margin: 8px 0 16px 18px; color: var(--ink-2); }
+    .close { float: right; border: 0; background: var(--paper); width: 34px; height: 34px; border-radius: 50%; cursor: pointer; }
+
+    .modal-wrap {
+      position: fixed; inset: 0; background: rgba(12,27,42,.5); z-index: 80;
+      display: none; place-items: center; padding: 20px;
+    }
+    .modal-wrap.show { display: grid; }
+    .modal {
+      width: min(460px, 100%); background: #fff; border-radius: 18px; padding: 24px;
+    }
+    .field { margin-top: 12px; }
+    .field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+    .field input, .field textarea, .field select {
+      width: 100%; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px;
+    }
+    .toast {
+      position: fixed; bottom: 20px; right: 20px; background: var(--ink); color: #fff;
+      padding: 12px 16px; border-radius: 12px; display: none; z-index: 90;
+    }
+
+    @media (max-width: 960px) {
+      nav.links { display: none; }
+      .menu-btn { display: inline-flex; }
+      .layout { grid-template-columns: 1fr; }
+      .filters { position: static; }
+      .stats, .grid-sec, .foot { grid-template-columns: 1fr 1fr; }
+      .card { grid-template-columns: auto 1fr; }
+      .side { grid-column: 2; text-align: left; }
+      .cta-band { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 560px) {
+      .stats, .grid-sec, .foot { grid-template-columns: 1fr; }
+      .copy { flex-direction: column; }
+      .search-card { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; scroll-behavior: auto !important; }
+    }
   </style>
 </head>
 <body>
-  <header>
-    <a class="logo" href="#home">Rwanda <span>Connect</span></a>
-    <nav>
-      <a href="#jobs">Jobs</a>
-      <a href="#list">Listings</a>
-      <a href="#fresh">New openings</a>
-      <a href="#post">Post a job</a>
-      <a href="#help">Help</a>
-    </nav>
-    <div class="langs">
-      <button id="bEn" type="button" onclick="setLang('en')">EN</button>
-      <button id="bRw" type="button" onclick="setLang('rw')">RW</button>
-      <button id="bFr" type="button" onclick="setLang('fr')">FR</button>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#">
+        <div class="mark">U</div>
+        <span>Umwanya<em>.</em></span>
+      </a>
+      <nav class="links">
+        <a href="#jobs">Jobs</a>
+        <a href="#jobs" data-jump-type="Tender">Tenders</a>
+        <a href="#jobs" data-jump-type="Internship">Internships</a>
+        <a href="#sectors">Sectors</a>
+        <a href="#employers">Employers</a>
+      </nav>
+      <div class="nav-cta">
+        <button class="btn btn-ghost" id="btnCv">Upload CV</button>
+        <button class="btn btn-primary" id="btnPost">Post a vacancy</button>
+      </div>
     </div>
   </header>
 
-  <section class="hero" id="home">
-    <p class="kicker" id="kicker">Jobs · Services · Markets · Rwanda</p>
-    <h1 id="title">Find work, services and customers across Rwanda.</h1>
-    <p class="lead" id="lead">Click a card for full details. Mark a job filled when the team is complete. The site then hides it and points you to other open work and official job pages.</p>
-    <div class="search">
-      <input id="q" type="search" placeholder="Search cook, nurse, market, hotel...">
-      <select id="city"></select>
-      <select id="cat"></select>
-      <button class="act" type="button" onclick="draw(true)">Search</button>
-    </div>
-    <div class="stats">
-      <div><b id="nOpen">0</b><span>open</span></div>
-      <div><b id="nFilled">0</b><span>filled / hidden</span></div>
-      <div><b>EN/RW/FR</b><span>languages</span></div>
-    </div>
-  </section>
-
-  <section class="room r-green" id="jobs">
-    <h2>Official job rooms</h2>
-    <p class="muted">Public pages that publish real vacancies. Open them to see the newest government and formal jobs.</p>
-    <div class="grid" id="portals"></div>
-  </section>
-
-  <section class="room" id="list">
-    <h2>Open jobs and services</h2>
-    <p class="muted">Click any card to read the full information. Use Mark filled when they no longer need staff or customers.</p>
-    <div class="grid" id="grid"></div>
-    <p id="empty" class="muted" style="display:none;margin-top:16px">No open match. Try another word, or check New openings.</p>
-  </section>
-
-  <section class="room r-sky" id="fresh">
-    <h2>Look for new openings</h2>
-    <p class="muted">This site cannot copy private job boards without their permission. It can hide filled posts and send you to official public pages that do list new jobs.</p>
-    <div class="panel">
-      <p id="freshLine">Checking official rooms...</p>
-      <div class="links" style="margin-top:12px">
-        <button type="button" class="act" onclick="nextFresh()">Show next official room</button>
-        <a class="act soft" id="freshGo" href="https://rdb.rw/careers/" target="_blank" rel="noopener">Open this page</a>
+  <section class="hero">
+    <div class="wrap">
+      <h1>Find work that builds Rwanda.</h1>
+      <p class="lead">Jobs, tenders, internships and consultancy — structured, searchable, and updated for Kigali and every district. Opportunity, organised.</p>
+      <div class="search-card">
+        <input id="q" type="search" placeholder="Search role, company, skill or district…  (press / )" autocomplete="off" />
+        <button class="btn btn-primary" id="btnSearch">Search opportunities</button>
+      </div>
+      <div class="chips" id="quickChips"></div>
+      <div class="stats">
+        <div class="stat"><b>2,416</b><span>Live opportunities in the full network</span></div>
+        <div class="stat"><b>864</b><span>Employers & public institutions</span></div>
+        <div class="stat"><b>47,200</b><span>Candidate profiles in the talent pool</span></div>
+        <div class="stat"><b>30</b><span>Districts covered across Rwanda</span></div>
       </div>
     </div>
-    <div class="grid" id="freshCards" style="margin-top:16px"></div>
   </section>
 
-  <section class="room r-clay" id="post">
-    <h2>Post a job / recruit</h2>
-    <p class="muted">Pin the workplace, publish it on this site, and email the host a copy.</p>
-    <form class="box" onsubmit="return sendJob(event)">
-      <label>Your name</label><input id="fName" required>
-      <label>Business or organisation</label><input id="fBiz" required>
-      <label>Job title</label><input id="fTitle" required>
-      <label>City / district</label><input id="fCity" required>
-      <label>Workplace on the map</label>
-      <p class="muted">Allow location, or tap the map.</p>
-      <button class="act soft" type="button" onclick="useMyLocation()">Use my location</button>
-      <div id="jobMap"></div>
-      <label>Exact location</label><input id="fLoc" required>
-      <input id="fLat" type="hidden"><input id="fLng" type="hidden">
-      <label>Who you need and what the job does</label><textarea id="fNeed" rows="4" required></textarea>
-      <label>Hours / pay note (optional)</label><input id="fPay" placeholder="Example: daytime, pay discussed">
-      <label>Your phone</label><input id="fPhone" required placeholder="+250...">
-      <label>Your email</label><input id="fMail" type="email" required>
-      <p class="muted" style="margin:12px 0">Copy also goes to mukashyakafrancine7@gmail.com</p>
-      <button class="act" type="submit">Publish job on the site</button>
-      <p id="postOk" class="muted" style="display:none;margin-top:10px">Saved. It now appears in Open jobs.</p>
-    </form>
+  <main class="wrap layout" id="jobs">
+    <aside class="filters">
+      <h3>Refine results</h3>
+      <label>Type</label>
+      <select id="fType">
+        <option value="">All types</option>
+        <option>Job</option>
+        <option>Tender</option>
+        <option>Internship</option>
+        <option>Consultancy</option>
+      </select>
+      <label>Sector</label>
+      <select id="fSector"><option value="">All sectors</option></select>
+      <label>Location</label>
+      <select id="fLoc"><option value="">All locations</option></select>
+      <label>Experience</label>
+      <select id="fExp">
+        <option value="">Any experience</option>
+        <option>Entry (0–2 years)</option>
+        <option>Mid (3–5 years)</option>
+        <option>Senior (5+ years)</option>
+        <option>Not specified</option>
+      </select>
+      <button class="btn btn-outline reset" id="btnReset">Clear filters</button>
+    </aside>
+
+    <section>
+      <div class="toolbar">
+        <div>
+          <h2>Opportunities</h2>
+          <small id="countLabel">Loading the Umwanya data store…</small>
+        </div>
+        <select id="sortBy">
+          <option value="featured">Featured first</option>
+          <option value="deadline">Closing soon</option>
+          <option value="recent">Most recent</option>
+          <option value="views">Most viewed</option>
+        </select>
+      </div>
+      <div class="jobs" id="jobList"></div>
+    </section>
+  </main>
+
+  <section class="wrap sectors" id="sectors">
+    <h2>Browse by sector</h2>
+    <div class="grid-sec" id="secGrid"></div>
   </section>
 
-  <section class="room r-gold" id="filledRoom">
-    <h2>Filled jobs (hidden from search)</h2>
-    <p class="muted">These were marked full. They stay here so you can reopen one if needed.</p>
-    <div class="grid" id="filledGrid"></div>
-  </section>
-
-  <section class="room r-green" id="help">
-    <h2>Help</h2>
-    <div class="helpbox">
-      <p>Missing or closed listing? Contact the host.</p>
-      <p><b>Francine Mukashyaka</b><br>
-        <a href="tel:+250783740809">+250 783 740 809</a><br>
-        <a href="mailto:mukashyakafrancine7@gmail.com">mukashyakafrancine7@gmail.com</a></p>
-      <p class="muted">Official lines: RDB 1415 · Irembo 9099 · REG 2727</p>
+  <div class="wrap" id="employers">
+    <div class="cta-band">
+      <div>
+        <h2>Hire from Rwanda’s sharpest talent pool.</h2>
+        <p>Post a featured vacancy, search CVs, or run a shortlist. Built for banks, NGOs, ministries, startups and industrial employers.</p>
+      </div>
+      <button class="btn btn-gold" id="btnHire">Start hiring</button>
     </div>
-  </section>
-
-  <footer>
-    <span>Rwanda Connect</span>
-    <span>Learning project. Confirm official jobs on official sites.</span>
-  </footer>
-
-  <div class="mask" id="mask" onclick="if(event.target.id==='mask') closeDetail()">
-    <div class="detail" id="detail"></div>
   </div>
 
-<script>
-const HOST_MAIL="mukashyakafrancine7@gmail.com";
-const HOST_TEL="+250783740809";
-const CITIES=["Kigali","Musanze","Huye","Rubavu","Karongi","Rwamagana","Nyagatare"];
-const CATS=["job","health","travel","market","farm","hotel","school","trade","money"];
-const PORTALS=[
-  {id:"rdb",name:"RDB Careers",place:"KG 9 Ave, Kigali",jobs:"RDB and project vacancies",sells:"Investment and tourism jobs",mail:"talentacquisition@rdb.rw",tel:"1415",url:"https://rdb.rw/careers/",about:"Official Rwanda Development Board careers page. Apply as one PDF to talentacquisition@rdb.rw when a post is open."},
-  {id:"mifotra",name:"MIFOTRA e-Recruitment",place:"Kigali",jobs:"Civil service posts",sells:"Government recruitment",mail:HOST_MAIL,tel:HOST_TEL,url:"https://recruitment.mifotra.gov.rw/",about:"Official public-service recruitment portal. New ministry and district jobs appear here."},
-  {id:"kora",name:"Kora Job Portal",place:"Kigali",jobs:"Jobs, internships, training",sells:"RDB matching service",mail:"info@rdb.rw",tel:"1415",url:"https://jobportal.kora.rw/",about:"RDB platform that links jobseekers with employers and Public Employment Service Centres."},
-  {id:"jir",name:"Job in Rwanda",place:"Kimihurura, Kigali",jobs:"Private and NGO vacancies",sells:"Job board",mail:HOST_MAIL,tel:HOST_TEL,url:"https://www.jobinrwanda.com",about:"Long-running Rwandan job board. Check the site for the current list; this page does not copy their private listings."},
-  {id:"cyizere",name:"Cyizere",place:"KN 82 St, Kigali",jobs:"Jobs, tenders, scholarships",sells:"Opportunity hub",mail:"info@cyizere.com",tel:"+250783977120",url:"https://www.cyizere.com/",about:"Public opportunity site. Email info@cyizere.com or call +250 783 977 120."},
-  {id:"harambee",name:"Harambee Rwanda",place:"Kigali",jobs:"Youth first jobs",sells:"Skills to employment",mail:HOST_MAIL,tel:HOST_TEL,url:"https://harambee.rw/",about:"Youth skilling and placement organisation. Register on their site for current programmes."}
-];
-const BASE=[
-  {id:"rdb-hq",cat:"job",city:"Kigali",name:"Rwanda Development Board",place:"RDB Building, KG 9 Ave, Kigali",jobs:"Investment officers, tourism staff, project roles",sells:"Investment and business support",mail:"info@rdb.rw",tel:"1415",url:"https://rdb.rw",about:"National board for investment, tourism and private-sector growth. Hotline 1415, email info@rdb.rw or support@rdb.rw. WhatsApp +250 788 321 555.",hours:"Mon–Fri, 7:00–23:00 for call centre"},
-  {id:"kesc",cat:"job",city:"Kigali",name:"Kigali Employment Service Centre",place:"City of Kigali offices",jobs:"Walk-in job search help",sells:"Public employment support",mail:HOST_MAIL,tel:HOST_TEL,url:"https://jobportal.kora.rw/",about:"City point for job-search help. Confirm hours at City of Kigali offices. If a number is missing, use the host."},
-  {id:"ur",cat:"school",city:"Huye",name:"University of Rwanda Huye",place:"UR Huye campus",jobs:"Student work, campus and local openings",sells:"Higher education",mail:HOST_MAIL,tel:HOST_TEL,url:"https://ur.ac.rw",about:"Campus boards and UR site list student and local openings. Check ur.ac.rw for official notices."},
-  {id:"chuk",cat:"health",city:"Kigali",name:"CHUK Hospital",place:"Nyarugenge, Kigali",jobs:"Nurses, doctors, cleaners, records staff",sells:"Public hospital care",mail:HOST_MAIL,tel:HOST_TEL,url:"https://chuk.rw",about:"University Teaching Hospital of Kigali. Use the hospital site for current vacancies. Do not treat the host email as a hospital HR inbox."},
-  {id:"kfh",cat:"health",city:"Kigali",name:"King Faisal Hospital",place:"Kacyiru, Kigali",jobs:"Specialist care, emergency, support staff",sells:"Hospital services",mail:HOST_MAIL,tel:HOST_TEL,url:"https://kfh.rw",about:"Major hospital in Kacyiru. Confirm jobs on kfh.rw."},
-  {id:"ruhengeri",cat:"health",city:"Musanze",name:"Ruhengeri Referral Hospital",place:"Musanze",jobs:"Nurses, lab staff, support roles",sells:"Referral care for the north",mail:HOST_MAIL,tel:HOST_TEL,url:"",about:"Northern Province referral hospital. Ask the host if you need a current office number."},
-  {id:"chub",cat:"health",city:"Huye",name:"CHUB Butare",place:"Huye",jobs:"Clinical and support jobs",sells:"Hospital care for the south",mail:HOST_MAIL,tel:HOST_TEL,url:"",about:"Teaching hospital for the Southern Province."},
-  {id:"airport",cat:"travel",city:"Kigali",name:"Kigali International Airport",place:"Kanombe, Kigali",jobs:"Airline, security, cleaning, retail",sells:"Flights in and out of Rwanda",mail:HOST_MAIL,tel:HOST_TEL,url:"https://www.aeroport-kigali.com",about:"Main international airport. Airport and airline employers post their own jobs."},
-  {id:"nyabugogo",cat:"travel",city:"Kigali",name:"Nyabugogo Taxi Park",place:"Nyabugogo, Kigali",jobs:"Drivers, loaders, ticket sellers, food stalls",sells:"Buses and shared taxis",mail:HOST_MAIL,tel:HOST_TEL,url:"",about:"Main park for buses to other towns. Stall contacts change; use the host if you need an introduction."},
-  {id:"kimironko",cat:"market",city:"Kigali",name:"Kimironko Market",place:"Kimironko, Gasabo, Kigali",jobs:"Vendors, porters, tailors, packers",sells:"Food, clothes, household goods",mail:HOST_MAIL,tel:HOST_TEL,url:"https://kimironkomarket.rw/",about:"Largest Kigali public market. Online orders: kimironkomarket.rw. Open roughly 6:00–18:00."},
-  {id:"caplaki",cat:"market",city:"Kigali",name:"Caplaki Craft Village",place:"Near Kigali Convention Centre",jobs:"Artisans, stall keepers, guides",sells:"Baskets, art, souvenirs",mail:HOST_MAIL,tel:HOST_TEL,url:"",about:"Craft market for visitors and locals. Bargain on price. Host can help if a stall contact is missing."},
-  {id:"huye-mkt",cat:"market",city:"Huye",name:"Huye Market",place:"Huye town centre",jobs:"Food sellers, porters, small shops",sells:"Daily food and household goods",mail:HOST_MAIL,tel:HOST_TEL,url:"",about:"Town market for everyday shopping in Huye."},
-  {id:"nyagatare",cat:"market",city:"Nyagatare",name:"Nyagatare town market",place:"Nyagatare centre",jobs:"Livestock trade help, shops",sells:"Cattle-region goods",mail:HOST_MAIL,tel:HOST_TEL,url:"",about:"Eastern cattle-farming town services and market."},
-  {id:"east-farm",cat:"farm",city:"Nyagatare",name:"Eastern Province farms and co-ops",place:"Nyagatare and nearby sectors",jobs:"Farm hands, milk collection, drivers",sells:"Milk, meat, crops",mail:HOST_MAIL,tel:HOST_TEL,url:"https://www.rab.gov.rw",about:"Agriculture work in the east. RAB site: rab.gov.rw."},
-  {id:"musanze-farm",cat:"farm",city:"Musanze",name:"Musanze highland farms",place:"Musanze district",jobs:"Potato and vegetable work, packing",sells:"Highland crops",mail:HOST_MAIL,tel:HOST_TEL,url:"",about:"Highland farm labour around Musanze."},
-  {id:"volcanoes",cat:"hotel",city:"Musanze",name:"Volcanoes National Park lodges",place:"Kinigi / Musanze",jobs:"Guides, cooks, housekeepers, drivers",sells:"Park visits and rooms",mail:HOST_MAIL,tel:HOST_TEL,url:"https://www.visitrwanda.com",about:"Hospitality around gorilla tourism. Lodge hiring is local and seasonal."},
-  {id:"kivu",cat:"hotel",city:"Rubavu",name:"Lake Kivu hotels and boats",place:"Rubavu / Gisenyi waterfront",jobs:"Hotel staff, boat crew, waiters",sells:"Rooms, meals, lake trips",mail:HOST_MAIL,tel:HOST_TEL,url:"https://www.visitrwanda.com",about:"Lakeside hospitality in Rubavu."},
-  {id:"karongi",cat:"hotel",city:"Karongi",name:"Karongi lakeside lodges",place:"Karongi / Kibuye",jobs:"Lodge staff, kitchen, front desk",sells:"Lakeside stays",mail:HOST_MAIL,tel:HOST_TEL,url:"https://www.visitrwanda.com",about:"Southern Lake Kivu stays and jobs."},
-  {id:"hanga",cat:"school",city:"Kigali",name:"Hanga Hubs / RISA",place:"Telecom House, Kacyiru",jobs:"Trainers, hub assistants",sells:"Youth innovation and skills",mail:HOST_MAIL,tel:HOST_TEL,url:"https://www.risa.gov.rw/projects/hanga-hubs",about:"Government innovation hubs for youth startups. See RISA for intake dates."},
-  {id:"trades",cat:"trade",city:"Kigali",name:"Construction and workshop trades",place:"Kigali industrial areas",jobs:"Masons, electricians, welders, helpers",sells:"Building and repair",mail:HOST_MAIL,tel:HOST_TEL,url:"",about:"Walk-up trades work. Confirm pay and safety on site."},
-  {id:"osc",cat:"money",city:"Kigali",name:"RDB One Stop Centre",place:"RDB, KG 9 Ave, Kigali",jobs:"Business registration support",sells:"Register a business",mail:"support@rdb.rw",tel:"1415",url:"https://rdb.rw",about:"Business registration and investor help. Call 1415 or email support@rdb.rw."},
-  {id:"irembo",cat:"money",city:"Kigali",name:"IremboGov",place:"Online and agents nationwide",jobs:"Irembo agents and support",sells:"Government e-services",mail:"support@irembo.com",tel:"9099",url:"https://irembo.gov.rw",about:"National e-services. Support 9099, email support@irembo.com."},
-  {id:"reg",cat:"money",city:"Kigali",name:"REG customer and field work",place:"Branches across Rwanda",jobs:"Electricians, tellers, technicians",sells:"Electricity connection",mail:HOST_MAIL,tel:"2727",url:"https://www.reg.rw/public-information/jobs/vacancies/",about:"Rwanda Energy Group vacancies page and customer line 2727."}
-];
-const FRESH_ROOMS=[
-  {title:"RDB careers",url:"https://rdb.rw/careers/",note:"New RDB contract and project jobs."},
-  {title:"MIFOTRA e-Recruitment",url:"https://recruitment.mifotra.gov.rw/",note:"New civil-service posts."},
-  {title:"Kora portal",url:"https://jobportal.kora.rw/",note:"Jobs, internships and training."},
-  {title:"REG vacancies",url:"https://www.reg.rw/public-information/jobs/vacancies/",note:"Energy utility jobs."},
-  {title:"Job in Rwanda",url:"https://www.jobinrwanda.com",note:"Private and NGO ads. View on their site."},
-  {title:"Cyizere",url:"https://www.cyizere.com/",note:"Jobs, tenders and scholarships."},
-  {title:"Harambee",url:"https://harambee.rw/",note:"Youth placement programmes."},
-  {title:"Visit Rwanda / tourism",url:"https://www.visitrwanda.com",note:"Hospitality and tourism businesses."}
-];
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div>
+          <div class="brand" style="margin-bottom:10px">
+            <div class="mark">U</div>
+            <span>Umwanya<em>.</em></span>
+          </div>
+          <p>A high-fidelity job portal prototype for Rwanda. Sample listings are illustrative and not official live vacancies.</p>
+        </div>
+        <div>
+          <h4>Seekers</h4>
+          <ul>
+            <li>Browse jobs</li>
+            <li>Internships</li>
+            <li>Upload CV</li>
+            <li>Career alerts</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Employers</h4>
+          <ul>
+            <li>Post a vacancy</li>
+            <li>Featured plans</li>
+            <li>CV search</li>
+            <li>Shortlisting</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Rwanda</h4>
+          <ul>
+            <li>Kigali</li>
+            <li>Secondary cities</li>
+            <li>All 30 districts</li>
+            <li>East Africa roles</li>
+          </ul>
+        </div>
+      </div>
+      <div class="copy">
+        <span>© 2026 Umwanya Opportunity Hub — demo product.</span>
+        <span>English · Ikinyarwanda ready</span>
+      </div>
+    </div>
+  </footer>
 
-let lang=localStorage.getItem("rc3")||"en";
-function filledSet(){ try{return new Set(JSON.parse(localStorage.getItem("rc-filled")||"[]"));}catch(e){return new Set();} }
-function saveFilled(set){ localStorage.setItem("rc-filled", JSON.stringify(Array.from(set))); }
-function loadPosted(){ try{return JSON.parse(localStorage.getItem("rc-jobs")||"[]");}catch(e){return [];} }
-function savePosted(list){ localStorage.setItem("rc-jobs", JSON.stringify(list)); }
+  <div class="overlay" id="overlay">
+    <aside class="drawer" id="drawer"></aside>
+  </div>
 
-const ITEMS=BASE.concat(loadPosted());
-const q=document.getElementById("q"), city=document.getElementById("city"), cat=document.getElementById("cat");
-function tColor(c){ return ({job:"#2f6b4f",health:"#3d6f8a",travel:"#8a6d1b",market:"#9a5b3c",farm:"#2f6b4f",hotel:"#3d6f8a",school:"#8a6d1b",trade:"#9a5b3c",money:"#2f6b4f"}[c]||"#2f6b4f"); }
-const PICS = {
-  job: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=60",
-  health: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=900&q=60",
-  travel: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=60",
-  market: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=60",
-  farm: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=60",
-  hotel: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=60",
-  school: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=900&q=60",
-  trade: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=60",
-  money: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=900&q=60",
-  rdb: "https://images.unsplash.com/photo-1486406149826-980e29aa6b4d?auto=format&fit=crop&w=900&q=60",
-  mifotra: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=900&q=60",
-  kora: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=60",
-  jir: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=900&q=60",
-  cyizere: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=900&q=60",
-  harambee: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=60",
-  "rdb-hq": "https://images.unsplash.com/photo-1486406149826-980e29aa6b4d?auto=format&fit=crop&w=900&q=60",
-  kesc: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=60",
-  ur: "https://images.unsplash.com/photo-1541339903302-d6ec549127bd?auto=format&fit=crop&w=900&q=60",
-  chuk: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=900&q=60",
-  kfh: "https://images.unsplash.com/photo-1512678080530-7760d81bada0?auto=format&fit=crop&w=900&q=60",
-  ruhengeri: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=900&q=60",
-  chub: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=900&q=60",
-  airport: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=60",
-  nyabugogo: "https://images.unsplash.com/photo-1544620341-11cb2cd4c8f8?auto=format&fit=crop&w=900&q=60",
-  kimironko: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=60",
-  caplaki: "https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=900&q=60",
-  "huye-mkt": "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=60",
-  nyagatare: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=900&q=60",
-  "east-farm": "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=900&q=60",
-  "musanze-farm": "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=900&q=60",
-  volcanoes: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=60",
-  kivu: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=900&q=60",
-  karongi: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=60",
-  hanga: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=60",
-  trades: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=60",
-  osc: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=60",
-  irembo: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=60",
-  reg: "https://images.unsplash.com/photo-1473341301370-5d210bd81930?auto=format&fit=crop&w=900&q=60"
-};
-function pic(item){ return item.img || PICS[item.id] || PICS[item.cat] || PICS.job; }
+  <div class="modal-wrap" id="modal">
+    <form class="modal" id="applyForm">
+      <h3 id="modalTitle">Apply</h3>
+      <p style="color:var(--mute);font-size:13px;margin-top:4px" id="modalSub"></p>
+      <div class="field"><label>Full name</label><input required name="name" placeholder="e.g. Keza Uwase" /></div>
+      <div class="field"><label>Email</label><input required type="email" name="email" placeholder="you@email.com" /></div>
+      <div class="field"><label>Phone (Rwanda)</label><input required name="phone" placeholder="+250 7…" /></div>
+      <div class="field"><label>Short note</label><textarea name="note" rows="3" placeholder="Why you are a fit (optional)"></textarea></div>
+      <div style="display:flex;gap:8px;margin-top:16px;justify-content:flex-end">
+        <button type="button" class="btn btn-outline" id="modalCancel">Cancel</button>
+        <button class="btn btn-primary" type="submit">Submit application</button>
+      </div>
+    </form>
+  </div>
+  <div class="toast" id="toast"></div>
 
-function isFilled(id){ return filledSet().has(id); }
-function openItems(){ return ITEMS.filter(i=>!isFilled(i.id)); }
-function filledItems(){ return ITEMS.filter(i=>isFilled(i.id)); }
+  <script>
+    /* =========================================================
+       UMWANYA DATA STORE
+       A structured in-memory database. Same shape you would
+       persist in PostgreSQL / Supabase in production.
+       Listings are illustrative — not official vacancies.
+       ========================================================= */
+    const JOBS = [
+      {id:"UMW-1001",title:"DevOps Engineer",company:"Development Bank of Rwanda (BRD)",initials:"BR",tone:"g",location:"Kigali",district:"Nyarugenge",type:"Job",sector:"Banking & Finance",experience:"Mid (3–5 years)",deadline:"2026-09-06",published:"2026-08-20",salary:"Competitive + benefits",views:1842,featured:true,urgent:true,tags:["DevOps","AWS","CI/CD","Linux"],summary:"Keep BRD’s digital banking platforms reliable, observable and secure.",description:"You will own CI/CD, cloud infrastructure and production reliability for mission-critical financial systems used across Rwanda.",requirements:["3+ years DevOps or SRE","Hands-on AWS or Azure","Infrastructure as code (Terraform/Ansible)","Comfortable with Linux and containers"]},
+      {id:"UMW-1002",title:"Full Stack Software Engineer",company:"Development Bank of Rwanda (BRD)",initials:"BR",tone:"g",location:"Kigali",district:"Nyarugenge",type:"Job",sector:"Banking & Finance",experience:"Mid (3–5 years)",deadline:"2026-09-06",published:"2026-08-20",salary:"Competitive",views:1560,featured:true,urgent:false,tags:["Java","React","PostgreSQL"],summary:"Build digital products that move capital to Rwandan enterprises.",description:"Join the engineering team shipping internal credit, SME and reporting tools.",requirements:["Strong Java or Node.js","React experience","Relational data modelling","Good written English"]},
+      {id:"UMW-1003",title:"Specialist, Data Analyst",company:"Development Bank of Rwanda (BRD)",initials:"BR",tone:"g",location:"Kigali",district:"Nyarugenge",type:"Job",sector:"Banking & Finance",experience:"Mid (3–5 years)",deadline:"2026-09-06",published:"2026-08-21",salary:"Competitive",views:990,featured:false,urgent:false,tags:["SQL","Power BI","Python"],summary:"Turn credit and portfolio data into decisions.",description:"Design dashboards and analyses for lending, risk and development impact.",requirements:["SQL fluency","BI tools","Understanding of financial metrics"]},
+      {id:"UMW-1004",title:"Solution Engineer",company:"SanlamAllianz Life Insurance Plc",initials:"SA",tone:"n",location:"Kigali",district:"Gasabo",type:"Job",sector:"Banking & Finance",experience:"Mid (3–5 years)",deadline:"2026-09-14",published:"2026-08-22",salary:"Not disclosed",views:720,featured:true,urgent:false,tags:["Insurance","Solutions","Pre-sales"],summary:"Translate insurance products into technical solutions for partners.",description:"Work with commercial and IT teams to design integrations and client solutions.",requirements:["Insurance or fintech background","Stakeholder communication","Basic API literacy"]},
+      {id:"UMW-1005",title:"Relationship Manager, Business Banking",company:"Bank of Kigali",initials:"BK",tone:"b",location:"Kigali",district:"Nyarugenge",type:"Job",sector:"Banking & Finance",experience:"Senior (5+ years)",deadline:"2026-09-18",published:"2026-08-19",salary:"Market related",views:2104,featured:true,urgent:false,tags:["SME","Credit","Sales"],summary:"Grow and protect a portfolio of Rwandan businesses.",description:"Originate quality assets, manage relationships and uphold credit standards.",requirements:["5+ years banking","Credit analysis","Kinyarwanda and English"]},
+      {id:"UMW-1006",title:"Program Director",company:"CARE International Rwanda",initials:"CA",tone:"g",location:"Kigali",district:"Kicukiro",type:"Job",sector:"NGO & Development",experience:"Senior (5+ years)",deadline:"2026-09-11",published:"2026-08-18",salary:"International NGO scale",views:1340,featured:true,urgent:true,tags:["Leadership","Gender","Grants"],summary:"Lead a multi-year portfolio of social and economic programmes.",description:"Provide strategic leadership, donor stewardship and team management.",requirements:["10+ years development sector","Grant management","People leadership"]},
+      {id:"UMW-1007",title:"WASH Project Manager",company:"World Vision International Rwanda",initials:"WV",tone:"b",location:"Kigali",district:"Gasabo",type:"Job",sector:"NGO & Development",experience:"Senior (5+ years)",deadline:"2026-09-11",published:"2026-08-17",salary:"NGO scale",views:880,featured:false,urgent:false,tags:["WASH","Project management","Field"],summary:"Deliver water, sanitation and hygiene outcomes in partner districts.",description:"Plan, budget and report on WASH interventions with local authorities.",requirements:["WASH technical background","PMP or equivalent a plus","Field leadership"]},
+      {id:"UMW-1008",title:"Communications Officer",company:"Rwanda Men’s Resource Centre (RWAMREC)",initials:"RW",tone:"y",location:"Kigali",district:"Gasabo",type:"Job",sector:"NGO & Development",experience:"Mid (3–5 years)",deadline:"2026-09-20",published:"2026-08-24",salary:"Competitive",views:640,featured:false,urgent:false,tags:["Comms","Gender","Content"],summary:"Shape public conversations on positive masculinity and gender equality.",description:"Produce campaigns, media and donor communications.",requirements:["Journalism or comms degree","Bilingual English/Kinyarwanda","Portfolio of published work"]},
+      {id:"UMW-1009",title:"Neonatal Nurse",company:"Partners In Health / Inshuti Mu Buzima",initials:"PI",tone:"g",location:"Kayonza",district:"Kayonza",type:"Job",sector:"Health",experience:"Mid (3–5 years)",deadline:"2026-09-12",published:"2026-08-16",salary:"Clinical scale",views:540,featured:true,urgent:true,tags:["Nursing","Neonatal","Clinical"],summary:"Provide high-quality neonatal care in a supported public facility.",description:"Clinical care, mentoring of colleagues and quality improvement.",requirements:["Registered nurse","Neonatal experience","Willingness to live near site"]},
+      {id:"UMW-1010",title:"Senior Breast Imaging Officer",company:"Partners In Health / Inshuti Mu Buzima",initials:"PI",tone:"g",location:"Kigali",district:"Gasabo",type:"Job",sector:"Health",experience:"Senior (5+ years)",deadline:"2026-09-11",published:"2026-08-25",salary:"Clinical scale",views:410,featured:false,urgent:false,tags:["Imaging","Radiology","Oncology"],summary:"Advance breast imaging services and training.",description:"Perform and supervise imaging, support early detection programmes.",requirements:["Degree in medical imaging","Masters an advantage","Teaching mindset"]},
+      {id:"UMW-1011",title:"Quality Assurance Engineer",company:"MTN Rwanda",initials:"MT",tone:"y",location:"Kigali",district:"Gasabo",type:"Job",sector:"ICT & Telecom",experience:"Mid (3–5 years)",deadline:"2026-09-22",published:"2026-08-21",salary:"Telecom scale",views:1677,featured:true,urgent:false,tags:["QA","Mobile","Automation"],summary:"Protect the quality of digital and telco products used by millions.",description:"Build test strategies for apps, APIs and customer journeys.",requirements:["Test automation","API testing","Telecom or fintech QA a plus"]},
+      {id:"UMW-1012",title:"Cloud Network Engineer",company:"MTN Rwanda",initials:"MT",tone:"y",location:"Kigali",district:"Gasabo",type:"Job",sector:"ICT & Telecom",experience:"Senior (5+ years)",deadline:"2026-09-25",published:"2026-08-15",salary:"Telecom scale",views:933,featured:false,urgent:false,tags:["Networking","Cloud","5G"],summary:"Design resilient IP and cloud connectivity for national services.",description:"Plan, implement and optimise core and cloud networks.",requirements:["CCNP or equivalent","Cloud networking","On-call discipline"]},
+      {id:"UMW-1013",title:"Product Manager — Digital Health",company:"Babyl Rwanda",initials:"BA",tone:"b",location:"Kigali",district:"Gasabo",type:"Job",sector:"ICT & Telecom",experience:"Mid (3–5 years)",deadline:"2026-09-16",published:"2026-08-19",salary:"Competitive",views:1201,featured:true,urgent:false,tags:["Product","Healthtech","UX"],summary:"Ship digital health products that work for clinicians and families.",description:"Own roadmap, discovery and delivery with engineering and clinical teams.",requirements:["Product experience","Health domain interest","Data-informed decisions"]},
+      {id:"UMW-1014",title:"Lecturer / Assistant Professor — Computer Science",company:"University of Rwanda",initials:"UR",tone:"n",location:"Kigali",district:"Gasabo",type:"Job",sector:"Education",experience:"Senior (5+ years)",deadline:"2026-09-30",published:"2026-08-10",salary:"Public academic scale",views:1503,featured:false,urgent:false,tags:["Teaching","Research","CS"],summary:"Teach and research in a growing national computer science faculty.",description:"Lecturing, supervision and contribution to applied research.",requirements:["Masters minimum, PhD preferred","Teaching portfolio","Research agenda"]},
+      {id:"UMW-1015",title:"Lecturer — Fashion Design",company:"Kent State University Rwanda",initials:"KS",tone:"n",location:"Kigali",district:"Gasabo",type:"Job",sector:"Education",experience:"Senior (5+ years)",deadline:"2026-09-28",published:"2026-08-12",salary:"University scale",views:388,featured:false,urgent:false,tags:["Fashion","Teaching","Studio"],summary:"Train the next generation of Rwandan designers.",description:"Studio teaching, curriculum and industry linkage.",requirements:["Relevant masters","Industry experience","Portfolio"]},
+      {id:"UMW-1016",title:"Agronomist — Coffee Value Chain",company:"NAEB / Partner Cooperative",initials:"NA",tone:"g",location:"Nyamasheke",district:"Nyamasheke",type:"Job",sector:"Agriculture",experience:"Mid (3–5 years)",deadline:"2026-09-19",published:"2026-08-18",salary:"Competitive + field allowance",views:512,featured:true,urgent:false,tags:["Coffee","Extension","Quality"],summary:"Raise quality and yields with smallholder cooperatives.",description:"Farmer training, farm visits and quality control at washing stations.",requirements:["Agronomy degree","Motorcycle licence useful","Kinyarwanda essential"]},
+      {id:"UMW-1017",title:"Pumping Station Operator",company:"Gabiro Agribusiness Hub",initials:"GA",tone:"g",location:"Nyagatare",district:"Nyagatare",type:"Job",sector:"Agriculture",experience:"Mid (3–5 years)",deadline:"2026-09-15",published:"2026-08-14",salary:"Industrial scale",views:301,featured:false,urgent:false,tags:["Irrigation","Operations","Mechanics"],summary:"Keep irrigation infrastructure running for large-scale production.",description:"Operate and maintain pumps, log performance, escalate faults.",requirements:["Technical diploma","Shift work","Safety first"]},
+      {id:"UMW-1018",title:"Mine Superintendent / Site Manager",company:"Rutongo Mines Ltd",initials:"RM",tone:"n",location:"Rulindo",district:"Rulindo",type:"Job",sector:"Mining & Industry",experience:"Senior (5+ years)",deadline:"2026-09-21",published:"2026-08-11",salary:"Expat / local package",views:766,featured:true,urgent:true,tags:["Mining","Leadership","HSE"],summary:"Run a producing site to plan, safely.",description:"Production, people, contractors and compliance on site.",requirements:["Mining engineering","5+ years underground or open pit","HSE leadership"]},
+      {id:"UMW-1019",title:"Maintenance Planner",company:"Trinity Nyakabingo Mines Ltd",initials:"TN",tone:"n",location:"Ngoma",district:"Ngoma",type:"Job",sector:"Mining & Industry",experience:"Mid (3–5 years)",deadline:"2026-09-17",published:"2026-08-13",salary:"Industrial scale",views:422,featured:false,urgent:false,tags:["Maintenance","CMMS","Planning"],summary:"Plan plant and mobile-equipment maintenance windows.",description:"Work orders, spares and downtime reduction.",requirements:["Mechanical or electrical background","CMMS experience","Excel discipline"]},
+      {id:"UMW-1020",title:"Energy Project Officer",company:"REG / partner IPP",initials:"RE",tone:"y",location:"Kigali",district:"Kicukiro",type:"Job",sector:"Energy",experience:"Mid (3–5 years)",deadline:"2026-09-24",published:"2026-08-20",salary:"Competitive",views:801,featured:false,urgent:false,tags:["Energy","Projects","Grid"],summary:"Coordinate generation and access projects.",description:"Stakeholder management, reporting and site coordination.",requirements:["Electrical / energy degree","Project reporting","Public-sector comfort"]},
+      {id:"UMW-1021",title:"Cabin Crew",company:"RwandAir",initials:"RW",tone:"b",location:"Kigali",district:"Kanombe",type:"Job",sector:"Tourism & Hospitality",experience:"Entry (0–2 years)",deadline:"2026-09-09",published:"2026-08-23",salary:"Airline scale + layover",views:3204,featured:true,urgent:true,tags:["Aviation","Service","Languages"],summary:"Deliver the Airline of Rwanda’s service standard in the air.",description:"Safety, service and representation of Rwanda globally.",requirements:["Service excellence","Swimming certificate","Height and medical standards as advertised"]},
+      {id:"UMW-1022",title:"Guest Experience Manager",company:"Magma Aviation / Hospitality Group",initials:"MA",tone:"y",location:"Musanze",district:"Musanze",type:"Job",sector:"Tourism & Hospitality",experience:"Mid (3–5 years)",deadline:"2026-09-27",published:"2026-08-16",salary:"Hospitality scale",views:455,featured:false,urgent:false,tags:["Hotels","Service","Leadership"],summary:"Own the guest journey in a high-end Northern Province property.",description:"Lead front-of-house teams and quality standards.",requirements:["Hotel school or equivalent","3+ years supervisory","English + French a plus"]},
+      {id:"UMW-1023",title:"Monitoring, Evaluation & Learning Specialist",company:"Development Bank of Rwanda (BRD)",initials:"BR",tone:"g",location:"Kigali",district:"Nyarugenge",type:"Job",sector:"Banking & Finance",experience:"Senior (5+ years)",deadline:"2026-09-06",published:"2026-08-20",salary:"Competitive",views:611,featured:false,urgent:false,tags:["MEL","Impact","Research"],summary:"Measure whether development finance changes lives.",description:"Build indicators, evaluations and learning loops across programmes.",requirements:["MEL experience","Statistics","Development finance exposure"]},
+      {id:"UMW-1024",title:"IT Infrastructure Modernization — Tender",company:"Development Bank of Rwanda (BRD)",initials:"BR",tone:"g",location:"Kigali",district:"Nyarugenge",type:"Tender",sector:"ICT & Telecom",experience:"Not specified",deadline:"2026-09-07",published:"2026-08-08",salary:"Tender",views:988,featured:true,urgent:true,tags:["Tender","Infrastructure","IT"],summary:"Call for qualified firms to modernise core IT infrastructure.",description:"Scope covers servers, network, security and migration services. Firms must demonstrate similar work in regulated environments.",requirements:["Company registration in Rwanda or eligible region","Tax clearance","Proven similar assignments"]},
+      {id:"UMW-1025",title:"Supply of IT Equipment — Tender",company:"Umwalimu SACCO",initials:"US",tone:"n",location:"Kigali",district:"Nyarugenge",type:"Tender",sector:"ICT & Telecom",experience:"Not specified",deadline:"2026-09-10",published:"2026-08-09",salary:"Tender",views:533,featured:false,urgent:true,tags:["Tender","Hardware","Procurement"],summary:"Supply laptops, networking gear and peripherals.",description:"Open tender. Specifications in the bidding document.",requirements:["RRA compliance","Warranty capacity","Delivery plan"]},
+      {id:"UMW-1026",title:"Design & Deploy Professional Website — Tender",company:"Rwanda Women’s Network",initials:"RN",tone:"g",location:"Kigali",district:"Kicukiro",type:"Tender",sector:"ICT & Telecom",experience:"Not specified",deadline:"2026-09-13",published:"2026-08-07",salary:"Tender",views:701,featured:true,urgent:false,tags:["Tender","Web","Bilingual"],summary:"Bilingual, accessible, secure website with donations and CMS.",description:"English + Kinyarwanda, mobile-first, analytics and security hardening.",requirements:["Portfolio of civic/NGO sites","Security practice","Local presence preferred"]},
+      {id:"UMW-1027",title:"Hybrid Solar Installation — Expression of Interest",company:"Kilimo Trust",initials:"KT",tone:"y",location:"Kigali",district:"Gasabo",type:"Tender",sector:"Energy",experience:"Not specified",deadline:"2026-09-11",published:"2026-08-18",salary:"Tender",views:277,featured:false,urgent:false,tags:["Solar","EoI","Energy"],summary:"Design, supply and install a hybrid solar system.",description:"Technical firms with proven off-grid / hybrid experience invited.",requirements:["Energy contractor licence","Similar installations","Safety record"]},
+      {id:"UMW-1028",title:"Software Engineering Intern",company:"Andela / Rwanda partner lab",initials:"AN",tone:"b",location:"Kigali",district:"Gasabo",type:"Internship",sector:"ICT & Telecom",experience:"Entry (0–2 years)",deadline:"2026-09-29",published:"2026-08-22",salary:"Stipend",views:2401,featured:true,urgent:false,tags:["Internship","JavaScript","Mentorship"],summary:"Six-month paid internship with production mentoring.",description:"Ship real features, code review culture, career support.",requirements:["CS student or recent grad","GitHub portfolio","Hunger to learn"]},
+      {id:"UMW-1029",title:"Policy Research Intern",company:"Institute of Policy Analysis and Research (IPAR)",initials:"IP",tone:"n",location:"Kigali",district:"Gasabo",type:"Internship",sector:"Public Sector",experience:"Entry (0–2 years)",deadline:"2026-09-18",published:"2026-08-14",salary:"Stipend",views:812,featured:false,urgent:false,tags:["Research","Policy","Internship"],summary:"Support evidence for public decisions.",description:"Literature reviews, data cleaning and event support.",requirements:["Economics / public policy student","Strong writing","Excel / R a plus"]},
+      {id:"UMW-1030",title:"Hospitality Intern — Front Office",company:"Radisson Blu Hotel & Convention Centre",initials:"RB",tone:"b",location:"Kigali",district:"Gasabo",type:"Internship",sector:"Tourism & Hospitality",experience:"Entry (0–2 years)",deadline:"2026-09-26",published:"2026-08-21",salary:"Stipend + meals",views:1099,featured:false,urgent:false,tags:["Hotels","Internship","Service"],summary:"Learn international hotel standards in Kigali.",description:"Rotations across reception, reservations and guest relations.",requirements:["Hospitality student","Professional presence","Languages a plus"]},
+      {id:"UMW-1031",title:"Public Financial Management Consultant",company:"Ministry of Finance partner project",initials:"MF",tone:"n",location:"Kigali",district:"Nyarugenge",type:"Consultancy",sector:"Public Sector",experience:"Senior (5+ years)",deadline:"2026-09-15",published:"2026-08-17",salary:"Daily fee",views:644,featured:true,urgent:false,tags:["PFM","Consultancy","IFMIS"],summary:"Advise on PFM reforms and systems uptake.",description:"Short-term consultancy with deliverables and knowledge transfer.",requirements:["10+ years PFM","Public sector references","Excellent reporting"]},
+      {id:"UMW-1032",title:"Climate Adaptation Consultant",company:"REMA / development partner",initials:"RM",tone:"g",location:"Kigali",district:"Gasabo",type:"Consultancy",sector:"Energy",experience:"Senior (5+ years)",deadline:"2026-09-23",published:"2026-08-19",salary:"Daily fee",views:390,featured:false,urgent:false,tags:["Climate","Consultancy","Environment"],summary:"Support district adaptation planning.",description:"Assessments, workshops and a publishable plan.",requirements:["Climate / environment masters","Workshop facilitation","Kinyarwanda useful"]},
+      {id:"UMW-1033",title:"Human Resources Business Partner",company:"BK TechHouse",initials:"BT",tone:"b",location:"Kigali",district:"Gasabo",type:"Job",sector:"ICT & Telecom",experience:"Mid (3–5 years)",deadline:"2026-09-20",published:"2026-08-22",salary:"Competitive",views:708,featured:false,urgent:false,tags:["HR","Tech","People"],summary:"Partner with engineering and product leaders on talent.",description:"Recruiting, performance and culture in a tech environment.",requirements:["HR experience in tech or banking","Labour law literacy","Coaching skill"]},
+      {id:"UMW-1034",title:"Secondary Mathematics Teacher",company:"Green Hills Academy",initials:"GH",tone:"g",location:"Kigali",district:"Kicukiro",type:"Job",sector:"Education",experience:"Mid (3–5 years)",deadline:"2026-09-12",published:"2026-08-15",salary:"International school scale",views:870,featured:false,urgent:true,tags:["Teaching","Maths","IB"],summary:"Teach ambitious secondary students in an international setting.",description:"Classroom teaching, assessment and pastoral care.",requirements:["Teaching qualification","IB or IGCSE experience preferred","Child safeguarding certificate"]},
+      {id:"UMW-1035",title:"Supply Chain Officer",company:"Save the Children Rwanda",initials:"SC",tone:"b",location:"Kigali",district:"Gasabo",type:"Job",sector:"NGO & Development",experience:"Mid (3–5 years)",deadline:"2026-09-18",published:"2026-08-13",salary:"NGO scale",views:519,featured:false,urgent:false,tags:["Logistics","Procurement","Compliance"],summary:"Keep programmes supplied on time and in policy.",description:"Procurement, warehousing and last-mile distribution.",requirements:["Supply chain diploma/degree","Donor compliance exposure","Integrity"]},
+      {id:"UMW-1036",title:"Digital Marketing Executive",company:"Ishyo Foods Ltd",initials:"IF",tone:"y",location:"Kigali",district:"Kicukiro",type:"Job",sector:"Tourism & Hospitality",experience:"Entry (0–2 years)",deadline:"2026-09-21",published:"2026-08-24",salary:"Competitive",views:933,featured:false,urgent:false,tags:["Marketing","Social","Brand"],summary:"Grow a Rwandan food brand across digital channels.",description:"Content, campaigns and community, with clear KPIs.",requirements:["Portfolio of campaigns","Analytics basics","Kinyarwanda content skill"]},
+      {id:"UMW-1037",title:"Civil Engineer — Urban Roads",company:"City of Kigali / contractor partner",initials:"CK",tone:"n",location:"Kigali",district:"Nyarugenge",type:"Job",sector:"Public Sector",experience:"Mid (3–5 years)",deadline:"2026-09-14",published:"2026-08-16",salary:"Public / contractor scale",views:1104,featured:true,urgent:false,tags:["Civil","Roads","Urban"],summary:"Deliver road and drainage works that keep the city moving.",description:"Site supervision, quantities and quality control.",requirements:["Civil engineering degree","Site experience","AutoCAD / Civil 3D"]},
+      {id:"UMW-1038",title:"Veterinary Officer",company:"RAB satellite station",initials:"RA",tone:"g",location:"Musanze",district:"Musanze",type:"Job",sector:"Agriculture",experience:"Mid (3–5 years)",deadline:"2026-09-19",published:"2026-08-18",salary:"Public scale",views:286,featured:false,urgent:false,tags:["Veterinary","Livestock","Field"],summary:"Protect animal health in the Northern Province.",description:"Clinics, vaccination campaigns and farmer advice.",requirements:["Veterinary degree","Field mobility","Public service mindset"]},
+      {id:"UMW-1039",title:"Cybersecurity Analyst",company:"Irembo / GovTech partner",initials:"IR",tone:"b",location:"Kigali",district:"Gasabo",type:"Job",sector:"ICT & Telecom",experience:"Mid (3–5 years)",deadline:"2026-09-08",published:"2026-08-23",salary:"Tech scale",views:1888,featured:true,urgent:true,tags:["Security","SOC","GovTech"],summary:"Defend national digital services used by citizens every day.",description:"Monitoring, incident response and hardening of public platforms.",requirements:["SOC or security engineering","SIEM familiarity","Calm under incident pressure"]},
+      {id:"UMW-1040",title:"Grants & Reporting Officer",company:"Akagera Management Company",initials:"AM",tone:"g",location:"Kayonza",district:"Kayonza",type:"Job",sector:"Tourism & Hospitality",experience:"Mid (3–5 years)",deadline:"2026-09-15",published:"2026-08-12",salary:"Conservation scale",views:344,featured:false,urgent:false,tags:["Grants","Conservation","Reporting"],summary:"Keep conservation finance transparent and on time.",description:"Donor reports, budgets and partner coordination around the park.",requirements:["Grants experience","Excellent writing","Comfort in a park-adjacent duty station"]},
+      {id:"UMW-1041",title:"Accounting Internship",company:"Africa Accounting Advisory Limited",initials:"AA",tone:"n",location:"Kigali",district:"Nyarugenge",type:"Internship",sector:"Banking & Finance",experience:"Entry (0–2 years)",deadline:"2026-09-16",published:"2026-08-20",salary:"Stipend",views:1422,featured:false,urgent:false,tags:["Accounting","IFRS","Internship"],summary:"Learn professional accounting inside a practice.",description:"Bookkeeping support, working papers and client files.",requirements:["Accounting student","Excel","Professional discretion"]},
+      {id:"UMW-1042",title:"Data Protection Consultancy",company:"Private bank — confidential",initials:"PB",tone:"n",location:"Kigali",district:"Gasabo",type:"Consultancy",sector:"Banking & Finance",experience:"Senior (5+ years)",deadline:"2026-09-09",published:"2026-08-21",salary:"Daily fee",views:508,featured:true,urgent:true,tags:["GDPR","Law 058/2021","Consultancy"],summary:"Align a regulated institution with Rwanda’s data protection law.",description:"Gap assessment, policies and staff training.",requirements:["Data protection law expertise","Financial sector references","Certified DPO a plus"]}
+    ];
 
-function card(item){
-  return '<article class="card" onclick="openDetail(\''+item.id+'\')"><div class="photo" style="background-image:linear-gradient(transparent,rgba(0,0,0,.35)),url(\''+pic(item)+'\')">'+item.city+'</div><div class="body"><div class="tag">'+item.cat+' · '+item.city+'</div><h3>'+item.name+'</h3><p class="meta">'+item.place+'</p></div></article>';
-}
-function filtered(){
-  const s=q.value.trim().toLowerCase();
-  return openItems().filter(i=>{
-    const blob=[i.name,i.city,i.place,i.jobs,i.sells,i.cat,i.about||""].join(" ").toLowerCase();
-    return (!s||blob.indexOf(s)!==-1)&&(city.value==="all"||i.city===city.value)&&(cat.value==="all"||i.cat===cat.value);
-  });
-}
-function draw(scroll){
-  const items=filtered();
-  document.getElementById("nOpen").textContent=openItems().length;
-  document.getElementById("nFilled").textContent=filledItems().length;
-  document.getElementById("grid").innerHTML=items.map(card).join("");
-  document.getElementById("empty").style.display=items.length?"none":"block";
-  document.getElementById("filledGrid").innerHTML=filledItems().map(card).join("")||'<p class="muted">No filled jobs yet.</p>';
-  document.getElementById("freshCards").innerHTML=openItems().slice(0,6).map(card).join("");
-  if(scroll) document.getElementById("list").scrollIntoView();
-}
-function menus(){
-  const cv=city.value||"all", tv=cat.value||"all";
-  city.innerHTML='<option value="all">All cities</option>'+CITIES.map(c=>'<option value="'+c+'">'+c+'</option>').join("");
-  cat.innerHTML='<option value="all">All rooms</option>'+CATS.map(c=>'<option value="'+c+'">'+c+'</option>').join("");
-  city.value=cv; cat.value=tv;
-}
-function portals(){
-  document.getElementById("portals").innerHTML=PORTALS.map(p=>card({id:p.id,cat:"job",city:"Kigali",name:p.name,place:p.place,jobs:p.jobs,sells:p.sells,mail:p.mail,tel:p.tel,url:p.url,about:p.about})).join("");
-}
-function findItem(id){ return ITEMS.concat(PORTALS.map(p=>({...p,cat:"job",city:"Kigali"}))).find(x=>x.id===id); }
-function openDetail(id){
-  const i=findItem(id); if(!i) return;
-  const filled=isFilled(i.id);
-  document.getElementById("detail").innerHTML=
-    '<img class="full" src="'+pic(i)+'" alt="'+i.name+'">'+
-    '<p class="tag">'+ (i.cat||"job")+' · '+i.city+'</p>'+
-    '<h3>'+i.name+'</h3>'+
-    '<p><b>Location:</b> '+i.place+'</p>'+
-    '<p><b>Jobs they need:</b> '+i.jobs+'</p>'+
-    '<p><b>Services / products:</b> '+i.sells+'</p>'+
-    (i.hours?'<p><b>Hours:</b> '+i.hours+'</p>':'')+
-    '<p>'+(i.about||"")+'</p>'+
-    '<p><b>Phone:</b> <a href="tel:'+(i.tel||HOST_TEL)+'">'+(i.tel||HOST_TEL)+'</a><br>'+
-    '<b>Email:</b> <a href="mailto:'+(i.mail||HOST_MAIL)+'">'+(i.mail||HOST_MAIL)+'</a></p>'+
-    '<div class="links">'+
-      (i.url?'<a href="'+i.url+'" target="_blank" rel="noopener">Official page</a>':'')+
-      (i.lat?'<a href="https://www.openstreetmap.org/?mlat='+i.lat+'&mlon='+i.lng+'#map=16/'+i.lat+'/'+i.lng+'" target="_blank" rel="noopener">Map</a>':'')+
-      '<a href="tel:'+(i.tel||HOST_TEL)+'">Call</a>'+
-      '<a href="mailto:'+(i.mail||HOST_MAIL)+'">Email</a>'+
-      (filled
-        ? '<button type="button" class="act soft" onclick="markFilled(\''+i.id+'\', false)">Reopen this job</button>'
-        : '<button type="button" class="act warn" onclick="markFilled(\''+i.id+'\', true)">Mark filled and hide</button>')+
-      '<button type="button" class="act soft" onclick="closeDetail()">Close</button>'+
-    '</div>';
-  document.getElementById("mask").className="mask on";
-}
-function closeDetail(){ document.getElementById("mask").className="mask"; }
-function markFilled(id, yes){
-  const set=filledSet();
-  if(yes) set.add(id); else set.delete(id);
-  saveFilled(set);
-  closeDetail();
-  draw(false);
-  if(yes) document.getElementById("fresh").scrollIntoView();
-}
+    const SECTORS = [
+      ["ICT & Telecom", "Product, cloud, cyber, telecom"],
+      ["Banking & Finance", "Banks, insurance, development finance"],
+      ["NGO & Development", "INGOs, local CSOs, programmes"],
+      ["Public Sector", "Institutions, cities, policy"],
+      ["Health", "Clinical and health systems"],
+      ["Education", "Schools, universities, TVET"],
+      ["Agriculture", "Value chains and agribusiness"],
+      ["Energy", "Grid, off-grid, climate"],
+      ["Mining & Industry", "Extractives and plants"],
+      ["Tourism & Hospitality", "Airline, parks, hotels"]
+    ];
 
-let freshI=0;
-function nextFresh(){
-  const room=FRESH_ROOMS[freshI % FRESH_ROOMS.length];
-  freshI++;
-  document.getElementById("freshLine").textContent="Next official room: "+room.title+" — "+room.note;
-  document.getElementById("freshGo").href=room.url;
-  document.getElementById("freshCards").innerHTML=openItems().slice(freshI%Math.max(openItems().length,1)).concat(openItems()).slice(0,6).map(card).join("");
-}
+    const UmwanyaDB = {
+      all() { return JOBS.slice(); },
+      get(id) { return JOBS.find(j => j.id === id); },
+      sectors() { return [...new Set(JOBS.map(j => j.sector))].sort(); },
+      locations() { return [...new Set(JOBS.map(j => j.location))].sort(); },
+      daysLeft(iso) {
+        const d = Math.ceil((new Date(iso + "T23:59:59") - new Date()) / 86400000);
+        return d;
+      },
+      query({ q = "", type = "", sector = "", location = "", experience = "", sort = "featured" } = {}) {
+        const needle = q.trim().toLowerCase();
+        let rows = JOBS.filter(j => {
+          if (type && j.type !== type) return false;
+          if (sector && j.sector !== sector) return false;
+          if (location && j.location !== location) return false;
+          if (experience && j.experience !== experience) return false;
+          if (!needle) return true;
+          const hay = [j.title, j.company, j.location, j.district, j.sector, j.summary, ...(j.tags || [])].join(" ").toLowerCase();
+          return hay.includes(needle);
+        });
+        const score = (j) => {
+          if (!needle) return 0;
+          const t = j.title.toLowerCase();
+          if (t === needle) return 100;
+          if (t.includes(needle)) return 80;
+          if (j.company.toLowerCase().includes(needle)) return 50;
+          if (j.tags.some(x => x.toLowerCase().includes(needle))) return 30;
+          return 10;
+        };
+        rows.sort((a, b) => {
+          if (sort === "deadline") return a.deadline.localeCompare(b.deadline);
+          if (sort === "recent") return b.published.localeCompare(a.published);
+          if (sort === "views") return b.views - a.views;
+          const feat = (b.featured - a.featured) || (b.urgent - a.urgent);
+          if (feat) return feat;
+          return score(b) - score(a) || b.views - a.views;
+        });
+        return rows;
+      }
+    };
 
-function setLang(next){
-  lang=next; localStorage.setItem("rc3", next);
-  document.getElementById("bEn").className=lang==="en"?"on":"";
-  document.getElementById("bRw").className=lang==="rw"?"on":"";
-  document.getElementById("bFr").className=lang==="fr"?"on":"";
-  if(lang==="rw"){
-    document.getElementById("title").textContent="Shakisha akazi, serivisi n'abakiriya.";
-    document.getElementById("lead").textContent="Kanda ikarita urebe amakuru yose. Niba akazi cyuzuye, kanda 'Cyuzuye' kigendanwe, hanyuma urubuga rukwereke ahandi.";
-  } else if(lang==="fr"){
-    document.getElementById("title").textContent="Trouver travail, services et clients.";
-    document.getElementById("lead").textContent="Touchez une fiche pour tout lire. Si le poste est pourvu, masquez-le. Le site vous oriente vers d'autres offres ouvertes.";
-  } else {
-    document.getElementById("title").textContent="Find work, services and customers across Rwanda.";
-    document.getElementById("lead").textContent="Click a card for full details. Mark a job filled when the team is complete. The site then hides it and points you to other open work and official job pages.";
-  }
-}
+    const $ = (id) => document.getElementById(id);
+    const fSector = $("fSector");
+    const fLoc = $("fLoc");
+    UmwanyaDB.sectors().forEach(s => fSector.insertAdjacentHTML("beforeend", `<option>${s}</option>`));
+    UmwanyaDB.locations().forEach(s => fLoc.insertAdjacentHTML("beforeend", `<option>${s}</option>`));
 
-let jobMap=null, jobMarker=null;
-function setPin(lat,lng,label){
-  document.getElementById("fLat").value=lat; document.getElementById("fLng").value=lng;
-  if(!jobMap||!window.L) return;
-  if(jobMarker) jobMap.removeLayer(jobMarker);
-  jobMarker=L.marker([lat,lng]).addTo(jobMap);
-  if(label) jobMarker.bindPopup(label).openPopup();
-  jobMap.setView([lat,lng],15);
-}
-function reversePlace(lat,lng){
-  fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat="+lat+"&lon="+lng)
-    .then(r=>r.json()).then(data=>{
-      const a=data.address||{};
-      const place=[a.road,a.suburb,a.town,a.city,a.county].filter(Boolean).slice(0,3).join(", ")||data.display_name||"";
-      if(place) document.getElementById("fLoc").value=place;
-      const blob=(data.display_name||"").toLowerCase();
-      CITIES.forEach(c=>{ if(blob.indexOf(c.toLowerCase())!==-1 && !document.getElementById("fCity").value) document.getElementById("fCity").value=c; });
-      setPin(lat,lng,place);
-    }).catch(()=>setPin(lat,lng));
-}
-function initMap(){
-  if(jobMap||!window.L) return;
-  jobMap=L.map("jobMap").setView([-1.9441,30.0619],8);
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap"}).addTo(jobMap);
-  jobMap.on("click", ev=>reversePlace(ev.latlng.lat, ev.latlng.lng));
-  setTimeout(()=>jobMap.invalidateSize(),300);
-}
-function useMyLocation(){
-  if(!navigator.geolocation){ alert("Location is not available."); return; }
-  navigator.geolocation.getCurrentPosition(pos=>reversePlace(pos.coords.latitude,pos.coords.longitude),
-    ()=>alert("Allow location, or tap the map."));
-}
-function sendJob(e){
-  e.preventDefault();
-  const lat=document.getElementById("fLat").value, lng=document.getElementById("fLng").value;
-  const item={
-    id:"post-"+Date.now(), cat:"job",
-    city:document.getElementById("fCity").value,
-    name:document.getElementById("fBiz").value+" — "+document.getElementById("fTitle").value,
-    place:document.getElementById("fLoc").value,
-    jobs:document.getElementById("fNeed").value,
-    sells:"Hiring now",
-    mail:document.getElementById("fMail").value,
-    tel:document.getElementById("fPhone").value,
-    url: lat&&lng ? "https://www.openstreetmap.org/?mlat="+lat+"&mlon="+lng+"#map=16/"+lat+"/"+lng : "",
-    about:"Posted by "+document.getElementById("fName").value+". "+(document.getElementById("fPay").value||""),
-    lat:lat?Number(lat):"", lng:lng?Number(lng):"",
-    img: PICS.job
-  };
-  ITEMS.unshift(item);
-  const posted=loadPosted(); posted.push(item); savePosted(posted);
-  draw(true);
-  document.getElementById("postOk").style.display="block";
-  const body=["New job",item.name,item.city,item.place,item.jobs,item.tel,item.mail,item.url].join("%0A");
-  setTimeout(()=>{ window.location.href="mailto:"+HOST_MAIL+"?subject="+encodeURIComponent("New job listing")+"&body="+body; },400);
-  return false;
-}
+    $("quickChips").innerHTML = ["All", "Job", "Tender", "Internship", "Consultancy", "Kigali", "ICT & Telecom"]
+      .map((c,i) => `<button class="chip ${i===0?"active":""}" data-chip="${c}">${c}</button>`).join("");
 
-q.addEventListener("input",()=>draw(false));
-q.addEventListener("keydown",e=>{ if(e.key==="Enter") draw(true); });
-city.addEventListener("change",()=>draw(true));
-cat.addEventListener("change",()=>draw(true));
-menus(); portals(); setLang(lang); draw(false); nextFresh();
-</script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" onload="initMap()"></script>
+    $("secGrid").innerHTML = SECTORS.map(([n,d]) => `<button class="sec" data-sector="${n}"><b>${n}</b><span>${d}</span></button>`).join("");
+
+    function fmtDate(iso) {
+      return new Date(iso + "T00:00:00").toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+    }
+    function toneClass(t) { return t === "g" ? "g" : t === "y" ? "y" : t === "n" ? "n" : ""; }
+
+    function render() {
+      const q = $("q").value;
+      const type = $("fType").value;
+      const sector = $("fSector").value;
+      const location = $("fLoc").value;
+      const experience = $("fExp").value;
+      const sort = $("sortBy").value;
+      const rows = UmwanyaDB.query({ q, type, sector, location, experience, sort });
+      $("countLabel").textContent = `${rows.length} listing${rows.length===1?"":"s"} in this view · sample store of ${JOBS.length} structured records`;
+      if (!rows.length) {
+        $("jobList").innerHTML = `<div class="empty">No opportunities match those filters. Try a broader sector or clear search.</div>`;
+        return;
+      }
+      $("jobList").innerHTML = rows.map(j => {
+        const left = UmwanyaDB.daysLeft(j.deadline);
+        const soon = left <= 7;
+        return `<article class="card" data-id="${j.id}" tabindex="0">
+          <div class="logo ${toneClass(j.tone)}">${j.initials}</div>
+          <div class="meta">
+            <h3>${j.title}</h3>
+            <div class="co">${j.company} · ${j.location}${j.district && j.district!==j.location ? " · " + j.district : ""}</div>
+            <div class="tags">${j.tags.slice(0,4).map(t=>`<span class="tag">${t}</span>`).join("")}</div>
+          </div>
+          <div class="side">
+            <div class="flags">
+              ${j.featured ? `<span class="flag feat">Featured</span>` : ""}
+              ${j.urgent ? `<span class="flag urg">Urgent</span>` : ""}
+            </div>
+            <span class="badge ${j.type.toLowerCase()}">${j.type}</span>
+            <span class="deadline ${soon?"soon":""}">Closes ${fmtDate(j.deadline)}${soon ? " · " + Math.max(left,0) + "d left" : ""}</span>
+          </div>
+        </article>`;
+      }).join("");
+    }
+
+    function openDrawer(id) {
+      const j = UmwanyaDB.get(id);
+      if (!j) return;
+      const left = UmwanyaDB.daysLeft(j.deadline);
+      $("drawer").innerHTML = `
+        <button class="close" id="closeDrawer" aria-label="Close">×</button>
+        <span class="badge ${j.type.toLowerCase()}">${j.type}</span>
+        ${j.featured ? `<span class="flag feat">Featured</span>` : ""}
+        <h2 style="margin-top:10px">${j.title}</h2>
+        <div class="co">${j.company} · ${j.location} · ${j.experience}</div>
+        <p><strong>${j.summary}</strong></p>
+        <p>${j.description}</p>
+        <p><b>Compensation:</b> ${j.salary}<br/>
+           <b>Published:</b> ${fmtDate(j.published)} · <b>Deadline:</b> ${fmtDate(j.deadline)} (${Math.max(left,0)} days)<br/>
+           <b>Reference:</b> ${j.id} · ${j.views.toLocaleString()} views</p>
+        <h3 style="margin-top:16px;font-size:16px">Requirements</h3>
+        <ul>${j.requirements.map(r=>`<li>${r}</li>`).join("")}</ul>
+        <div style="display:flex;gap:8px;margin-top:18px">
+          <button class="btn btn-primary" id="applyNow">Apply now</button>
+          <button class="btn btn-outline" id="saveJob">Save locally</button>
+        </div>
+        <p style="margin-top:16px;font-size:12px;color:var(--mute)">Demo listing for product showcase. Not an official vacancy of the named organisation.</p>`;
+      $("overlay").classList.add("show");
+      $("closeDrawer").onclick = closeDrawer;
+      $("applyNow").onclick = () => openApply(j);
+      $("saveJob").onclick = () => {
+        const saved = JSON.parse(localStorage.getItem("umwanya_saved") || "[]");
+        if (!saved.includes(j.id)) saved.push(j.id);
+        localStorage.setItem("umwanya_saved", JSON.stringify(saved));
+        toast("Saved to this browser.");
+      };
+    }
+    function closeDrawer() { $("overlay").classList.remove("show"); }
+
+    let applying = null;
+    function openApply(job) {
+      applying = job;
+      $("modalTitle").textContent = job ? `Apply · ${job.title}` : "Upload your CV to the talent pool";
+      $("modalSub").textContent = job ? job.company : "Employers on Umwanya can request profiles that match open roles.";
+      $("modal").classList.add("show");
+    }
+    function toast(msg) {
+      const t = $("toast"); t.textContent = msg; t.style.display = "block";
+      setTimeout(() => t.style.display = "none", 2800);
+    }
+
+    $("jobList").addEventListener("click", e => {
+      const card = e.target.closest(".card"); if (card) openDrawer(card.dataset.id);
+    });
+    $("jobList").addEventListener("keydown", e => {
+      if (e.key === "Enter") { const card = e.target.closest(".card"); if (card) openDrawer(card.dataset.id); }
+    });
+    $("overlay").addEventListener("click", e => { if (e.target.id === "overlay") closeDrawer(); });
+    $("modalCancel").onclick = () => $("modal").classList.remove("show");
+    $("applyForm").addEventListener("submit", e => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(e.target).entries());
+      const pack = { ...data, jobId: applying?.id || "TALENT-POOL", at: new Date().toISOString() };
+      const all = JSON.parse(localStorage.getItem("umwanya_applications") || "[]");
+      all.push(pack);
+      localStorage.setItem("umwanya_applications", JSON.stringify(all));
+      $("modal").classList.remove("show");
+      e.target.reset();
+      toast("Application stored locally. In production this would hit the API.");
+    });
+
+    ["q","fType","fSector","fLoc","fExp","sortBy"].forEach(id => $(id).addEventListener("input", render));
+    $("btnSearch").onclick = render;
+    $("btnReset").onclick = () => {
+      $("q").value = $("fType").value = $("fSector").value = $("fLoc").value = $("fExp").value = "";
+      document.querySelectorAll(".chip").forEach((c,i)=>c.classList.toggle("active", i===0));
+      render();
+    };
+    $("quickChips").addEventListener("click", e => {
+      const chip = e.target.closest(".chip"); if (!chip) return;
+      document.querySelectorAll(".chip").forEach(c => c.classList.remove("active"));
+      chip.classList.add("active");
+      const v = chip.dataset.chip;
+      $("q").value = ""; $("fType").value = ""; $("fSector").value = ""; $("fLoc").value = "";
+      if (v === "Kigali") $("fLoc").value = "Kigali";
+      else if (v === "ICT & Telecom") $("fSector").value = "ICT & Telecom";
+      else if (["Job","Tender","Internship","Consultancy"].includes(v)) $("fType").value = v;
+      render();
+    });
+    $("secGrid").addEventListener("click", e => {
+      const sec = e.target.closest(".sec"); if (!sec) return;
+      $("fSector").value = sec.dataset.sector;
+      $("jobs").scrollIntoView({ behavior: "smooth" });
+      render();
+    });
+    document.querySelectorAll("[data-jump-type]").forEach(a => a.addEventListener("click", () => {
+      $("fType").value = a.dataset.jumpType; render();
+    }));
+    $("btnCv").onclick = () => openApply(null);
+    $("btnPost").onclick = $("btnHire").onclick = () => toast("Employer workspace is a planned module. Schema is in README.md.");
+
+    document.addEventListener("keydown", e => {
+      if (e.key === "/" && document.activeElement.tagName !== "INPUT" && document.activeElement.tagName !== "TEXTAREA") {
+        e.preventDefault(); $("q").focus();
+      }
+      if (e.key === "Escape") { closeDrawer(); $("modal").classList.remove("show"); }
+    });
+
+    render();
+  </script>
 </body>
 </html>
