@@ -7,94 +7,64 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <style>
     :root {
-      --ink: #1f2a24;
-      --muted: #5b6b63;
-      --paper: #f6f3ea;
-      --card: #fffdf8;
-      --line: #e4ddd0;
-      --green: #2f6b4f;
-      --green-soft: #e7f1ea;
-      --gold: #c9a227;
-      --gold-soft: #f7efd4;
-      --sky: #3d6f8a;
-      --sky-soft: #e7f2f6;
-      --clay: #9a5b3c;
-      --clay-soft: #f6ebe4;
+      --ink:#1f2a24; --muted:#5b6b63; --paper:#f6f3ea; --card:#fffdf8; --line:#e4ddd0;
+      --green:#2f6b4f; --green-soft:#e7f1ea; --gold:#c9a227; --gold-soft:#f7efd4;
+      --sky:#3d6f8a; --sky-soft:#e7f2f6; --clay:#9a5b3c; --clay-soft:#f6ebe4;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: Arial, Helvetica, sans-serif; background: var(--paper); color: var(--ink); }
-    a { color: var(--green); }
-    header {
-      position: sticky; top: 0; z-index: 20;
-      background: rgba(246,243,234,0.96);
-      border-bottom: 1px solid var(--line);
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 12px; padding: 12px 6%; flex-wrap: wrap;
-    }
-    .logo { font-weight: 700; text-decoration: none; color: var(--ink); }
-    .logo span { color: var(--green); }
-    nav { display: flex; gap: 12px; flex-wrap: wrap; font-size: 14px; }
-    nav a { text-decoration: none; color: var(--ink); }
-    .langs button, .act, select, input, textarea {
-      font: inherit; border-radius: 8px; border: 1px solid var(--line);
-    }
-    .langs button { background: #fff; padding: 7px 10px; cursor: pointer; }
-    .langs button.on { background: var(--green); color: #fff; border-color: var(--green); }
-    .hero { padding: 48px 6% 28px; background: linear-gradient(180deg, #eef6f1, var(--paper)); }
-    .kicker { color: var(--gold); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 8px; }
-    h1 { font-size: clamp(28px, 5vw, 48px); max-width: 820px; line-height: 1.15; margin-bottom: 12px; }
-    .lead { max-width: 680px; color: var(--muted); margin-bottom: 22px; }
-    .search {
-      display: grid; grid-template-columns: 1.5fr .7fr .7fr auto; gap: 8px;
-      background: #fff; padding: 10px; border: 1px solid var(--line); border-radius: 12px; max-width: 920px;
-    }
-    input, select, textarea { padding: 12px; background: #fff; width: 100%; }
-    .act { background: var(--green); color: #fff; border: 0; padding: 12px 16px; cursor: pointer; font-weight: 700; }
-    .act.gold { background: #8a6d1b; }
-    .stats { display: flex; gap: 22px; margin-top: 16px; flex-wrap: wrap; color: var(--muted); }
-    .stats b { display: block; color: var(--ink); font-size: 20px; }
-    section { padding: 36px 6%; }
-    .room { border-top: 1px solid var(--line); }
-    .r-green { background: var(--green-soft); }
-    .r-gold { background: var(--gold-soft); }
-    .r-sky { background: var(--sky-soft); }
-    .r-clay { background: var(--clay-soft); }
-    .r-paper { background: var(--paper); }
-    h2 { margin-bottom: 8px; }
-    .muted { color: var(--muted); }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-top: 16px; }
-    .card {
-      background: var(--card); border: 1px solid var(--line); border-radius: 14px; overflow: hidden;
-    }
-    .photo { height: 120px; display: flex; align-items: flex-end; padding: 10px; color: #fff; font-size: 13px; }
-    .body { padding: 14px; }
-    .tag { font-size: 12px; color: var(--sky); margin-bottom: 6px; }
-    .card h3 { font-size: 17px; margin-bottom: 6px; }
-    .meta { font-size: 13px; color: var(--muted); margin: 8px 0; }
-    .links { display: flex; gap: 8px; flex-wrap: wrap; }
-    .links a, .links button {
-      font-size: 13px; text-decoration: none; background: var(--green-soft);
-      color: var(--green); border: 0; padding: 7px 9px; border-radius: 8px; cursor: pointer;
-    }
-    form.box { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 16px; max-width: 720px; }
-    form.box label { display: block; font-size: 13px; margin: 10px 0 4px; }
-    footer { padding: 24px 6%; border-top: 1px solid var(--line); color: var(--muted); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .helpbox { background: #fff; border-left: 4px solid var(--gold); padding: 14px; border-radius: 8px; margin-top: 12px; }
-    #jobMap { height: 280px; width: 100%; border-radius: 12px; border: 1px solid var(--line); margin: 8px 0 12px; z-index: 1; }
-    .map-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
-    @media (max-width: 800px) { .search { grid-template-columns: 1fr; } }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:Arial,Helvetica,sans-serif;background:var(--paper);color:var(--ink)}
+    a{color:var(--green)}
+    header{position:sticky;top:0;z-index:30;background:rgba(246,243,234,.96);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 6%;flex-wrap:wrap}
+    .logo{font-weight:700;text-decoration:none;color:var(--ink)}.logo span{color:var(--green)}
+    nav{display:flex;gap:12px;flex-wrap:wrap;font-size:14px} nav a{text-decoration:none;color:var(--ink)}
+    .langs button,.act,select,input,textarea{font:inherit;border-radius:8px;border:1px solid var(--line)}
+    .langs button{background:#fff;padding:7px 10px;cursor:pointer}
+    .langs button.on{background:var(--green);color:#fff;border-color:var(--green)}
+    .hero{padding:48px 6% 28px;background:linear-gradient(180deg,#eef6f1,var(--paper))}
+    .kicker{color:var(--gold);font-size:13px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+    h1{font-size:clamp(28px,5vw,48px);max-width:820px;line-height:1.15;margin-bottom:12px}
+    .lead{max-width:720px;color:var(--muted);margin-bottom:22px}
+    .search{display:grid;grid-template-columns:1.5fr .7fr .7fr auto;gap:8px;background:#fff;padding:10px;border:1px solid var(--line);border-radius:12px;max-width:920px}
+    input,select,textarea{padding:12px;background:#fff;width:100%}
+    .act{background:var(--green);color:#fff;border:0;padding:12px 16px;cursor:pointer;font-weight:700}
+    .act.soft{background:var(--green-soft);color:var(--green)}
+    .act.warn{background:#8a3b2a}
+    .stats{display:flex;gap:22px;margin-top:16px;flex-wrap:wrap;color:var(--muted)}.stats b{display:block;color:var(--ink);font-size:20px}
+    section{padding:36px 6%}
+    .room{border-top:1px solid var(--line)}
+    .r-green{background:var(--green-soft)}.r-gold{background:var(--gold-soft)}.r-sky{background:var(--sky-soft)}.r-clay{background:var(--clay-soft)}
+    h2{margin-bottom:8px}.muted{color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:16px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;text-align:left}
+    .card:hover{border-color:var(--green)}
+    .photo{height:110px;display:flex;align-items:flex-end;padding:10px;color:#fff;font-size:13px}
+    .body{padding:14px}.tag{font-size:12px;color:var(--sky);margin-bottom:6px}
+    .card h3,.detail h3{font-size:18px;margin-bottom:6px}
+    .meta{font-size:13px;color:var(--muted);margin:8px 0}
+    .links{display:flex;gap:8px;flex-wrap:wrap}
+    .links a,.links button{font-size:13px;text-decoration:none;background:var(--green-soft);color:var(--green);border:0;padding:7px 9px;border-radius:8px;cursor:pointer}
+    form.box,.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;max-width:760px}
+    form.box label{display:block;font-size:13px;margin:10px 0 4px}
+    #jobMap{height:260px;width:100%;border-radius:12px;border:1px solid var(--line);margin:8px 0 12px;z-index:1}
+    .helpbox{background:#fff;border-left:4px solid var(--gold);padding:14px;border-radius:8px;margin-top:12px}
+    footer{padding:24px 6%;border-top:1px solid var(--line);color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .mask{display:none;position:fixed;inset:0;background:rgba(20,28,24,.45);z-index:40;padding:24px 6%;overflow:auto}
+    .mask.on{display:block}
+    .detail{background:#fff;border-radius:16px;max-width:760px;margin:40px auto;padding:22px;border:1px solid var(--line)}
+    .detail p{margin:8px 0;line-height:1.45}
+    @media(max-width:800px){.search{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
   <header>
     <a class="logo" href="#home">Rwanda <span>Connect</span></a>
     <nav>
-      <a href="#jobs" data-i="navJobs">Jobs</a>
-      <a href="#services" data-i="navServices">Services</a>
-      <a href="#markets" data-i="navMarkets">Markets</a>
-      <a href="#post" data-i="navPost">Post a job</a>
-      <a href="#help" data-i="navHelp">Help</a>
+      <a href="#jobs">Jobs</a>
+      <a href="#list">Listings</a>
+      <a href="#fresh">New openings</a>
+      <a href="#post">Post a job</a>
+      <a href="#help">Help</a>
     </nav>
     <div class="langs">
       <button id="bEn" type="button" onclick="setLang('en')">EN</button>
@@ -104,358 +74,314 @@
   </header>
 
   <section class="hero" id="home">
-    <p class="kicker" data-i="kicker">Jobs · Services · Markets · Rwanda</p>
-    <h1 data-i="title">Find work, services and customers across Rwanda.</h1>
-    <p class="lead" data-i="lead">Search jobs and local services. Open a card for location, what they hire, what they sell, and a real public contact when one exists. If something is missing, call or email the host.</p>
+    <p class="kicker" id="kicker">Jobs · Services · Markets · Rwanda</p>
+    <h1 id="title">Find work, services and customers across Rwanda.</h1>
+    <p class="lead" id="lead">Click a card for full details. Mark a job filled when the team is complete. The site then hides it and points you to other open work and official job pages.</p>
     <div class="search">
       <input id="q" type="search" placeholder="Search cook, nurse, market, hotel...">
       <select id="city"></select>
       <select id="cat"></select>
-      <button class="act" type="button" onclick="draw(true)" data-i="search">Search</button>
+      <button class="act" type="button" onclick="draw(true)">Search</button>
     </div>
     <div class="stats">
-      <div><b id="n">0</b><span data-i="stList">listings</span></div>
-      <div><b>7</b><span data-i="stCity">cities</span></div>
-      <div><b>EN/RW/FR</b><span data-i="stLang">languages</span></div>
+      <div><b id="nOpen">0</b><span>open</span></div>
+      <div><b id="nFilled">0</b><span>filled / hidden</span></div>
+      <div><b>EN/RW/FR</b><span>languages</span></div>
     </div>
   </section>
 
   <section class="room r-green" id="jobs">
-    <h2 data-i="jobsT">Jobs and careers</h2>
-    <p class="muted" data-i="jobsL">Start with official portals, then browse sample local work rooms.</p>
+    <h2>Official job rooms</h2>
+    <p class="muted">Public pages that publish real vacancies. Open them to see the newest government and formal jobs.</p>
     <div class="grid" id="portals"></div>
   </section>
 
-  <section class="room r-paper" id="list">
-    <h2 data-i="listT">All rooms: jobs, services and businesses</h2>
-    <p class="muted" data-i="listL">Every card has a place, the work they need, the service they offer, and a contact.</p>
+  <section class="room" id="list">
+    <h2>Open jobs and services</h2>
+    <p class="muted">Click any card to read the full information. Use Mark filled when they no longer need staff or customers.</p>
     <div class="grid" id="grid"></div>
-    <p id="empty" class="muted" style="display:none;margin-top:16px" data-i="empty">No match. Try another word or contact the host.</p>
+    <p id="empty" class="muted" style="display:none;margin-top:16px">No open match. Try another word, or check New openings.</p>
   </section>
 
-  <section class="room r-sky" id="services"><h2 data-i="svcT">Everyday services</h2><p class="muted" data-i="svcL">Health, buses, training and local help.</p></section>
-  <section class="room r-gold" id="markets"><h2 data-i="mktT">Markets and sellers</h2><p class="muted" data-i="mktL">Meet buyers and sellers in known Rwandan markets.</p></section>
-  <section class="room r-clay" id="post">
-    <h2 data-i="postT">Post a job / recruit</h2>
-    <p class="muted" data-i="postL">Fill the form, pin the workplace on the map, then publish. The job appears on this website and a copy is emailed to the host.</p>
-    <form class="box" onsubmit="return sendJob(event)">
-      <label data-i="fName">Your name</label><input id="fName" required>
-      <label data-i="fBiz">Business or organisation</label><input id="fBiz" required>
-      <label data-i="fTitle">Job title</label><input id="fTitle" required>
-      <label data-i="fCity">City / district</label><input id="fCity" required>
-      <label data-i="mapT">Workplace on the map</label>
-      <p class="muted" data-i="mapL">Allow location, or tap the map to drop a pin.</p>
-      <div class="map-actions">
-        <button class="act" type="button" onclick="useMyLocation()" data-i="useLoc">Use my location</button>
+  <section class="room r-sky" id="fresh">
+    <h2>Look for new openings</h2>
+    <p class="muted">This site cannot copy private job boards without their permission. It can hide filled posts and send you to official public pages that do list new jobs.</p>
+    <div class="panel">
+      <p id="freshLine">Checking official rooms...</p>
+      <div class="links" style="margin-top:12px">
+        <button type="button" class="act" onclick="nextFresh()">Show next official room</button>
+        <a class="act soft" id="freshGo" href="https://rdb.rw/careers/" target="_blank" rel="noopener">Open this page</a>
       </div>
+    </div>
+    <div class="grid" id="freshCards" style="margin-top:16px"></div>
+  </section>
+
+  <section class="room r-clay" id="post">
+    <h2>Post a job / recruit</h2>
+    <p class="muted">Pin the workplace, publish it on this site, and email the host a copy.</p>
+    <form class="box" onsubmit="return sendJob(event)">
+      <label>Your name</label><input id="fName" required>
+      <label>Business or organisation</label><input id="fBiz" required>
+      <label>Job title</label><input id="fTitle" required>
+      <label>City / district</label><input id="fCity" required>
+      <label>Workplace on the map</label>
+      <p class="muted">Allow location, or tap the map.</p>
+      <button class="act soft" type="button" onclick="useMyLocation()">Use my location</button>
       <div id="jobMap"></div>
-      <label data-i="fLoc">Exact location</label>
-      <input id="fLoc" required placeholder="Street, sector, district">
-      <input id="fLat" type="hidden">
-      <input id="fLng" type="hidden">
-      <label data-i="fNeed">Who you need and what the job does</label><textarea id="fNeed" rows="4" required></textarea>
-      <label data-i="fPhone">Your phone</label><input id="fPhone" required placeholder="+250...">
-      <label data-i="fMail">Your email</label><input id="fMail" type="email" required>
-      <p class="muted" style="margin:12px 0" data-i="fNote">The form sends to mukashyakafrancine7@gmail.com</p>
-      <button class="act" type="submit" data-i="fSend">Publish job on the site</button>
-      <p id="postOk" class="muted" style="display:none;margin-top:10px" data-i="postedOk">Saved on this website. Check the listings above.</p>
+      <label>Exact location</label><input id="fLoc" required>
+      <input id="fLat" type="hidden"><input id="fLng" type="hidden">
+      <label>Who you need and what the job does</label><textarea id="fNeed" rows="4" required></textarea>
+      <label>Hours / pay note (optional)</label><input id="fPay" placeholder="Example: daytime, pay discussed">
+      <label>Your phone</label><input id="fPhone" required placeholder="+250...">
+      <label>Your email</label><input id="fMail" type="email" required>
+      <p class="muted" style="margin:12px 0">Copy also goes to mukashyakafrancine7@gmail.com</p>
+      <button class="act" type="submit">Publish job on the site</button>
+      <p id="postOk" class="muted" style="display:none;margin-top:10px">Saved. It now appears in Open jobs.</p>
     </form>
   </section>
 
+  <section class="room r-gold" id="filledRoom">
+    <h2>Filled jobs (hidden from search)</h2>
+    <p class="muted">These were marked full. They stay here so you can reopen one if needed.</p>
+    <div class="grid" id="filledGrid"></div>
+  </section>
+
   <section class="room r-green" id="help">
-    <h2 data-i="helpT">Help and missing information</h2>
+    <h2>Help</h2>
     <div class="helpbox">
-      <p data-i="helpB">If a listing is empty, closed, or has no contact, use the host:</p>
+      <p>Missing or closed listing? Contact the host.</p>
       <p><b>Francine Mukashyaka</b><br>
         <a href="tel:+250783740809">+250 783 740 809</a><br>
-        <a href="mailto:mukashyakafrancine7@gmail.com">mukashyakafrancine7@gmail.com</a>
-      </p>
+        <a href="mailto:mukashyakafrancine7@gmail.com">mukashyakafrancine7@gmail.com</a></p>
+      <p class="muted">Official lines: RDB 1415 · Irembo 9099 · REG 2727</p>
     </div>
-    <p class="muted" style="margin-top:12px" data-i="helpO">Official lines: RDB 1415 · Irembo 9099 · REG 2727</p>
   </section>
 
   <footer>
     <span>Rwanda Connect</span>
-    <span data-i="foot">Learning project. Confirm official jobs on official sites.</span>
+    <span>Learning project. Confirm official jobs on official sites.</span>
   </footer>
 
+  <div class="mask" id="mask" onclick="if(event.target.id==='mask') closeDetail()">
+    <div class="detail" id="detail"></div>
+  </div>
+
 <script>
-const HOST_MAIL = "mukashyakafrancine7@gmail.com";
-const HOST_TEL = "+250783740809";
-const I18N = {
-  en: {
-    navJobs:"Jobs", navServices:"Services", navMarkets:"Markets", navPost:"Post a job", navHelp:"Help",
-    kicker:"Jobs · Services · Markets · Rwanda",
-    title:"Find work, services and customers across Rwanda.",
-    lead:"Search jobs and local services. Open a card for location, what they hire, what they sell, and a real public contact when one exists. If something is missing, call or email the host.",
-    search:"Search", stList:"listings", stCity:"cities", stLang:"languages",
-    jobsT:"Jobs and careers", jobsL:"Start with official portals, then browse sample local work rooms.",
-    listT:"All rooms: jobs, services and businesses", listL:"Every card has a place, the work they need, the service they offer, and a contact.",
-    empty:"No match. Try another word or contact the host.",
-    svcT:"Everyday services", svcL:"Health, buses, training and local help.",
-    mktT:"Markets and sellers", mktL:"Meet buyers and sellers in known Rwandan markets.",
-    postT:"Post a job / recruit", postL:"Fill the form, pin the workplace on the map, then publish. The job appears on this website and a copy is emailed to the host.",
-    mapT:"Workplace on the map", mapL:"Allow location, or tap the map to drop a pin.", useLoc:"Use my location",
-    postedOk:"Saved on this website. Check the listings above.", mapBtn:"Map",
-    fName:"Your name", fBiz:"Business or organisation", fTitle:"Job title", fCity:"City / district",
-    fLoc:"Exact location", fNeed:"Who you need and what the job does", fPhone:"Your phone", fMail:"Your email",
-    fNote:"The form sends to mukashyakafrancine7@gmail.com", fSend:"Publish job on the site",
-    helpT:"Help and missing information", helpB:"If a listing is empty, closed, or has no contact, use the host:",
-    helpO:"Official lines: RDB 1415 · Irembo 9099 · REG 2727",
-    foot:"Learning project. Confirm official jobs on official sites.",
-    allC:"All cities", allT:"All rooms",
-    jobsNeed:"Jobs they need", sells:"Services / products", place:"Location",
-    open:"Open page", call:"Call", mail:"Email", host:"Ask host"
-  },
-  rw: {
-    navJobs:"Akazi", navServices:"Serivisi", navMarkets:"Amasoko", navPost:"Shyira akazi", navHelp:"Ubufasha",
-    kicker:"Akazi · Serivisi · Amasoko · u Rwanda",
-    title:"Shakisha akazi, serivisi n'abakiriya mu Rwanda hose.",
-    lead:"Shakisha akazi na serivisi. Kanda ikarita urebe aho biri, akazi bashaka, icyo bacuruza, n'aho babazanira. Niba habura, hamagara nyir'urubuga.",
-    search:"Shakisha", stList:"ibikubiye", stCity:"imijyi", stLang:"indimi",
-    jobsT:"Akazi n'umwuga", jobsL:"Tangira ku mbuga za Leta, hanyuma reba akandi kazi.",
-    listT:"Ibyumba byose: akazi, serivisi n'ubucuruzi", listL:"Buri karita ifite ahantu, akazi, serivisi n'aho uvugana.",
-    empty:"Nta bihuye. Gerageza irindi jambo cyangwa uhamagare nyir'urubuga.",
-    svcT:"Serivisi za buri munsi", svcL:"Ubuzima, amabisi, amahugurwa n'ubufasha.",
-    mktT:"Amasoko n'abacuruzi", mktL:"Huza abagura n'abacuruzi mu masoko azwi.",
-    postT:"Shyira akazi / shaka umukozi", postL:"Uzuza fomu, shyira akamennetse ku ikarita, hanyuma ushyire akazi ku rubuga.",
-    mapT:"Aho akazi kari ku ikarita", mapL:"Emerera ahantu, cyangwa ukande ku ikarita.", useLoc:"Koresha ahantu ndi",
-    postedOk:"Byabitswe ku rubuga. Reba urutonde hejuru.", mapBtn:"Ikarita",
-    fName:"Amazina yawe", fBiz:"Ubucuruzi cyangwa ikigo", fTitle:"Izina ry'akazi", fCity:"Umujyi / akarere",
-    fLoc:"Aho kiri neza", fNeed:"Uwu ushaka n'icyo akazi gikora", fPhone:"Telefoni", fMail:"Imeyili",
-    fNote:"Iyo fomu ijya kuri mukashyakafrancine7@gmail.com", fSend:"Shyira akazi ku rubuga",
-    helpT:"Ubufasha n'amakuru abura", helpB:"Niba urutonde rudafite telefoni, koresha nyir'urubuga:",
-    helpO:"Imirongo ya Leta: RDB 1415 · Irembo 9099 · REG 2727",
-    foot:"Umushinga wo kwiga. Emeza akazi ka Leta ku mbuga za Leta.",
-    allC:"Imijyi yose", allT:"Ibyumba byose",
-    jobsNeed:"Akazi bashaka", sells:"Serivisi / ibicuruzwa", place:"Ahantu",
-    open:"Fungura", call:"Hamagara", mail:"Andikira", host:"Baza nyir'urubuga"
-  },
-  fr: {
-    navJobs:"Emplois", navServices:"Services", navMarkets:"Marches", navPost:"Publier un emploi", navHelp:"Aide",
-    kicker:"Emplois · Services · Marches · Rwanda",
-    title:"Trouver du travail, des services et des clients au Rwanda.",
-    lead:"Cherchez un emploi ou un service. Chaque fiche a un lieu, les postes cherches, ce qui est vendu, et un contact public quand il existe. S'il manque une info, contactez l'hote.",
-    search:"Rechercher", stList:"fiches", stCity:"villes", stLang:"langues",
-    jobsT:"Emplois et carrieres", jobsL:"Commencez par les portails officiels, puis voyez les salles locales.",
-    listT:"Toutes les salles: emplois, services et entreprises", listL:"Chaque fiche a un lieu, le travail cherche, le service offert et un contact.",
-    empty:"Aucun resultat. Essayez un autre mot ou contactez l'hote.",
-    svcT:"Services du quotidien", svcL:"Sante, bus, formation et aide locale.",
-    mktT:"Marches et vendeurs", mktL:"Relier acheteurs et vendeurs dans des marches connus.",
-    postT:"Publier un emploi / recruter", postL:"Remplissez le formulaire, placez le lieu sur la carte, puis publiez. L'offre apparait sur le site.",
-    mapT:"Lieu de travail sur la carte", mapL:"Autorisez la position, ou touchez la carte.", useLoc:"Utiliser ma position",
-    postedOk:"Enregistre sur le site. Voyez la liste plus haut.", mapBtn:"Carte",
-    fName:"Votre nom", fBiz:"Entreprise ou organisation", fTitle:"Intitule du poste", fCity:"Ville / district",
-    fLoc:"Lieu exact", fNeed:"Qui vous cherchez et le travail a faire", fPhone:"Telephone", fMail:"Email",
-    fNote:"Le formulaire part vers mukashyakafrancine7@gmail.com", fSend:"Publier sur le site",
-    helpT:"Aide et informations manquantes", helpB:"Si une fiche n'a pas de contact, utilisez l'hote:",
-    helpO:"Lignes officielles: RDB 1415 · Irembo 9099 · REG 2727",
-    foot:"Projet d'apprentissage. Confirmez les emplois officiels sur les sites officiels.",
-    allC:"Toutes les villes", allT:"Toutes les salles",
-    jobsNeed:"Postes cherches", sells:"Services / produits", place:"Lieu",
-    open:"Ouvrir", call:"Appeler", mail:"Ecrire", host:"Demander a l'hote"
-  }
-};
-
-const CITIES = ["Kigali","Musanze","Huye","Rubavu","Karongi","Rwamagana","Nyagatare"];
-const CATS = ["job","health","travel","market","farm","hotel","school","trade","money"];
-const PORTALS = [
-  {name:"RDB Careers", why:"Government and project jobs at RDB", url:"https://rdb.rw/careers/", mail:"talentacquisition@rdb.rw", tel:"1415", place:"KG 9 Ave, Kigali"},
-  {name:"MIFOTRA e-Recruitment", why:"Official civil service vacancies", url:"https://recruitment.mifotra.gov.rw/", mail:HOST_MAIL, tel:HOST_TEL, place:"Kigali"},
-  {name:"Kora Job Portal", why:"RDB matching for jobs, internships and training", url:"https://jobportal.kora.rw/", mail:"info@rdb.rw", tel:"1415", place:"Kigali"},
-  {name:"Job in Rwanda", why:"Large private job board used across the country", url:"https://www.jobinrwanda.com", mail:HOST_MAIL, tel:HOST_TEL, place:"Kimihurura, Kigali"},
-  {name:"Cyizere", why:"Jobs, tenders and scholarships", url:"https://www.cyizere.com/", mail:"info@cyizere.com", tel:"+250783977120", place:"KN 82 St, Kigali"},
-  {name:"Harambee Rwanda", why:"Youth skills and job placement", url:"https://harambee.rw/", mail:HOST_MAIL, tel:HOST_TEL, place:"Kigali"}
+const HOST_MAIL="mukashyakafrancine7@gmail.com";
+const HOST_TEL="+250783740809";
+const CITIES=["Kigali","Musanze","Huye","Rubavu","Karongi","Rwamagana","Nyagatare"];
+const CATS=["job","health","travel","market","farm","hotel","school","trade","money"];
+const PORTALS=[
+  {id:"rdb",name:"RDB Careers",place:"KG 9 Ave, Kigali",jobs:"RDB and project vacancies",sells:"Investment and tourism jobs",mail:"talentacquisition@rdb.rw",tel:"1415",url:"https://rdb.rw/careers/",about:"Official Rwanda Development Board careers page. Apply as one PDF to talentacquisition@rdb.rw when a post is open."},
+  {id:"mifotra",name:"MIFOTRA e-Recruitment",place:"Kigali",jobs:"Civil service posts",sells:"Government recruitment",mail:HOST_MAIL,tel:HOST_TEL,url:"https://recruitment.mifotra.gov.rw/",about:"Official public-service recruitment portal. New ministry and district jobs appear here."},
+  {id:"kora",name:"Kora Job Portal",place:"Kigali",jobs:"Jobs, internships, training",sells:"RDB matching service",mail:"info@rdb.rw",tel:"1415",url:"https://jobportal.kora.rw/",about:"RDB platform that links jobseekers with employers and Public Employment Service Centres."},
+  {id:"jir",name:"Job in Rwanda",place:"Kimihurura, Kigali",jobs:"Private and NGO vacancies",sells:"Job board",mail:HOST_MAIL,tel:HOST_TEL,url:"https://www.jobinrwanda.com",about:"Long-running Rwandan job board. Check the site for the current list; this page does not copy their private listings."},
+  {id:"cyizere",name:"Cyizere",place:"KN 82 St, Kigali",jobs:"Jobs, tenders, scholarships",sells:"Opportunity hub",mail:"info@cyizere.com",tel:"+250783977120",url:"https://www.cyizere.com/",about:"Public opportunity site. Email info@cyizere.com or call +250 783 977 120."},
+  {id:"harambee",name:"Harambee Rwanda",place:"Kigali",jobs:"Youth first jobs",sells:"Skills to employment",mail:HOST_MAIL,tel:HOST_TEL,url:"https://harambee.rw/",about:"Youth skilling and placement organisation. Register on their site for current programmes."}
+];
+const BASE=[
+  {id:"rdb-hq",cat:"job",city:"Kigali",name:"Rwanda Development Board",place:"RDB Building, KG 9 Ave, Kigali",jobs:"Investment officers, tourism staff, project roles",sells:"Investment and business support",mail:"info@rdb.rw",tel:"1415",url:"https://rdb.rw",about:"National board for investment, tourism and private-sector growth. Hotline 1415, email info@rdb.rw or support@rdb.rw. WhatsApp +250 788 321 555.",hours:"Mon–Fri, 7:00–23:00 for call centre"},
+  {id:"kesc",cat:"job",city:"Kigali",name:"Kigali Employment Service Centre",place:"City of Kigali offices",jobs:"Walk-in job search help",sells:"Public employment support",mail:HOST_MAIL,tel:HOST_TEL,url:"https://jobportal.kora.rw/",about:"City point for job-search help. Confirm hours at City of Kigali offices. If a number is missing, use the host."},
+  {id:"ur",cat:"school",city:"Huye",name:"University of Rwanda Huye",place:"UR Huye campus",jobs:"Student work, campus and local openings",sells:"Higher education",mail:HOST_MAIL,tel:HOST_TEL,url:"https://ur.ac.rw",about:"Campus boards and UR site list student and local openings. Check ur.ac.rw for official notices."},
+  {id:"chuk",cat:"health",city:"Kigali",name:"CHUK Hospital",place:"Nyarugenge, Kigali",jobs:"Nurses, doctors, cleaners, records staff",sells:"Public hospital care",mail:HOST_MAIL,tel:HOST_TEL,url:"https://chuk.rw",about:"University Teaching Hospital of Kigali. Use the hospital site for current vacancies. Do not treat the host email as a hospital HR inbox."},
+  {id:"kfh",cat:"health",city:"Kigali",name:"King Faisal Hospital",place:"Kacyiru, Kigali",jobs:"Specialist care, emergency, support staff",sells:"Hospital services",mail:HOST_MAIL,tel:HOST_TEL,url:"https://kfh.rw",about:"Major hospital in Kacyiru. Confirm jobs on kfh.rw."},
+  {id:"ruhengeri",cat:"health",city:"Musanze",name:"Ruhengeri Referral Hospital",place:"Musanze",jobs:"Nurses, lab staff, support roles",sells:"Referral care for the north",mail:HOST_MAIL,tel:HOST_TEL,url:"",about:"Northern Province referral hospital. Ask the host if you need a current office number."},
+  {id:"chub",cat:"health",city:"Huye",name:"CHUB Butare",place:"Huye",jobs:"Clinical and support jobs",sells:"Hospital care for the south",mail:HOST_MAIL,tel:HOST_TEL,url:"",about:"Teaching hospital for the Southern Province."},
+  {id:"airport",cat:"travel",city:"Kigali",name:"Kigali International Airport",place:"Kanombe, Kigali",jobs:"Airline, security, cleaning, retail",sells:"Flights in and out of Rwanda",mail:HOST_MAIL,tel:HOST_TEL,url:"https://www.aeroport-kigali.com",about:"Main international airport. Airport and airline employers post their own jobs."},
+  {id:"nyabugogo",cat:"travel",city:"Kigali",name:"Nyabugogo Taxi Park",place:"Nyabugogo, Kigali",jobs:"Drivers, loaders, ticket sellers, food stalls",sells:"Buses and shared taxis",mail:HOST_MAIL,tel:HOST_TEL,url:"",about:"Main park for buses to other towns. Stall contacts change; use the host if you need an introduction."},
+  {id:"kimironko",cat:"market",city:"Kigali",name:"Kimironko Market",place:"Kimironko, Gasabo, Kigali",jobs:"Vendors, porters, tailors, packers",sells:"Food, clothes, household goods",mail:HOST_MAIL,tel:HOST_TEL,url:"https://kimironkomarket.rw/",about:"Largest Kigali public market. Online orders: kimironkomarket.rw. Open roughly 6:00–18:00."},
+  {id:"caplaki",cat:"market",city:"Kigali",name:"Caplaki Craft Village",place:"Near Kigali Convention Centre",jobs:"Artisans, stall keepers, guides",sells:"Baskets, art, souvenirs",mail:HOST_MAIL,tel:HOST_TEL,url:"",about:"Craft market for visitors and locals. Bargain on price. Host can help if a stall contact is missing."},
+  {id:"huye-mkt",cat:"market",city:"Huye",name:"Huye Market",place:"Huye town centre",jobs:"Food sellers, porters, small shops",sells:"Daily food and household goods",mail:HOST_MAIL,tel:HOST_TEL,url:"",about:"Town market for everyday shopping in Huye."},
+  {id:"nyagatare",cat:"market",city:"Nyagatare",name:"Nyagatare town market",place:"Nyagatare centre",jobs:"Livestock trade help, shops",sells:"Cattle-region goods",mail:HOST_MAIL,tel:HOST_TEL,url:"",about:"Eastern cattle-farming town services and market."},
+  {id:"east-farm",cat:"farm",city:"Nyagatare",name:"Eastern Province farms and co-ops",place:"Nyagatare and nearby sectors",jobs:"Farm hands, milk collection, drivers",sells:"Milk, meat, crops",mail:HOST_MAIL,tel:HOST_TEL,url:"https://www.rab.gov.rw",about:"Agriculture work in the east. RAB site: rab.gov.rw."},
+  {id:"musanze-farm",cat:"farm",city:"Musanze",name:"Musanze highland farms",place:"Musanze district",jobs:"Potato and vegetable work, packing",sells:"Highland crops",mail:HOST_MAIL,tel:HOST_TEL,url:"",about:"Highland farm labour around Musanze."},
+  {id:"volcanoes",cat:"hotel",city:"Musanze",name:"Volcanoes National Park lodges",place:"Kinigi / Musanze",jobs:"Guides, cooks, housekeepers, drivers",sells:"Park visits and rooms",mail:HOST_MAIL,tel:HOST_TEL,url:"https://www.visitrwanda.com",about:"Hospitality around gorilla tourism. Lodge hiring is local and seasonal."},
+  {id:"kivu",cat:"hotel",city:"Rubavu",name:"Lake Kivu hotels and boats",place:"Rubavu / Gisenyi waterfront",jobs:"Hotel staff, boat crew, waiters",sells:"Rooms, meals, lake trips",mail:HOST_MAIL,tel:HOST_TEL,url:"https://www.visitrwanda.com",about:"Lakeside hospitality in Rubavu."},
+  {id:"karongi",cat:"hotel",city:"Karongi",name:"Karongi lakeside lodges",place:"Karongi / Kibuye",jobs:"Lodge staff, kitchen, front desk",sells:"Lakeside stays",mail:HOST_MAIL,tel:HOST_TEL,url:"https://www.visitrwanda.com",about:"Southern Lake Kivu stays and jobs."},
+  {id:"hanga",cat:"school",city:"Kigali",name:"Hanga Hubs / RISA",place:"Telecom House, Kacyiru",jobs:"Trainers, hub assistants",sells:"Youth innovation and skills",mail:HOST_MAIL,tel:HOST_TEL,url:"https://www.risa.gov.rw/projects/hanga-hubs",about:"Government innovation hubs for youth startups. See RISA for intake dates."},
+  {id:"trades",cat:"trade",city:"Kigali",name:"Construction and workshop trades",place:"Kigali industrial areas",jobs:"Masons, electricians, welders, helpers",sells:"Building and repair",mail:HOST_MAIL,tel:HOST_TEL,url:"",about:"Walk-up trades work. Confirm pay and safety on site."},
+  {id:"osc",cat:"money",city:"Kigali",name:"RDB One Stop Centre",place:"RDB, KG 9 Ave, Kigali",jobs:"Business registration support",sells:"Register a business",mail:"support@rdb.rw",tel:"1415",url:"https://rdb.rw",about:"Business registration and investor help. Call 1415 or email support@rdb.rw."},
+  {id:"irembo",cat:"money",city:"Kigali",name:"IremboGov",place:"Online and agents nationwide",jobs:"Irembo agents and support",sells:"Government e-services",mail:"support@irembo.com",tel:"9099",url:"https://irembo.gov.rw",about:"National e-services. Support 9099, email support@irembo.com."},
+  {id:"reg",cat:"money",city:"Kigali",name:"REG customer and field work",place:"Branches across Rwanda",jobs:"Electricians, tellers, technicians",sells:"Electricity connection",mail:HOST_MAIL,tel:"2727",url:"https://www.reg.rw/public-information/jobs/vacancies/",about:"Rwanda Energy Group vacancies page and customer line 2727."}
+];
+const FRESH_ROOMS=[
+  {title:"RDB careers",url:"https://rdb.rw/careers/",note:"New RDB contract and project jobs."},
+  {title:"MIFOTRA e-Recruitment",url:"https://recruitment.mifotra.gov.rw/",note:"New civil-service posts."},
+  {title:"Kora portal",url:"https://jobportal.kora.rw/",note:"Jobs, internships and training."},
+  {title:"REG vacancies",url:"https://www.reg.rw/public-information/jobs/vacancies/",note:"Energy utility jobs."},
+  {title:"Job in Rwanda",url:"https://www.jobinrwanda.com",note:"Private and NGO ads. View on their site."},
+  {title:"Cyizere",url:"https://www.cyizere.com/",note:"Jobs, tenders and scholarships."},
+  {title:"Harambee",url:"https://harambee.rw/",note:"Youth placement programmes."},
+  {title:"Visit Rwanda / tourism",url:"https://www.visitrwanda.com",note:"Hospitality and tourism businesses."}
 ];
 
-const ITEMS = [
-  {cat:"job", city:"Kigali", name:"Rwanda Development Board", place:"RDB Building, KG 9 Ave, Kigali", jobs:"Investment officers, tourism staff, project roles", sells:"Investment and business support", mail:"info@rdb.rw", tel:"1415", url:"https://rdb.rw", color:"#2f6b4f"},
-  {cat:"job", city:"Kigali", name:"Kigali Employment Service Centre", place:"City of Kigali offices", jobs:"Job-search help, skills notices, walk-in guidance", sells:"Public employment support", mail:HOST_MAIL, tel:HOST_TEL, url:"https://jobportal.kora.rw/", color:"#3d6f8a"},
-  {cat:"job", city:"Huye", name:"University of Rwanda notice boards", place:"UR Huye campus", jobs:"Student work, campus and local openings", sells:"Higher education", mail:HOST_MAIL, tel:HOST_TEL, url:"https://ur.ac.rw", color:"#2f6b4f"},
-  {cat:"health", city:"Kigali", name:"CHUK Hospital", place:"Nyarugenge, Kigali", jobs:"Nurses, doctors, cleaners, records staff", sells:"Public hospital care", mail:HOST_MAIL, tel:HOST_TEL, url:"https://chuk.rw", color:"#3d6f8a"},
-  {cat:"health", city:"Kigali", name:"King Faisal Hospital", place:"Kacyiru, Kigali", jobs:"Specialist care, emergency, support staff", sells:"Hospital services", mail:HOST_MAIL, tel:HOST_TEL, url:"https://kfh.rw", color:"#3d6f8a"},
-  {cat:"health", city:"Musanze", name:"Ruhengeri Referral Hospital", place:"Musanze", jobs:"Nurses, lab staff, support roles", sells:"Referral hospital care for the north", mail:HOST_MAIL, tel:HOST_TEL, url:"", color:"#3d6f8a"},
-  {cat:"health", city:"Huye", name:"CHUB Butare", place:"Huye", jobs:"Teaching-hospital clinical and support jobs", sells:"Hospital care for the south", mail:HOST_MAIL, tel:HOST_TEL, url:"", color:"#3d6f8a"},
-  {cat:"travel", city:"Kigali", name:"Kigali International Airport", place:"Kanombe, Kigali", jobs:"Airline, security, cleaning, retail", sells:"Flights in and out of Rwanda", mail:HOST_MAIL, tel:HOST_TEL, url:"https://www.aeroport-kigali.com", color:"#8a6d1b"},
-  {cat:"travel", city:"Kigali", name:"Nyabugogo Taxi Park", place:"Nyabugogo, Kigali", jobs:"Drivers, loaders, ticket sellers, food stalls", sells:"Buses and shared taxis to other towns", mail:HOST_MAIL, tel:HOST_TEL, url:"", color:"#8a6d1b"},
-  {cat:"market", city:"Kigali", name:"Kimironko Market", place:"Kimironko, Gasabo, Kigali", jobs:"Vendors, porters, tailors, online order packers", sells:"Food, clothes, household goods", mail:HOST_MAIL, tel:HOST_TEL, url:"https://kimironkomarket.rw/", color:"#9a5b3c"},
-  {cat:"market", city:"Kigali", name:"Caplaki Craft Village", place:"Near Kigali Convention Centre / Gikondo", jobs:"Artisans, stall keepers, guides", sells:"Baskets, art, souvenirs", mail:HOST_MAIL, tel:HOST_TEL, url:"", color:"#9a5b3c"},
-  {cat:"market", city:"Huye", name:"Huye Market", place:"Huye town centre", jobs:"Food sellers, porters, small shops", sells:"Daily food and household goods", mail:HOST_MAIL, tel:HOST_TEL, url:"", color:"#9a5b3c"},
-  {cat:"market", city:"Nyagatare", name:"Nyagatare town market", place:"Nyagatare centre", jobs:"Livestock trade help, shops, offices", sells:"Cattle-region goods and local services", mail:HOST_MAIL, tel:HOST_TEL, url:"", color:"#9a5b3c"},
-  {cat:"farm", city:"Nyagatare", name:"Eastern Province farms and co-ops", place:"Nyagatare and nearby sectors", jobs:"Farm hands, milk collection, drivers", sells:"Milk, meat, crops", mail:HOST_MAIL, tel:HOST_TEL, url:"https://www.rab.gov.rw", color:"#2f6b4f"},
-  {cat:"farm", city:"Musanze", name:"Musanze highland farms", place:"Musanze district", jobs:"Potato and vegetable farm work, packing", sells:"Highland crops", mail:HOST_MAIL, tel:HOST_TEL, url:"", color:"#2f6b4f"},
-  {cat:"hotel", city:"Musanze", name:"Volcanoes National Park area lodges", place:"Kinigi / Musanze", jobs:"Guides, cooks, housekeepers, drivers", sells:"Park visits and rooms", mail:HOST_MAIL, tel:HOST_TEL, url:"https://www.visitrwanda.com", color:"#2f6b4f"},
-  {cat:"hotel", city:"Rubavu", name:"Lake Kivu hotels and boats", place:"Rubavu / Gisenyi waterfront", jobs:"Hotel staff, boat crew, waiters", sells:"Rooms, meals, lake trips", mail:HOST_MAIL, tel:HOST_TEL, url:"https://www.visitrwanda.com", color:"#3d6f8a"},
-  {cat:"hotel", city:"Karongi", name:"Karongi lakeside lodges", place:"Karongi / Kibuye", jobs:"Lodge staff, kitchen, front desk", sells:"Lakeside stays", mail:HOST_MAIL, tel:HOST_TEL, url:"https://www.visitrwanda.com", color:"#3d6f8a"},
-  {cat:"school", city:"Kigali", name:"Hanga Hubs / RISA", place:"Telecom House, Kacyiru", jobs:"Trainers, hub assistants, startup support", sells:"Youth innovation and skills", mail:HOST_MAIL, tel:HOST_TEL, url:"https://www.risa.gov.rw/projects/hanga-hubs", color:"#8a6d1b"},
-  {cat:"school", city:"Kigali", name:"Harambee Rwanda", place:"Kigali", jobs:"Youth placement and skills coaches", sells:"Training to first job", mail:HOST_MAIL, tel:HOST_TEL, url:"https://harambee.rw/", color:"#8a6d1b"},
-  {cat:"trade", city:"Kigali", name:"Construction and workshop trades", place:"Kigali industrial areas", jobs:"Masons, electricians, welders, helpers", sells:"Building and repair work", mail:HOST_MAIL, tel:HOST_TEL, url:"", color:"#9a5b3c"},
-  {cat:"money", city:"Kigali", name:"RDB One Stop Centre", place:"RDB, KG 9 Ave, Kigali", jobs:"Business registration support roles", sells:"Register a business, investor help", mail:"support@rdb.rw", tel:"1415", url:"https://rdb.rw", color:"#2f6b4f"},
-  {cat:"money", city:"Kigali", name:"IremboGov", place:"Online + Irembo agents nationwide", jobs:"Irembo agents and support staff", sells:"Government e-services", mail:"support@irembo.com", tel:"9099", url:"https://irembo.gov.rw", color:"#3d6f8a"},
-  {cat:"money", city:"Kigali", name:"REG customer and field work", place:"Branches across Rwanda", jobs:"Electricians, tellers, field technicians", sells:"Electricity connection and billing", mail:HOST_MAIL, tel:"2727", url:"https://www.reg.rw/public-information/jobs/vacancies/", color:"#8a6d1b"}
-];
+let lang=localStorage.getItem("rc3")||"en";
+function filledSet(){ try{return new Set(JSON.parse(localStorage.getItem("rc-filled")||"[]"));}catch(e){return new Set();} }
+function saveFilled(set){ localStorage.setItem("rc-filled", JSON.stringify(Array.from(set))); }
+function loadPosted(){ try{return JSON.parse(localStorage.getItem("rc-jobs")||"[]");}catch(e){return [];} }
+function savePosted(list){ localStorage.setItem("rc-jobs", JSON.stringify(list)); }
 
-let lang = localStorage.getItem("rc3") || "en";
-const q = document.getElementById("q");
-const city = document.getElementById("city");
-const cat = document.getElementById("cat");
-function t(k){ return (I18N[lang] && I18N[lang][k]) || I18N.en[k] || k; }
-function applyText(){
-  document.documentElement.lang = lang;
-  document.querySelectorAll("[data-i]").forEach(n => n.textContent = t(n.getAttribute("data-i")));
-  q.placeholder = lang==="rw" ? "Shakisha umutetsi, umuforomo, isoko..." : lang==="fr" ? "Chercher cuisinier, infirmier, marche..." : "Search cook, nurse, market, hotel...";
-  document.getElementById("bEn").className = lang==="en"?"on":"";
-  document.getElementById("bRw").className = lang==="rw"?"on":"";
-  document.getElementById("bFr").className = lang==="fr"?"on":"";
-}
-function menus(){
-  const cv = city.value || "all", tv = cat.value || "all";
-  city.innerHTML = '<option value="all">'+t("allC")+'</option>'+CITIES.map(c=>'<option value="'+c+'">'+c+'</option>').join("");
-  cat.innerHTML = '<option value="all">'+t("allT")+'</option>'+CATS.map(c=>'<option value="'+c+'">'+c+'</option>').join("");
-  city.value = cv; cat.value = tv;
-}
-function card(item, extra){
-  const tel = item.tel || HOST_TEL;
-  const mail = item.mail || HOST_MAIL;
-  const askHost = mail === HOST_MAIL;
-  return '<article class="card"><div class="photo" style="background:'+item.color+'">'+item.city+'</div><div class="body">'+
-    '<div class="tag">'+(extra||item.cat)+' · '+item.city+'</div><h3>'+item.name+'</h3>'+
-    '<p class="meta"><b>'+t("place")+':</b> '+item.place+'<br><b>'+t("jobsNeed")+':</b> '+item.jobs+'<br><b>'+t("sells")+':</b> '+item.sells+'</p>'+
-    '<div class="links">'+
-      (item.url ? '<a href="'+item.url+'" target="_blank" rel="noopener">'+t("open")+'</a>' : '')+
-      (item.lat && item.lng ? '<a href="https://www.openstreetmap.org/?mlat='+item.lat+'&mlon='+item.lng+'#map=16/'+item.lat+'/'+item.lng+'" target="_blank" rel="noopener">'+(t("mapBtn")||"Map")+'</a>' : '')+
-      '<a href="tel:'+tel+'">'+t("call")+'</a>'+
-      '<a href="mailto:'+mail+'">'+t("mail")+'</a>'+
-      (askHost ? '<a href="mailto:'+HOST_MAIL+'">'+t("host")+'</a>' : '')+
-    '</div></div></article>';
+const ITEMS=BASE.concat(loadPosted());
+const q=document.getElementById("q"), city=document.getElementById("city"), cat=document.getElementById("cat");
+function tColor(c){ return ({job:"#2f6b4f",health:"#3d6f8a",travel:"#8a6d1b",market:"#9a5b3c",farm:"#2f6b4f",hotel:"#3d6f8a",school:"#8a6d1b",trade:"#9a5b3c",money:"#2f6b4f"}[c]||"#2f6b4f"); }
+
+function isFilled(id){ return filledSet().has(id); }
+function openItems(){ return ITEMS.filter(i=>!isFilled(i.id)); }
+function filledItems(){ return ITEMS.filter(i=>isFilled(i.id)); }
+
+function card(item){
+  return '<article class="card" onclick="openDetail(\''+item.id+'\')"><div class="photo" style="background:'+tColor(item.cat)+'">'+item.city+'</div><div class="body"><div class="tag">'+item.cat+' · '+item.city+'</div><h3>'+item.name+'</h3><p class="meta">'+item.place+'</p></div></article>';
 }
 function filtered(){
-  const s = q.value.trim().toLowerCase();
-  return ITEMS.filter(i => {
-    const blob = [i.name,i.city,i.place,i.jobs,i.sells,i.cat].join(" ").toLowerCase();
-    return (!s || blob.indexOf(s) !== -1) && (city.value==="all"||i.city===city.value) && (cat.value==="all"||i.cat===cat.value);
+  const s=q.value.trim().toLowerCase();
+  return openItems().filter(i=>{
+    const blob=[i.name,i.city,i.place,i.jobs,i.sells,i.cat,i.about||""].join(" ").toLowerCase();
+    return (!s||blob.indexOf(s)!==-1)&&(city.value==="all"||i.city===city.value)&&(cat.value==="all"||i.cat===cat.value);
   });
 }
 function draw(scroll){
-  const items = filtered();
-  document.getElementById("n").textContent = items.length;
-  document.getElementById("grid").innerHTML = items.map(i => card(i)).join("");
-  document.getElementById("empty").style.display = items.length ? "none" : "block";
-  if (scroll) document.getElementById("list").scrollIntoView();
+  const items=filtered();
+  document.getElementById("nOpen").textContent=openItems().length;
+  document.getElementById("nFilled").textContent=filledItems().length;
+  document.getElementById("grid").innerHTML=items.map(card).join("");
+  document.getElementById("empty").style.display=items.length?"none":"block";
+  document.getElementById("filledGrid").innerHTML=filledItems().map(card).join("")||'<p class="muted">No filled jobs yet.</p>';
+  document.getElementById("freshCards").innerHTML=openItems().slice(0,6).map(card).join("");
+  if(scroll) document.getElementById("list").scrollIntoView();
+}
+function menus(){
+  const cv=city.value||"all", tv=cat.value||"all";
+  city.innerHTML='<option value="all">All cities</option>'+CITIES.map(c=>'<option value="'+c+'">'+c+'</option>').join("");
+  cat.innerHTML='<option value="all">All rooms</option>'+CATS.map(c=>'<option value="'+c+'">'+c+'</option>').join("");
+  city.value=cv; cat.value=tv;
 }
 function portals(){
-  document.getElementById("portals").innerHTML = PORTALS.map(p => card({
-    cat:"job", city:"Kigali", name:p.name, place:p.place, jobs:p.why, sells:"Job portal",
-    mail:p.mail, tel:p.tel, url:p.url, color:"#2f6b4f"
-  }, "portal")).join("");
+  document.getElementById("portals").innerHTML=PORTALS.map(p=>card({id:p.id,cat:"job",city:"Kigali",name:p.name,place:p.place,jobs:p.jobs,sells:p.sells,mail:p.mail,tel:p.tel,url:p.url,about:p.about})).join("");
 }
-function setLang(next){ lang=next; localStorage.setItem("rc3", next); applyText(); menus(); portals(); draw(false); }
-function loadPosted(){
-  try { return JSON.parse(localStorage.getItem("rc-jobs") || "[]"); } catch (e) { return []; }
+function findItem(id){ return ITEMS.concat(PORTALS.map(p=>({...p,cat:"job",city:"Kigali"}))).find(x=>x.id===id); }
+function openDetail(id){
+  const i=findItem(id); if(!i) return;
+  const filled=isFilled(i.id);
+  document.getElementById("detail").innerHTML=
+    '<p class="tag">'+ (i.cat||"job")+' · '+i.city+'</p>'+
+    '<h3>'+i.name+'</h3>'+
+    '<p><b>Location:</b> '+i.place+'</p>'+
+    '<p><b>Jobs they need:</b> '+i.jobs+'</p>'+
+    '<p><b>Services / products:</b> '+i.sells+'</p>'+
+    (i.hours?'<p><b>Hours:</b> '+i.hours+'</p>':'')+
+    '<p>'+(i.about||"")+'</p>'+
+    '<p><b>Phone:</b> <a href="tel:'+(i.tel||HOST_TEL)+'">'+(i.tel||HOST_TEL)+'</a><br>'+
+    '<b>Email:</b> <a href="mailto:'+(i.mail||HOST_MAIL)+'">'+(i.mail||HOST_MAIL)+'</a></p>'+
+    '<div class="links">'+
+      (i.url?'<a href="'+i.url+'" target="_blank" rel="noopener">Official page</a>':'')+
+      (i.lat?'<a href="https://www.openstreetmap.org/?mlat='+i.lat+'&mlon='+i.lng+'#map=16/'+i.lat+'/'+i.lng+'" target="_blank" rel="noopener">Map</a>':'')+
+      '<a href="tel:'+(i.tel||HOST_TEL)+'">Call</a>'+
+      '<a href="mailto:'+(i.mail||HOST_MAIL)+'">Email</a>'+
+      (filled
+        ? '<button type="button" class="act soft" onclick="markFilled(\''+i.id+'\', false)">Reopen this job</button>'
+        : '<button type="button" class="act warn" onclick="markFilled(\''+i.id+'\', true)">Mark filled and hide</button>')+
+      '<button type="button" class="act soft" onclick="closeDetail()">Close</button>'+
+    '</div>';
+  document.getElementById("mask").className="mask on";
 }
-function savePosted(list){ localStorage.setItem("rc-jobs", JSON.stringify(list)); }
-loadPosted().reverse().forEach(function(job){ ITEMS.unshift(job); });
+function closeDetail(){ document.getElementById("mask").className="mask"; }
+function markFilled(id, yes){
+  const set=filledSet();
+  if(yes) set.add(id); else set.delete(id);
+  saveFilled(set);
+  closeDetail();
+  draw(false);
+  if(yes) document.getElementById("fresh").scrollIntoView();
+}
 
-let jobMap = null, jobMarker = null;
-function setPin(lat, lng, label){
-  document.getElementById("fLat").value = lat;
-  document.getElementById("fLng").value = lng;
-  if (!jobMap) return;
-  if (jobMarker) jobMap.removeLayer(jobMarker);
-  jobMarker = L.marker([lat, lng]).addTo(jobMap);
-  if (label) jobMarker.bindPopup(label).openPopup();
-  jobMap.setView([lat, lng], 15);
+let freshI=0;
+function nextFresh(){
+  const room=FRESH_ROOMS[freshI % FRESH_ROOMS.length];
+  freshI++;
+  document.getElementById("freshLine").textContent="Next official room: "+room.title+" — "+room.note;
+  document.getElementById("freshGo").href=room.url;
+  document.getElementById("freshCards").innerHTML=openItems().slice(freshI%Math.max(openItems().length,1)).concat(openItems()).slice(0,6).map(card).join("");
 }
-function guessCity(text){
-  const blob = (text || "").toLowerCase();
-  for (let i = 0; i < CITIES.length; i++) {
-    if (blob.indexOf(CITIES[i].toLowerCase()) !== -1) return CITIES[i];
+
+function setLang(next){
+  lang=next; localStorage.setItem("rc3", next);
+  document.getElementById("bEn").className=lang==="en"?"on":"";
+  document.getElementById("bRw").className=lang==="rw"?"on":"";
+  document.getElementById("bFr").className=lang==="fr"?"on":"";
+  if(lang==="rw"){
+    document.getElementById("title").textContent="Shakisha akazi, serivisi n'abakiriya.";
+    document.getElementById("lead").textContent="Kanda ikarita urebe amakuru yose. Niba akazi cyuzuye, kanda 'Cyuzuye' kigendanwe, hanyuma urubuga rukwereke ahandi.";
+  } else if(lang==="fr"){
+    document.getElementById("title").textContent="Trouver travail, services et clients.";
+    document.getElementById("lead").textContent="Touchez une fiche pour tout lire. Si le poste est pourvu, masquez-le. Le site vous oriente vers d'autres offres ouvertes.";
+  } else {
+    document.getElementById("title").textContent="Find work, services and customers across Rwanda.";
+    document.getElementById("lead").textContent="Click a card for full details. Mark a job filled when the team is complete. The site then hides it and points you to other open work and official job pages.";
   }
-  return "";
 }
-function nameFromPlace(data){
-  const a = data.address || {};
-  return [a.road, a.suburb, a.village, a.town, a.city, a.county].filter(Boolean).slice(0, 3).join(", ") || data.display_name || "";
+
+let jobMap=null, jobMarker=null;
+function setPin(lat,lng,label){
+  document.getElementById("fLat").value=lat; document.getElementById("fLng").value=lng;
+  if(!jobMap||!window.L) return;
+  if(jobMarker) jobMap.removeLayer(jobMarker);
+  jobMarker=L.marker([lat,lng]).addTo(jobMap);
+  if(label) jobMarker.bindPopup(label).openPopup();
+  jobMap.setView([lat,lng],15);
 }
-function reversePlace(lat, lng){
-  fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat="+lat+"&lon="+lng, {
-    headers: { "Accept": "application/json" }
-  }).then(function(r){ return r.json(); }).then(function(data){
-    const place = nameFromPlace(data);
-    if (place) document.getElementById("fLoc").value = place;
-    const found = guessCity(data.display_name || place);
-    if (found && !document.getElementById("fCity").value) document.getElementById("fCity").value = found;
-    setPin(lat, lng, place);
-  }).catch(function(){ setPin(lat, lng); });
+function reversePlace(lat,lng){
+  fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat="+lat+"&lon="+lng)
+    .then(r=>r.json()).then(data=>{
+      const a=data.address||{};
+      const place=[a.road,a.suburb,a.town,a.city,a.county].filter(Boolean).slice(0,3).join(", ")||data.display_name||"";
+      if(place) document.getElementById("fLoc").value=place;
+      const blob=(data.display_name||"").toLowerCase();
+      CITIES.forEach(c=>{ if(blob.indexOf(c.toLowerCase())!==-1 && !document.getElementById("fCity").value) document.getElementById("fCity").value=c; });
+      setPin(lat,lng,place);
+    }).catch(()=>setPin(lat,lng));
 }
 function initMap(){
-  if (jobMap || !window.L) return;
-  jobMap = L.map("jobMap").setView([-1.9441, 30.0619], 8);
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    maxZoom: 19,
-    attribution: "&copy; OpenStreetMap"
-  }).addTo(jobMap);
-  jobMap.on("click", function(ev){
-    reversePlace(ev.latlng.lat, ev.latlng.lng);
-  });
-  setTimeout(function(){ jobMap.invalidateSize(); }, 300);
+  if(jobMap||!window.L) return;
+  jobMap=L.map("jobMap").setView([-1.9441,30.0619],8);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:19,attribution:"&copy; OpenStreetMap"}).addTo(jobMap);
+  jobMap.on("click", ev=>reversePlace(ev.latlng.lat, ev.latlng.lng));
+  setTimeout(()=>jobMap.invalidateSize(),300);
 }
 function useMyLocation(){
-  if (!navigator.geolocation) { alert("Location is not available on this device."); return; }
-  navigator.geolocation.getCurrentPosition(function(pos){
-    reversePlace(pos.coords.latitude, pos.coords.longitude);
-  }, function(){
-    alert("Allow location in the browser, or tap the map instead.");
-  }, { enableHighAccuracy: true, timeout: 10000 });
+  if(!navigator.geolocation){ alert("Location is not available."); return; }
+  navigator.geolocation.getCurrentPosition(pos=>reversePlace(pos.coords.latitude,pos.coords.longitude),
+    ()=>alert("Allow location, or tap the map."));
 }
 function sendJob(e){
   e.preventDefault();
-  const lat = document.getElementById("fLat").value;
-  const lng = document.getElementById("fLng").value;
-  const item = {
-    cat: "job",
-    city: document.getElementById("fCity").value,
-    name: document.getElementById("fBiz").value + " — " + document.getElementById("fTitle").value,
-    place: document.getElementById("fLoc").value + (lat && lng ? " ("+Number(lat).toFixed(5)+", "+Number(lng).toFixed(5)+")" : ""),
-    jobs: document.getElementById("fNeed").value,
-    sells: "Hiring now",
-    mail: document.getElementById("fMail").value,
-    tel: document.getElementById("fPhone").value,
-    url: lat && lng ? "https://www.openstreetmap.org/?mlat="+lat+"&mlon="+lng+"#map=16/"+lat+"/"+lng : "",
-    color: "#2f6b4f",
-    lat: lat ? Number(lat) : "",
-    lng: lng ? Number(lng) : "",
-    postedBy: document.getElementById("fName").value
+  const lat=document.getElementById("fLat").value, lng=document.getElementById("fLng").value;
+  const item={
+    id:"post-"+Date.now(), cat:"job",
+    city:document.getElementById("fCity").value,
+    name:document.getElementById("fBiz").value+" — "+document.getElementById("fTitle").value,
+    place:document.getElementById("fLoc").value,
+    jobs:document.getElementById("fNeed").value,
+    sells:"Hiring now",
+    mail:document.getElementById("fMail").value,
+    tel:document.getElementById("fPhone").value,
+    url: lat&&lng ? "https://www.openstreetmap.org/?mlat="+lat+"&mlon="+lng+"#map=16/"+lat+"/"+lng : "",
+    about:"Posted by "+document.getElementById("fName").value+". "+(document.getElementById("fPay").value||""),
+    lat:lat?Number(lat):"", lng:lng?Number(lng):""
   };
   ITEMS.unshift(item);
-  const posted = loadPosted();
-  posted.push(item);
-  savePosted(posted);
+  const posted=loadPosted(); posted.push(item); savePosted(posted);
   draw(true);
-  document.getElementById("postOk").style.display = "block";
-  const body = [
-    "New job for Rwanda Connect",
-    "Name: "+item.postedBy,
-    "Business job: "+item.name,
-    "City: "+item.city,
-    "Location: "+item.place,
-    "Map: "+item.url,
-    "Need: "+item.jobs,
-    "Phone: "+item.tel,
-    "Email: "+item.mail
-  ].join("%0A");
-  setTimeout(function(){
-    window.location.href = "mailto:"+HOST_MAIL+"?subject="+encodeURIComponent("New job listing")+"&body="+body;
-  }, 400);
+  document.getElementById("postOk").style.display="block";
+  const body=["New job",item.name,item.city,item.place,item.jobs,item.tel,item.mail,item.url].join("%0A");
+  setTimeout(()=>{ window.location.href="mailto:"+HOST_MAIL+"?subject="+encodeURIComponent("New job listing")+"&body="+body; },400);
   return false;
 }
-q.addEventListener("input", function(){ draw(false); });
-q.addEventListener("keydown", function(e){ if(e.key==="Enter") draw(true); });
-city.addEventListener("change", function(){ draw(true); });
-cat.addEventListener("change", function(){ draw(true); });
-applyText(); menus(); portals(); draw(false);
-initMap();
-window.addEventListener("load", function(){ if (jobMap) jobMap.invalidateSize(); });
+
+q.addEventListener("input",()=>draw(false));
+q.addEventListener("keydown",e=>{ if(e.key==="Enter") draw(true); });
+city.addEventListener("change",()=>draw(true));
+cat.addEventListener("change",()=>draw(true));
+menus(); portals(); setLang(lang); draw(false); nextFresh();
 </script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" onload="initMap()"></script>
 </body>
