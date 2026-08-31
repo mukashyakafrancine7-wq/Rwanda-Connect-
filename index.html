@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rwanda Connect — Jobs, services and markets</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <style>
     :root {
       --ink: #1f2a24;
@@ -80,6 +81,8 @@
     form.box label { display: block; font-size: 13px; margin: 10px 0 4px; }
     footer { padding: 24px 6%; border-top: 1px solid var(--line); color: var(--muted); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .helpbox { background: #fff; border-left: 4px solid var(--gold); padding: 14px; border-radius: 8px; margin-top: 12px; }
+    #jobMap { height: 280px; width: 100%; border-radius: 12px; border: 1px solid var(--line); margin: 8px 0 12px; z-index: 1; }
+    .map-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
     @media (max-width: 800px) { .search { grid-template-columns: 1fr; } }
   </style>
 </head>
@@ -134,18 +137,28 @@
   <section class="room r-gold" id="markets"><h2 data-i="mktT">Markets and sellers</h2><p class="muted" data-i="mktL">Meet buyers and sellers in known Rwandan markets.</p></section>
   <section class="room r-clay" id="post">
     <h2 data-i="postT">Post a job / recruit</h2>
-    <p class="muted" data-i="postL">If you have work and need staff, fill this form. It opens email to the host so the job can be added.</p>
+    <p class="muted" data-i="postL">Fill the form, pin the workplace on the map, then publish. The job appears on this website and a copy is emailed to the host.</p>
     <form class="box" onsubmit="return sendJob(event)">
       <label data-i="fName">Your name</label><input id="fName" required>
       <label data-i="fBiz">Business or organisation</label><input id="fBiz" required>
       <label data-i="fTitle">Job title</label><input id="fTitle" required>
       <label data-i="fCity">City / district</label><input id="fCity" required>
-      <label data-i="fLoc">Exact location</label><input id="fLoc" required>
+      <label data-i="mapT">Workplace on the map</label>
+      <p class="muted" data-i="mapL">Allow location, or tap the map to drop a pin.</p>
+      <div class="map-actions">
+        <button class="act" type="button" onclick="useMyLocation()" data-i="useLoc">Use my location</button>
+      </div>
+      <div id="jobMap"></div>
+      <label data-i="fLoc">Exact location</label>
+      <input id="fLoc" required placeholder="Street, sector, district">
+      <input id="fLat" type="hidden">
+      <input id="fLng" type="hidden">
       <label data-i="fNeed">Who you need and what the job does</label><textarea id="fNeed" rows="4" required></textarea>
       <label data-i="fPhone">Your phone</label><input id="fPhone" required placeholder="+250...">
       <label data-i="fMail">Your email</label><input id="fMail" type="email" required>
       <p class="muted" style="margin:12px 0" data-i="fNote">The form sends to mukashyakafrancine7@gmail.com</p>
-      <button class="act" type="submit" data-i="fSend">Send job to host</button>
+      <button class="act" type="submit" data-i="fSend">Publish job on the site</button>
+      <p id="postOk" class="muted" style="display:none;margin-top:10px" data-i="postedOk">Saved on this website. Check the listings above.</p>
     </form>
   </section>
 
@@ -181,10 +194,12 @@ const I18N = {
     empty:"No match. Try another word or contact the host.",
     svcT:"Everyday services", svcL:"Health, buses, training and local help.",
     mktT:"Markets and sellers", mktL:"Meet buyers and sellers in known Rwandan markets.",
-    postT:"Post a job / recruit", postL:"If you have work and need staff, fill this form. It opens email to the host so the job can be added.",
+    postT:"Post a job / recruit", postL:"Fill the form, pin the workplace on the map, then publish. The job appears on this website and a copy is emailed to the host.",
+    mapT:"Workplace on the map", mapL:"Allow location, or tap the map to drop a pin.", useLoc:"Use my location",
+    postedOk:"Saved on this website. Check the listings above.", mapBtn:"Map",
     fName:"Your name", fBiz:"Business or organisation", fTitle:"Job title", fCity:"City / district",
     fLoc:"Exact location", fNeed:"Who you need and what the job does", fPhone:"Your phone", fMail:"Your email",
-    fNote:"The form sends to mukashyakafrancine7@gmail.com", fSend:"Send job to host",
+    fNote:"The form sends to mukashyakafrancine7@gmail.com", fSend:"Publish job on the site",
     helpT:"Help and missing information", helpB:"If a listing is empty, closed, or has no contact, use the host:",
     helpO:"Official lines: RDB 1415 · Irembo 9099 · REG 2727",
     foot:"Learning project. Confirm official jobs on official sites.",
@@ -203,10 +218,12 @@ const I18N = {
     empty:"Nta bihuye. Gerageza irindi jambo cyangwa uhamagare nyir'urubuga.",
     svcT:"Serivisi za buri munsi", svcL:"Ubuzima, amabisi, amahugurwa n'ubufasha.",
     mktT:"Amasoko n'abacuruzi", mktL:"Huza abagura n'abacuruzi mu masoko azwi.",
-    postT:"Shyira akazi / shaka umukozi", postL:"Niba ufite akazi ushaka umukozi, uzuza iyi fomu. Ijya kuri email ya nyir'urubuga.",
+    postT:"Shyira akazi / shaka umukozi", postL:"Uzuza fomu, shyira akamennetse ku ikarita, hanyuma ushyire akazi ku rubuga.",
+    mapT:"Aho akazi kari ku ikarita", mapL:"Emerera ahantu, cyangwa ukande ku ikarita.", useLoc:"Koresha ahantu ndi",
+    postedOk:"Byabitswe ku rubuga. Reba urutonde hejuru.", mapBtn:"Ikarita",
     fName:"Amazina yawe", fBiz:"Ubucuruzi cyangwa ikigo", fTitle:"Izina ry'akazi", fCity:"Umujyi / akarere",
     fLoc:"Aho kiri neza", fNeed:"Uwu ushaka n'icyo akazi gikora", fPhone:"Telefoni", fMail:"Imeyili",
-    fNote:"Iyo fomu ijya kuri mukashyakafrancine7@gmail.com", fSend:"Ohereza akazi",
+    fNote:"Iyo fomu ijya kuri mukashyakafrancine7@gmail.com", fSend:"Shyira akazi ku rubuga",
     helpT:"Ubufasha n'amakuru abura", helpB:"Niba urutonde rudafite telefoni, koresha nyir'urubuga:",
     helpO:"Imirongo ya Leta: RDB 1415 · Irembo 9099 · REG 2727",
     foot:"Umushinga wo kwiga. Emeza akazi ka Leta ku mbuga za Leta.",
@@ -225,10 +242,12 @@ const I18N = {
     empty:"Aucun resultat. Essayez un autre mot ou contactez l'hote.",
     svcT:"Services du quotidien", svcL:"Sante, bus, formation et aide locale.",
     mktT:"Marches et vendeurs", mktL:"Relier acheteurs et vendeurs dans des marches connus.",
-    postT:"Publier un emploi / recruter", postL:"Si vous avez du travail et cherchez du personnel, remplissez ce formulaire. Il envoie un email a l'hote.",
+    postT:"Publier un emploi / recruter", postL:"Remplissez le formulaire, placez le lieu sur la carte, puis publiez. L'offre apparait sur le site.",
+    mapT:"Lieu de travail sur la carte", mapL:"Autorisez la position, ou touchez la carte.", useLoc:"Utiliser ma position",
+    postedOk:"Enregistre sur le site. Voyez la liste plus haut.", mapBtn:"Carte",
     fName:"Votre nom", fBiz:"Entreprise ou organisation", fTitle:"Intitule du poste", fCity:"Ville / district",
     fLoc:"Lieu exact", fNeed:"Qui vous cherchez et le travail a faire", fPhone:"Telephone", fMail:"Email",
-    fNote:"Le formulaire part vers mukashyakafrancine7@gmail.com", fSend:"Envoyer a l'hote",
+    fNote:"Le formulaire part vers mukashyakafrancine7@gmail.com", fSend:"Publier sur le site",
     helpT:"Aide et informations manquantes", helpB:"Si une fiche n'a pas de contact, utilisez l'hote:",
     helpO:"Lignes officielles: RDB 1415 · Irembo 9099 · REG 2727",
     foot:"Projet d'apprentissage. Confirmez les emplois officiels sur les sites officiels.",
@@ -304,6 +323,7 @@ function card(item, extra){
     '<p class="meta"><b>'+t("place")+':</b> '+item.place+'<br><b>'+t("jobsNeed")+':</b> '+item.jobs+'<br><b>'+t("sells")+':</b> '+item.sells+'</p>'+
     '<div class="links">'+
       (item.url ? '<a href="'+item.url+'" target="_blank" rel="noopener">'+t("open")+'</a>' : '')+
+      (item.lat && item.lng ? '<a href="https://www.openstreetmap.org/?mlat='+item.lat+'&mlon='+item.lng+'#map=16/'+item.lat+'/'+item.lng+'" target="_blank" rel="noopener">'+(t("mapBtn")||"Map")+'</a>' : '')+
       '<a href="tel:'+tel+'">'+t("call")+'</a>'+
       '<a href="mailto:'+mail+'">'+t("mail")+'</a>'+
       (askHost ? '<a href="mailto:'+HOST_MAIL+'">'+t("host")+'</a>' : '')+
@@ -330,20 +350,103 @@ function portals(){
   }, "portal")).join("");
 }
 function setLang(next){ lang=next; localStorage.setItem("rc3", next); applyText(); menus(); portals(); draw(false); }
+function loadPosted(){
+  try { return JSON.parse(localStorage.getItem("rc-jobs") || "[]"); } catch (e) { return []; }
+}
+function savePosted(list){ localStorage.setItem("rc-jobs", JSON.stringify(list)); }
+loadPosted().reverse().forEach(function(job){ ITEMS.unshift(job); });
+
+let jobMap = null, jobMarker = null;
+function setPin(lat, lng, label){
+  document.getElementById("fLat").value = lat;
+  document.getElementById("fLng").value = lng;
+  if (!jobMap) return;
+  if (jobMarker) jobMap.removeLayer(jobMarker);
+  jobMarker = L.marker([lat, lng]).addTo(jobMap);
+  if (label) jobMarker.bindPopup(label).openPopup();
+  jobMap.setView([lat, lng], 15);
+}
+function guessCity(text){
+  const blob = (text || "").toLowerCase();
+  for (let i = 0; i < CITIES.length; i++) {
+    if (blob.indexOf(CITIES[i].toLowerCase()) !== -1) return CITIES[i];
+  }
+  return "";
+}
+function nameFromPlace(data){
+  const a = data.address || {};
+  return [a.road, a.suburb, a.village, a.town, a.city, a.county].filter(Boolean).slice(0, 3).join(", ") || data.display_name || "";
+}
+function reversePlace(lat, lng){
+  fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat="+lat+"&lon="+lng, {
+    headers: { "Accept": "application/json" }
+  }).then(function(r){ return r.json(); }).then(function(data){
+    const place = nameFromPlace(data);
+    if (place) document.getElementById("fLoc").value = place;
+    const found = guessCity(data.display_name || place);
+    if (found && !document.getElementById("fCity").value) document.getElementById("fCity").value = found;
+    setPin(lat, lng, place);
+  }).catch(function(){ setPin(lat, lng); });
+}
+function initMap(){
+  if (jobMap || !window.L) return;
+  jobMap = L.map("jobMap").setView([-1.9441, 30.0619], 8);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    maxZoom: 19,
+    attribution: "&copy; OpenStreetMap"
+  }).addTo(jobMap);
+  jobMap.on("click", function(ev){
+    reversePlace(ev.latlng.lat, ev.latlng.lng);
+  });
+  setTimeout(function(){ jobMap.invalidateSize(); }, 300);
+}
+function useMyLocation(){
+  if (!navigator.geolocation) { alert("Location is not available on this device."); return; }
+  navigator.geolocation.getCurrentPosition(function(pos){
+    reversePlace(pos.coords.latitude, pos.coords.longitude);
+  }, function(){
+    alert("Allow location in the browser, or tap the map instead.");
+  }, { enableHighAccuracy: true, timeout: 10000 });
+}
 function sendJob(e){
   e.preventDefault();
+  const lat = document.getElementById("fLat").value;
+  const lng = document.getElementById("fLng").value;
+  const item = {
+    cat: "job",
+    city: document.getElementById("fCity").value,
+    name: document.getElementById("fBiz").value + " — " + document.getElementById("fTitle").value,
+    place: document.getElementById("fLoc").value + (lat && lng ? " ("+Number(lat).toFixed(5)+", "+Number(lng).toFixed(5)+")" : ""),
+    jobs: document.getElementById("fNeed").value,
+    sells: "Hiring now",
+    mail: document.getElementById("fMail").value,
+    tel: document.getElementById("fPhone").value,
+    url: lat && lng ? "https://www.openstreetmap.org/?mlat="+lat+"&mlon="+lng+"#map=16/"+lat+"/"+lng : "",
+    color: "#2f6b4f",
+    lat: lat ? Number(lat) : "",
+    lng: lng ? Number(lng) : "",
+    postedBy: document.getElementById("fName").value
+  };
+  ITEMS.unshift(item);
+  const posted = loadPosted();
+  posted.push(item);
+  savePosted(posted);
+  draw(true);
+  document.getElementById("postOk").style.display = "block";
   const body = [
     "New job for Rwanda Connect",
-    "Name: "+document.getElementById("fName").value,
-    "Business: "+document.getElementById("fBiz").value,
-    "Title: "+document.getElementById("fTitle").value,
-    "City: "+document.getElementById("fCity").value,
-    "Location: "+document.getElementById("fLoc").value,
-    "Need: "+document.getElementById("fNeed").value,
-    "Phone: "+document.getElementById("fPhone").value,
-    "Email: "+document.getElementById("fMail").value
+    "Name: "+item.postedBy,
+    "Business job: "+item.name,
+    "City: "+item.city,
+    "Location: "+item.place,
+    "Map: "+item.url,
+    "Need: "+item.jobs,
+    "Phone: "+item.tel,
+    "Email: "+item.mail
   ].join("%0A");
-  window.location.href = "mailto:"+HOST_MAIL+"?subject="+encodeURIComponent("New job listing")+"&body="+body;
+  setTimeout(function(){
+    window.location.href = "mailto:"+HOST_MAIL+"?subject="+encodeURIComponent("New job listing")+"&body="+body;
+  }, 400);
   return false;
 }
 q.addEventListener("input", function(){ draw(false); });
@@ -351,6 +454,9 @@ q.addEventListener("keydown", function(e){ if(e.key==="Enter") draw(true); });
 city.addEventListener("change", function(){ draw(true); });
 cat.addEventListener("change", function(){ draw(true); });
 applyText(); menus(); portals(); draw(false);
+initMap();
+window.addEventListener("load", function(){ if (jobMap) jobMap.invalidateSize(); });
 </script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" onload="initMap()"></script>
 </body>
 </html>
