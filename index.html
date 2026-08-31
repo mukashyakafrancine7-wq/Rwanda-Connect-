@@ -38,7 +38,8 @@
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:16px}
     .card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;text-align:left}
     .card:hover{border-color:var(--green)}
-    .photo{height:110px;display:flex;align-items:flex-end;padding:10px;color:#fff;font-size:13px}
+    .photo{height:140px;display:flex;align-items:flex-end;padding:10px;color:#fff;font-size:13px;background-size:cover;background-position:center;text-shadow:0 1px 4px rgba(0,0,0,.55)}
+    .detail img.full{width:100%;height:220px;object-fit:cover;border-radius:12px;margin:0 0 14px;display:block}
     .body{padding:14px}.tag{font-size:12px;color:var(--sky);margin-bottom:6px}
     .card h3,.detail h3{font-size:18px;margin-bottom:6px}
     .meta{font-size:13px;color:var(--muted);margin:8px 0}
@@ -224,13 +225,54 @@ function savePosted(list){ localStorage.setItem("rc-jobs", JSON.stringify(list))
 const ITEMS=BASE.concat(loadPosted());
 const q=document.getElementById("q"), city=document.getElementById("city"), cat=document.getElementById("cat");
 function tColor(c){ return ({job:"#2f6b4f",health:"#3d6f8a",travel:"#8a6d1b",market:"#9a5b3c",farm:"#2f6b4f",hotel:"#3d6f8a",school:"#8a6d1b",trade:"#9a5b3c",money:"#2f6b4f"}[c]||"#2f6b4f"); }
+const PICS = {
+  job: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=60",
+  health: "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=900&q=60",
+  travel: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=60",
+  market: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=60",
+  farm: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=60",
+  hotel: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=900&q=60",
+  school: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=900&q=60",
+  trade: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=60",
+  money: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=900&q=60",
+  rdb: "https://images.unsplash.com/photo-1486406149826-980e29aa6b4d?auto=format&fit=crop&w=900&q=60",
+  mifotra: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=900&q=60",
+  kora: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=60",
+  jir: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=900&q=60",
+  cyizere: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=900&q=60",
+  harambee: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=900&q=60",
+  "rdb-hq": "https://images.unsplash.com/photo-1486406149826-980e29aa6b4d?auto=format&fit=crop&w=900&q=60",
+  kesc: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=900&q=60",
+  ur: "https://images.unsplash.com/photo-1541339903302-d6ec549127bd?auto=format&fit=crop&w=900&q=60",
+  chuk: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=900&q=60",
+  kfh: "https://images.unsplash.com/photo-1512678080530-7760d81bada0?auto=format&fit=crop&w=900&q=60",
+  ruhengeri: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=900&q=60",
+  chub: "https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=900&q=60",
+  airport: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=900&q=60",
+  nyabugogo: "https://images.unsplash.com/photo-1544620341-11cb2cd4c8f8?auto=format&fit=crop&w=900&q=60",
+  kimironko: "https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=900&q=60",
+  caplaki: "https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=900&q=60",
+  "huye-mkt": "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=900&q=60",
+  nyagatare: "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=900&q=60",
+  "east-farm": "https://images.unsplash.com/photo-1500595046743-cd271d694d30?auto=format&fit=crop&w=900&q=60",
+  "musanze-farm": "https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=900&q=60",
+  volcanoes: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=60",
+  kivu: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=900&q=60",
+  karongi: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=60",
+  hanga: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=60",
+  trades: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=900&q=60",
+  osc: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=60",
+  irembo: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=60",
+  reg: "https://images.unsplash.com/photo-1473341301370-5d210bd81930?auto=format&fit=crop&w=900&q=60"
+};
+function pic(item){ return item.img || PICS[item.id] || PICS[item.cat] || PICS.job; }
 
 function isFilled(id){ return filledSet().has(id); }
 function openItems(){ return ITEMS.filter(i=>!isFilled(i.id)); }
 function filledItems(){ return ITEMS.filter(i=>isFilled(i.id)); }
 
 function card(item){
-  return '<article class="card" onclick="openDetail(\''+item.id+'\')"><div class="photo" style="background:'+tColor(item.cat)+'">'+item.city+'</div><div class="body"><div class="tag">'+item.cat+' · '+item.city+'</div><h3>'+item.name+'</h3><p class="meta">'+item.place+'</p></div></article>';
+  return '<article class="card" onclick="openDetail(\''+item.id+'\')"><div class="photo" style="background-image:linear-gradient(transparent,rgba(0,0,0,.35)),url(\''+pic(item)+'\')">'+item.city+'</div><div class="body"><div class="tag">'+item.cat+' · '+item.city+'</div><h3>'+item.name+'</h3><p class="meta">'+item.place+'</p></div></article>';
 }
 function filtered(){
   const s=q.value.trim().toLowerCase();
@@ -263,6 +305,7 @@ function openDetail(id){
   const i=findItem(id); if(!i) return;
   const filled=isFilled(i.id);
   document.getElementById("detail").innerHTML=
+    '<img class="full" src="'+pic(i)+'" alt="'+i.name+'">'+
     '<p class="tag">'+ (i.cat||"job")+' · '+i.city+'</p>'+
     '<h3>'+i.name+'</h3>'+
     '<p><b>Location:</b> '+i.place+'</p>'+
@@ -366,7 +409,8 @@ function sendJob(e){
     tel:document.getElementById("fPhone").value,
     url: lat&&lng ? "https://www.openstreetmap.org/?mlat="+lat+"&mlon="+lng+"#map=16/"+lat+"/"+lng : "",
     about:"Posted by "+document.getElementById("fName").value+". "+(document.getElementById("fPay").value||""),
-    lat:lat?Number(lat):"", lng:lng?Number(lng):""
+    lat:lat?Number(lat):"", lng:lng?Number(lng):"",
+    img: PICS.job
   };
   ITEMS.unshift(item);
   const posted=loadPosted(); posted.push(item); savePosted(posted);
