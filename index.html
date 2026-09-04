@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Rwanda Connect - discover useful services, businesses and places across Rwanda.">
+<meta name="description" content="Rwanda Connect - discover useful services, businesses, rental houses, offices and places across Rwanda.">
 <meta name="theme-color" content="#176b45">
 <title>Rwanda Connect 🇷🇼 | Discover Rwanda</title>
 
@@ -43,10 +43,6 @@ body{
   overflow-x:hidden;
 }
 
-/* =========================
-   DARK MODE — KIGALI NIGHT
-========================= */
-
 body.dark{
   --text:#f4f7f5;
   --muted:#b7c2bc;
@@ -62,18 +58,10 @@ body.dark{
     linear-gradient(rgba(1,10,7,.80),rgba(1,10,7,.94)),
     url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Panoramic_view_of_Kigali_(Rwanda)_at_night_01.jpg");
 
-  background-size:
-    auto,
-    auto,
-    auto,
-    cover,
-    cover;
-
+  background-size:auto,auto,auto,cover,cover;
   background-position:center;
   background-attachment:fixed;
 }
-
-/* GOLDEN KIGALI CITY LIGHTS */
 
 body.dark::before{
   content:"";
@@ -95,8 +83,6 @@ body.dark::before{
   opacity:.85;
 }
 
-/* GREEN ATMOSPHERIC GLOW */
-
 body.dark::after{
   content:"";
   position:fixed;
@@ -105,30 +91,18 @@ body.dark::after{
   z-index:0;
 
   background:
-    radial-gradient(
-      circle at 20% 50%,
-      rgba(23,107,69,.16),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 80% 65%,
-      rgba(0,196,255,.08),
-      transparent 28%
-    );
+    radial-gradient(circle at 20% 50%,rgba(23,107,69,.16),transparent 30%),
+    radial-gradient(circle at 80% 65%,rgba(0,196,255,.08),transparent 28%);
 
   filter:blur(35px);
 }
-
-/* Keep website above effects */
 
 body > *{
   position:relative;
   z-index:1;
 }
 
-/* =========================
-   NAVIGATION
-========================= */
+/* NAVIGATION */
 
 nav{
   position:sticky;
@@ -154,9 +128,7 @@ body.dark nav{
   gap:20px;
 }
 
-/* =========================
-   MASTERPIECE LOGO
-========================= */
+/* LOGO */
 
 .brand{
   display:flex;
@@ -258,9 +230,7 @@ body.dark nav{
   color:var(--text);
 }
 
-/* =========================
-   HERO
-========================= */
+/* HERO */
 
 .hero{
   min-height:650px;
@@ -281,8 +251,6 @@ body.dark nav{
   background-size:cover;
   background-position:center;
 }
-
-/* ACTUAL KIGALI NIGHT IMAGE IN DARK MODE */
 
 body.dark .hero{
   background-image:
@@ -381,9 +349,7 @@ body.dark .hero::before{
   margin-bottom:30px;
 }
 
-/* =========================
-   SEARCH
-========================= */
+/* SEARCH */
 
 .search-box{
   background:rgba(255,255,255,.96);
@@ -427,9 +393,7 @@ body.dark .hero::before{
   background:var(--green-2);
 }
 
-/* =========================
-   SECTIONS
-========================= */
+/* SECTIONS */
 
 section{
   padding:80px 22px;
@@ -454,13 +418,11 @@ section{
   color:var(--muted);
 }
 
-/* =========================
-   CATEGORIES
-========================= */
+/* CATEGORIES */
 
 .categories{
   display:grid;
-  grid-template-columns:repeat(6,1fr);
+  grid-template-columns:repeat(4,1fr);
   gap:16px;
 }
 
@@ -490,9 +452,7 @@ section{
   font-size:16px;
 }
 
-/* =========================
-   DISCOVER
-========================= */
+/* DISCOVER */
 
 .discover-grid{
   display:grid;
@@ -588,9 +548,7 @@ body.dark .details-btn{
   color:white;
 }
 
-/* =========================
-   STATS
-========================= */
+/* STATS */
 
 .stats{
   background:linear-gradient(135deg,#176b45,#0e5134);
@@ -613,9 +571,7 @@ body.dark .details-btn{
   opacity:.9;
 }
 
-/* =========================
-   HOW IT WORKS
-========================= */
+/* HOW IT WORKS */
 
 .steps{
   display:grid;
@@ -646,9 +602,7 @@ body.dark .details-btn{
   font-size:20px;
 }
 
-/* =========================
-   CTA
-========================= */
+/* CTA */
 
 .cta{
   background:
@@ -721,9 +675,7 @@ body.dark .cta{
   transform:translateY(-2px);
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* FOOTER */
 
 footer{
   background:#0b1712;
@@ -767,9 +719,7 @@ footer a:hover{
   font-size:13px;
 }
 
-/* =========================
-   MODAL
-========================= */
+/* MODAL */
 
 .modal{
   position:fixed;
@@ -808,9 +758,7 @@ footer a:hover{
   color:var(--text);
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+/* RESPONSIVE */
 
 @media(max-width:900px){
 
@@ -839,7 +787,7 @@ footer a:hover{
   }
 
   .categories{
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns:repeat(2,1fr);
   }
 
   .discover-grid{
@@ -1049,7 +997,8 @@ Explore
 
 <p data-i18n="heroDescription">
 Discover trusted businesses, hotels, restaurants,
-healthcare, transport, jobs and useful services across Rwanda.
+healthcare, transport, jobs, rental houses,
+offices and useful services across Rwanda.
 </p>
 
 <div class="search-box">
@@ -1129,6 +1078,16 @@ Find what you need quickly and easily.
 <h3 data-i18n="businesses">Businesses</h3>
 </div>
 
+<div class="category-card" onclick="setCategory('Rental')">
+<div class="category-icon">🏠</div>
+<h3 data-i18n="rentals">Rental Houses</h3>
+</div>
+
+<div class="category-card" onclick="setCategory('Office')">
+<div class="category-icon">🏢</div>
+<h3 data-i18n="offices">Offices</h3>
+</div>
+
 </div>
 </div>
 </section>
@@ -1161,7 +1120,7 @@ Explore places and services around the country.
 <div class="stats-grid">
 
 <div class="stat">
-<h3>30+</h3>
+<h3>40+</h3>
 <p data-i18n="listings">Listings</p>
 </div>
 
@@ -1171,7 +1130,7 @@ Explore places and services around the country.
 </div>
 
 <div class="stat">
-<h3>6</h3>
+<h3>8</h3>
 <p data-i18n="categoriesCount">Categories</p>
 </div>
 
@@ -1330,10 +1289,12 @@ This is a demo listing on Rwanda Connect.
 <script>
 
 /* =========================
-   LISTINGS — NEW HD IMAGES
+   LISTINGS
 ========================= */
 
 const listings = [
+
+/* HOTELS */
 
 {
 name:"Kigali Serena Hotel",
@@ -1362,6 +1323,8 @@ icon:"🏨",
 image:"https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1600&q=95"
 },
 
+/* RESTAURANTS */
+
 {
 name:"Heaven Restaurant",
 category:"Restaurant",
@@ -1379,6 +1342,17 @@ area:"Nyarutarama",
 icon:"☕",
 image:"https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=1600&q=95"
 },
+
+{
+name:"Kigali Garden Restaurant",
+category:"Restaurant",
+city:"Kigali",
+area:"Kacyiru",
+icon:"🍽️",
+image:"https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1600&q=95"
+},
+
+/* HEALTHCARE */
 
 {
 name:"University Teaching Hospital of Kigali",
@@ -1399,6 +1373,17 @@ image:"https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&
 },
 
 {
+name:"Modern Medical Centre Rwanda",
+category:"Healthcare",
+city:"Kigali",
+area:"Remera",
+icon:"🏥",
+image:"https://images.unsplash.com/photo-1516841273335-e39b37888115?auto=format&fit=crop&w=1600&q=95"
+},
+
+/* TRANSPORT */
+
+{
 name:"Kigali International Airport",
 category:"Transport",
 city:"Kigali",
@@ -1417,13 +1402,44 @@ image:"https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit
 },
 
 {
+name:"Rwanda Express Transport",
+category:"Transport",
+city:"Kigali",
+area:"Downtown",
+icon:"🚌",
+image:"https://images.unsplash.com/photo-1570125909232-eb263c188f7e?auto=format&fit=crop&w=1600&q=95"
+},
+
+/* JOBS */
+
+{
 name:"Rwanda Careers",
 category:"Jobs",
 city:"Kigali",
 area:"Kigali",
 icon:"💼",
-image:"https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1600&q=95"
+image:"https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1600&q=95"
 },
+
+{
+name:"Digital Jobs Rwanda",
+category:"Jobs",
+city:"Kigali",
+area:"Kigali",
+icon:"💻",
+image:"https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=95"
+},
+
+{
+name:"Rwanda Career Opportunities",
+category:"Jobs",
+city:"Kigali",
+area:"Nyarugenge",
+icon:"👔",
+image:"https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1600&q=95"
+},
+
+/* BUSINESSES */
 
 {
 name:"Kimironko Market",
@@ -1444,15 +1460,6 @@ image:"https://images.unsplash.com/photo-1604719312566-8912e9227c6a?auto=format&
 },
 
 {
-name:"Digital Jobs Rwanda",
-category:"Jobs",
-city:"Kigali",
-area:"Kigali",
-icon:"💻",
-image:"https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=95"
-},
-
-{
 name:"Rwanda Business Hub",
 category:"Business",
 city:"Kigali",
@@ -1470,13 +1477,80 @@ icon:"🏪",
 image:"https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1600&q=95"
 },
 
+/* RENTAL HOUSES */
+
 {
-name:"Rwanda Career Opportunities",
-category:"Jobs",
+name:"Kigali Modern Family House",
+category:"Rental",
 city:"Kigali",
-area:"Nyarugenge",
-icon:"👔",
-image:"https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=1600&q=95"
+area:"Gacuriro",
+icon:"🏠",
+image:"https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=95"
+},
+
+{
+name:"Luxury Rental Villa Kigali",
+category:"Rental",
+city:"Kigali",
+area:"Nyarutarama",
+icon:"🏡",
+image:"https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&q=95"
+},
+
+{
+name:"Musanze Family Rental House",
+category:"Rental",
+city:"Musanze",
+area:"Musanze",
+icon:"🏠",
+image:"https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=1600&q=95"
+},
+
+{
+name:"Huye Comfortable Rental Home",
+category:"Rental",
+city:"Huye",
+area:"Town Centre",
+icon:"🏡",
+image:"https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&q=95"
+},
+
+/* OFFICES */
+
+{
+name:"Kigali Business Office Suites",
+category:"Office",
+city:"Kigali",
+area:"Kacyiru",
+icon:"🏢",
+image:"https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1600&q=95"
+},
+
+{
+name:"Modern Kigali Office Space",
+category:"Office",
+city:"Kigali",
+area:"Nyarutarama",
+icon:"🏢",
+image:"https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&q=95"
+},
+
+{
+name:"Gasabo Professional Offices",
+category:"Office",
+city:"Kigali",
+area:"Gasabo",
+icon:"🏢",
+image:"https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1600&q=95"
+},
+
+{
+name:"Musanze Office Centre",
+category:"Office",
+city:"Musanze",
+area:"Musanze",
+icon:"🏢",
+image:"https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1600&q=95"
 }
 
 ];
@@ -1498,7 +1572,7 @@ explore:"Explore",
 badge:"🇷🇼 Made for Rwanda",
 everything:"Everything you need",
 inRwanda:"in Rwanda.",
-heroDescription:"Discover trusted businesses, hotels, restaurants, healthcare, transport, jobs and useful services across Rwanda.",
+heroDescription:"Discover trusted businesses, hotels, restaurants, healthcare, transport, jobs, rental houses, offices and useful services across Rwanda.",
 searchPlaceholder:"Search businesses, services or places...",
 allCities:"All cities",
 search:"Search",
@@ -1510,6 +1584,8 @@ healthcare:"Healthcare",
 transport:"Transport",
 jobs:"Jobs",
 businesses:"Businesses",
+rentals:"Rental Houses",
+offices:"Offices",
 discoverRwanda:"Discover Rwanda",
 explorePlaces:"Explore places and services around the country.",
 listings:"Listings",
@@ -1527,7 +1603,7 @@ connectDescription:"Use the available contact information to connect.",
 ctaTitle:"Discover more of Rwanda.",
 ctaDescription:"Rwanda Connect brings useful places, businesses and services together in one simple platform.",
 startExploring:"Start Exploring",
-footerDescription:"Your simple way to discover businesses, services and places across Rwanda.",
+footerDescription:"Your simple way to discover businesses, services, rental houses, offices and places across Rwanda.",
 quickLinks:"Quick Links",
 contact:"Contact",
 noListings:"No listings found",
@@ -1546,7 +1622,7 @@ explore:"Shakisha",
 badge:"🇷🇼 Byakorewe u Rwanda",
 everything:"Ibyo ukeneye byose",
 inRwanda:"mu Rwanda.",
-heroDescription:"Menya ubucuruzi bwizewe, amahoteli, resitora, ubuvuzi, ubwikorezi, imirimo na serivisi zitandukanye mu Rwanda.",
+heroDescription:"Menya ubucuruzi bwizewe, amahoteli, resitora, ubuvuzi, ubwikorezi, imirimo, amazu akodeshwa, ibiro na serivisi zitandukanye mu Rwanda.",
 searchPlaceholder:"Shakisha serivisi, ubucuruzi cyangwa ahantu...",
 allCities:"Imijyi yose",
 search:"Shakisha",
@@ -1558,6 +1634,8 @@ healthcare:"Ubuvuzi",
 transport:"Ubwikorezi",
 jobs:"Imirimo",
 businesses:"Ubucuruzi",
+rentals:"Amazu akodeshwa",
+offices:"Ibiro",
 discoverRwanda:"Menya u Rwanda",
 explorePlaces:"Shakisha ahantu na serivisi hirya no hino mu gihugu.",
 listings:"Ahantu na serivisi",
@@ -1573,9 +1651,9 @@ searchDescription:"Shakisha ubucuruzi, serivisi, ahantu cyangwa amahirwe.",
 discoverDescription:"Reba amakuru afasha ku byerekeye serivisi ziboneka.",
 connectDescription:"Koresha amakuru yo kuvugana kugira ngo uhuze n'abo ukeneye.",
 ctaTitle:"Menya byinshi ku Rwanda.",
-ctaDescription:"Rwanda Connect ihuriza hamwe ahantu, ubucuruzi na serivisi by'ingirakamaro kuri platform imwe.",
+ctaDescription:"Rwanda Connect ihuriza hamwe ahantu, ubucuruzi, amazu akodeshwa, ibiro na serivisi by'ingirakamaro kuri platform imwe.",
 startExploring:"Tangira gushakisha",
-footerDescription:"Uburyo bworoshye bwo kumenya ubucuruzi, serivisi n'ahantu mu Rwanda.",
+footerDescription:"Uburyo bworoshye bwo kumenya ubucuruzi, serivisi, amazu akodeshwa, ibiro n'ahantu mu Rwanda.",
 quickLinks:"Aho wajya",
 contact:"Twandikire",
 noListings:"Nta byo tubonye",
@@ -1594,7 +1672,7 @@ explore:"Explorer",
 badge:"🇷🇼 Conçu pour le Rwanda",
 everything:"Tout ce dont vous avez besoin",
 inRwanda:"au Rwanda.",
-heroDescription:"Découvrez des entreprises, hôtels, restaurants, services de santé, transports, emplois et services utiles au Rwanda.",
+heroDescription:"Découvrez des entreprises, hôtels, restaurants, services de santé, transports, emplois, maisons à louer, bureaux et services utiles au Rwanda.",
 searchPlaceholder:"Rechercher une entreprise, un service ou un lieu...",
 allCities:"Toutes les villes",
 search:"Rechercher",
@@ -1606,6 +1684,8 @@ healthcare:"Santé",
 transport:"Transport",
 jobs:"Emplois",
 businesses:"Entreprises",
+rentals:"Maisons à louer",
+offices:"Bureaux",
 discoverRwanda:"Découvrez le Rwanda",
 explorePlaces:"Explorez des lieux et services partout dans le pays.",
 listings:"Annonces",
@@ -1621,9 +1701,9 @@ searchDescription:"Recherchez une entreprise, un service, un lieu ou une opportu
 discoverDescription:"Découvrez des informations utiles sur les annonces disponibles.",
 connectDescription:"Utilisez les informations de contact disponibles pour vous connecter.",
 ctaTitle:"Découvrez davantage le Rwanda.",
-ctaDescription:"Rwanda Connect rassemble les lieux, entreprises et services utiles sur une seule plateforme.",
+ctaDescription:"Rwanda Connect rassemble les lieux, entreprises, maisons à louer, bureaux et services utiles sur une seule plateforme.",
 startExploring:"Commencer à explorer",
-footerDescription:"Votre moyen simple de découvrir les entreprises, services et lieux du Rwanda.",
+footerDescription:"Votre moyen simple de découvrir les entreprises, services, maisons à louer, bureaux et lieux du Rwanda.",
 quickLinks:"Liens rapides",
 contact:"Contact",
 noListings:"Aucun résultat",
@@ -1642,7 +1722,7 @@ explore:"Chunguza",
 badge:"🇷🇼 Imetengenezwa kwa Rwanda",
 everything:"Kila kitu unachohitaji",
 inRwanda:"nchini Rwanda.",
-heroDescription:"Gundua biashara, hoteli, mikahawa, huduma za afya, usafiri, ajira na huduma muhimu nchini Rwanda.",
+heroDescription:"Gundua biashara, hoteli, mikahawa, huduma za afya, usafiri, ajira, nyumba za kukodisha, ofisi na huduma muhimu nchini Rwanda.",
 searchPlaceholder:"Tafuta biashara, huduma au maeneo...",
 allCities:"Miji yote",
 search:"Tafuta",
@@ -1654,6 +1734,8 @@ healthcare:"Huduma za afya",
 transport:"Usafiri",
 jobs:"Ajira",
 businesses:"Biashara",
+rentals:"Nyumba za kukodisha",
+offices:"Ofisi",
 discoverRwanda:"Gundua Rwanda",
 explorePlaces:"Chunguza maeneo na huduma kote nchini.",
 listings:"Matangazo",
@@ -1669,9 +1751,9 @@ searchDescription:"Tafuta biashara, huduma, eneo au fursa.",
 discoverDescription:"Chunguza taarifa muhimu kuhusu huduma zinazopatikana.",
 connectDescription:"Tumia taarifa za mawasiliano zinazopatikana kuwasiliana.",
 ctaTitle:"Gundua zaidi ya Rwanda.",
-ctaDescription:"Rwanda Connect inaweka pamoja maeneo, biashara na huduma muhimu kwenye jukwaa moja rahisi.",
+ctaDescription:"Rwanda Connect inaweka pamoja maeneo, biashara, nyumba za kukodisha, ofisi na huduma muhimu kwenye jukwaa moja rahisi.",
 startExploring:"Anza Kuchunguza",
-footerDescription:"Njia rahisi ya kugundua biashara, huduma na maeneo kote Rwanda.",
+footerDescription:"Njia rahisi ya kugundua biashara, huduma, nyumba za kukodisha, ofisi na maeneo kote Rwanda.",
 quickLinks:"Viungo vya Haraka",
 contact:"Mawasiliano",
 noListings:"Hakuna matokeo",
