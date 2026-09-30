@@ -34,25 +34,55 @@ body:after{
   background:radial-gradient(circle at 20% 10%,rgba(247,201,40,.12),transparent 30%),
              linear-gradient(180deg,rgba(248,255,251,.12),rgba(235,248,241,.75))
 }
+/* Device-aware theme: the website follows the phone/computer setting. */
 body.dark{
   --text:#edf8f1;--muted:#b7c9bf;--bg:#030a07;--card:rgba(7,20,15,.88);
   --border:#1e4634;--shadow:0 20px 60px rgba(0,0,0,.50);
-  --glow:0 0 20px rgba(42,255,126,.35),0 0 55px rgba(42,255,126,.16)
+  --glow:none;
 }
-body.dark:before{
-  opacity:.88;
+
+/* Dark device: use a visible Kigali night background. The overlay is only
+   there to preserve readability; it does not create artificial city lights. */
+@media (prefers-color-scheme:dark){
+  body:not(.force-light)::before{
+    opacity:.96;
+    background:
+      linear-gradient(180deg,rgba(0,5,12,.08),rgba(0,7,14,.34)),
+      url("https://images.unsplash.com/photo-1603870891993-5f00bca6fca2?auto=format&fit=crop&w=2200&q=90") center/cover no-repeat fixed;
+  }
+  body:not(.force-light)::after{
+    background:linear-gradient(180deg,rgba(0,4,10,.08),rgba(0,7,12,.38));
+  }
+}
+
+/* Manual preview classes only apply when the user presses the theme button. */
+body.force-dark{
+  --text:#edf8f1;--muted:#b7c9bf;--bg:#030a07;--card:rgba(7,20,15,.88);
+  --border:#1e4634;--shadow:0 20px 60px rgba(0,0,0,.50);--glow:none;
+}
+body.force-dark::before{
+  opacity:.96;
   background:
-    linear-gradient(180deg,rgba(0,6,4,.20),rgba(0,9,6,.48)),
+    linear-gradient(180deg,rgba(0,5,12,.08),rgba(0,7,14,.34)),
     url("https://images.unsplash.com/photo-1603870891993-5f00bca6fca2?auto=format&fit=crop&w=2200&q=90") center/cover no-repeat fixed;
 }
-body.dark:after{
-  background:
-    radial-gradient(circle at 50% 18%,rgba(62,255,140,.10),transparent 26%),
-    radial-gradient(circle at 80% 30%,rgba(0,183,255,.08),transparent 28%),
-    linear-gradient(180deg,rgba(0,7,4,.08),rgba(0,10,7,.74));
+body.force-dark::after{background:linear-gradient(180deg,rgba(0,4,10,.08),rgba(0,7,12,.38));}
+
+body.force-light{
+  --text:#14221b;--muted:#65746d;--bg:#edf7f0;--card:rgba(255,255,255,.94);
+  --border:#d5e6dc;--shadow:0 18px 50px rgba(13,86,53,.14);--glow:none;
 }
-#stars{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;display:none}
-body.dark #stars{display:block}
+body.force-light::before{
+  opacity:.82;
+  background:
+    linear-gradient(135deg,rgba(245,255,249,.76),rgba(225,249,240,.40)),
+    url("https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=2200&q=88") center/cover no-repeat fixed;
+}
+body.force-light::after{
+  background:radial-gradient(circle at 20% 10%,rgba(247,201,40,.12),transparent 30%),
+             linear-gradient(180deg,rgba(248,255,251,.12),rgba(235,248,241,.75));
+}
+#stars{display:none!important}
 .star{
   position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;
   box-shadow:0 0 7px 2px rgba(194,255,226,.95);animation:twinkle 2.2s infinite ease-in-out
@@ -866,16 +896,34 @@ function useMyLocation(){
     document.getElementById("discover").scrollIntoView({behavior:"smooth"});
   },()=>toast("Location permission was not granted."));
 }
-function toggleTheme(){
-  document.body.classList.toggle("dark");
-  const dark=document.body.classList.contains("dark");
-  localStorage.setItem("rwandaConnectTheme",dark?"dark":"light");
-  document.getElementById("themeBtn").textContent=dark?"☀️":"🌙";
+const systemTheme = window.matchMedia("(prefers-color-scheme: dark)");
+
+function applyDeviceTheme(){
+  document.body.classList.remove("force-light","force-dark");
+  document.body.classList.toggle("dark",systemTheme.matches);
+  document.getElementById("themeBtn").textContent=systemTheme.matches?"☀️":"🌙";
 }
-if(localStorage.getItem("rwandaConnectTheme")==="dark"){document.body.classList.add("dark");document.getElementById("themeBtn").textContent="☀️"}
-function toggleMenu(){
-  const n=document.getElementById("navLinks"),b=document.getElementById("menuBtn");
-  const open=n.classList.toggle("open");b.setAttribute("aria-expanded",open?"true":"false");
+
+/* The normal website follows the device. The button is only a temporary
+   manual preview and does not save a preference over the device setting. */
+function toggleTheme(){
+  const currentlyDark=document.body.classList.contains("dark");
+  document.body.classList.remove("dark","force-light","force-dark");
+  if(currentlyDark){
+    document.body.classList.add("force-light");
+    document.getElementById("themeBtn").textContent="🌙";
+  }else{
+    document.body.classList.add("force-dark");
+    document.getElementById("themeBtn").textContent="☀️";
+  }
+}
+
+/* Automatically switch if the phone/computer changes between light and dark. */
+applyDeviceTheme();
+if(systemTheme.addEventListener){
+  systemTheme.addEventListener("change",applyDeviceTheme);
+}else{
+  systemTheme.addListener(applyDeviceTheme);
 }
 document.querySelectorAll(".nav-links a").forEach(a=>a.addEventListener("click",()=>{
   document.getElementById("navLinks").classList.remove("open");
