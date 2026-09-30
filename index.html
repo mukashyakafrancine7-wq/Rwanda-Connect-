@@ -1,1 +1,952 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <meta name="description" content="Rwanda Connect - discover businesses, services, rental houses, offices, opportunities and places across Rwanda."> <title>Rwanda Connect 🇷🇼 | Discover Rwanda</title> <style> :root{--green:#176b45;--green2:#0c5b39;--blue:#0796d2;--gold:#f7c928;--text:#17251e;--muted:#68766f;--bg:#f4f8f5;--card:rgba(255,255,255,.94);--border:#dfe9e3;--shadow:0 15px 40px rgba(14,81,52,.12)} *{box-sizing:border-box;margin:0;padding:0} html{scroll-behavior:smooth} body{font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);background:var(--bg);line-height:1.55} button,input,select,textarea{font:inherit} button{cursor:pointer} a{text-decoration:none;color:inherit} body:before{content:"";position:fixed;inset:0;z-index:-2;background:url("https://commons.wikimedia.org/wiki/Special:Redirect/file/Kigali_in_morning.jpg") center/cover no-repeat fixed;opacity:.18} body:after{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(244,248,245,.88),rgba(244,248,245,.96));pointer-events:none} body.dark{--text:#edf7f1;--muted:#b7c7bf;--bg:#07100d;--card:rgba(10,24,19,.91);--border:#20372d;--shadow:0 15px 45px rgba(0,0,0,.35)} body.dark:before{background-image:url("https://commons.wikimedia.org/wiki/Special:Redirect/file/KIGALI_NIGHT.jpg");opacity:.42} body.dark:after{background:linear-gradient(180deg,rgba(2,8,6,.58),rgba(3,10,8,.9))} .container{max-width:1180px;margin:auto;padding:64px 22px} .nav{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)} body.dark .nav{background:rgba(4,14,10,.84)} .nav-inner{max-width:1180px;margin:auto;padding:12px 22px;display:flex;align-items:center;gap:18px} .logo{display:flex;align-items:center;flex-shrink:0} .logo img{width:150px;height:52px;object-fit:contain;display:block} .nav-links{margin-left:auto;display:flex;gap:20px;align-items:center;font-weight:800} .nav-links a:hover{color:var(--green)} .nav-actions{display:flex;align-items:center;gap:8px} .icon-btn,.menu-btn{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:11px;padding:9px 11px} .menu-btn{display:none} .lang select{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:11px;padding:9px} .hero{min-height:650px;display:grid;place-items:center;background:linear-gradient(90deg,rgba(255,255,255,.78),rgba(255,255,255,.35));border-bottom:1px solid var(--border)} body.dark .hero{background:linear-gradient(90deg,rgba(2,8,6,.78),rgba(2,8,6,.28))} .hero-inner{max-width:1180px;width:100%;padding:90px 22px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center} .eyebrow{display:inline-block;padding:8px 13px;border-radius:999px;background:var(--card);border:1px solid var(--border);color:var(--green);font-weight:900;margin-bottom:18px} h1{font-size:clamp(42px,6vw,72px);line-height:1.02;letter-spacing:-2px} h1 span{color:var(--green)} .hero-copy{font-size:18px;color:var(--muted);max-width:650px;margin:20px 0 28px} .search-box{display:grid;grid-template-columns:1fr 160px 130px;gap:8px;background:var(--card);padding:8px;border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow)} .search-box input,.search-box select{border:0;outline:0;background:rgba(245,250,247,.9);color:var(--text);border-radius:12px;padding:14px} .btn{border:0;background:var(--green);color:#fff;padding:12px 17px;border-radius:12px;font-weight:900} .btn:hover{background:var(--green2)} .hero-card{background:var(--card);border:1px solid var(--border);border-radius:28px;padding:20px;box-shadow:var(--shadow)} .hero-card img{width:100%;height:280px;object-fit:cover;border-radius:20px} .section-head{display:flex;justify-content:space-between;gap:18px;align-items:end;margin-bottom:22px} .section-head h2{font-size:32px} .hint{color:var(--muted)} .categories,.cards,.rental-grid,.office-grid,.opp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px} .category,.card,.listing-card,.about-box,.opportunity,.form-card{background:var(--card);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow)} .category{padding:22px;text-align:center;transition:.2s} .category:hover,.card:hover,.listing-card:hover,.opportunity:hover{transform:translateY(-4px)} .category-icon{font-size:34px;margin-bottom:8px} .category small,.muted{color:var(--muted)} .toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px} .filter{border:1px solid var(--border);background:var(--card);color:var(--text);padding:8px 13px;border-radius:999px;font-weight:800} .filter.active{background:var(--green);color:#fff;border-color:var(--green)} .cards{grid-template-columns:repeat(3,1fr)} .card{padding:18px} .card-icon{font-size:30px;margin-bottom:10px} .tag{display:inline-block;color:var(--blue);font-size:12px;font-weight:900;text-transform:uppercase;margin-bottom:6px} .location{color:var(--muted);font-size:14px} .card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:15px} .details{border:0;background:#eaf6ef;color:var(--green);padding:8px 11px;border-radius:10px;font-weight:900} .listing-card{overflow:hidden} .listing-card img{width:100%;height:190px;object-fit:cover} .listing-body{padding:17px} .price{font-weight:900;color:var(--green);margin-top:8px} .opportunity{padding:20px} .opportunity h3{margin:7px 0} .opportunity .contact{margin-top:12px;padding:10px;border-radius:12px;background:rgba(23,107,69,.08);font-size:14px} .stats{background:var(--green);color:#fff;border-radius:25px;padding:26px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px} .stat{text-align:center} .stat strong{font-size:30px;display:block} .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px} .step{background:var(--card);border:1px solid var(--border);padding:22px;border-radius:18px} .number{width:40px;height:40px;border-radius:12px;background:#e7f5ed;color:var(--green);display:grid;place-items:center;font-weight:900;margin-bottom:12px} .cta{background:linear-gradient(120deg,rgba(223,244,232,.95),rgba(229,247,251,.95));border:1px solid var(--border);border-radius:25px;padding:35px;display:flex;justify-content:space-between;gap:20px;align-items:center} body.dark .cta{background:rgba(14,39,29,.85)} footer{background:#10251b;color:#fff;padding:40px 22px} .footer-inner{max-width:1180px;margin:auto} .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:35px} .footer-grid p{color:rgba(255,255,255,.7);margin-top:8px} .contact-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px} .contact-link{background:rgba(255,255,255,.08);padding:9px 11px;border-radius:10px} .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:100;align-items:center;justify-content:center;padding:18px} .modal.show{display:flex} .modal-box{width:min(650px,100%);max-height:90vh;overflow:auto;background:var(--card);color:var(--text);border-radius:22px;padding:24px} .close{float:right;border:0;background:#eef2ef;color:var(--text);border-radius:50%;width:35px;height:35px;font-size:20px} .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px} .form-grid label{display:grid;gap:5px;font-weight:800} .form-grid input,.form-grid select,.form-grid textarea{width:100%;padding:11px;border:1px solid var(--border);background:rgba(245,250,247,.85);color:var(--text);border-radius:10px} .full{grid-column:1/-1} .notice{padding:11px;background:rgba(247,201,40,.13);border:1px solid rgba(247,201,40,.35);border-radius:12px;color:var(--muted);font-size:13px;margin-bottom:14px} .empty{text-align:center;padding:28px;color:var(--muted);display:none} .toast{position:fixed;right:18px;bottom:18px;background:#10251b;color:#fff;padding:12px 15px;border-radius:12px;display:none;z-index:120} .toast.show{display:block} @media(max-width:900px){ .hero-inner{grid-template-columns:1fr} .cards,.rental-grid,.office-grid,.opp-grid{grid-template-columns:repeat(2,1fr)} .stats{grid-template-columns:repeat(2,1fr)} .footer-grid{grid-template-columns:1fr 1fr} .nav-links{display:none;position:absolute;top:76px;left:0;right:0;background:var(--card);padding:18px 22px;flex-direction:column;align-items:flex-start;border-bottom:1px solid var(--border)} .nav-links.open{display:flex} .menu-btn{display:block} .search-box{grid-template-columns:1fr} .form-grid{grid-template-columns:1fr} .full{grid-column:auto} } @media(max-width:600px){ .logo img{width:125px;height:48px} .hero{min-height:600px} .categories,.cards,.rental-grid,.office-grid,.opp-grid,.steps{grid-template-columns:1fr} .footer-grid{grid-template-columns:1fr} .stats{grid-template-columns:1fr 1fr} .section-head{display:block} .section-head .btn{margin-top:10px} .nav-inner{padding:10px 14px} } </style> </head> <body> <header class="nav"> <div class="nav-inner"> <a class="logo" href="#home"> <img src="rwanda-connect-logo.png" alt="Rwanda Connect logo"> </a> <nav class="nav-links" id="navLinks"> <a href="#home" data-i18n="home">Home</a> <a href="#categories" data-i18n="categories">Categories</a> <a href="#discover" data-i18n="discover">Discover</a> <a href="#rentals" data-i18n="rentals">Rental Houses</a> <a href="#offices" data-i18n="offices">Offices</a> <a href="#opportunities" data-i18n="opportunities">Opportunities</a> <a href="#about" data-i18n="about">About</a> </nav> <div class="nav-actions"> <div class="lang"> <select id="language" onchange="setLanguage(this.value)" aria-label="Language"> <option value="en">English</option> <option value="rw">Kinyarwanda</option> <option value="fr">Français</option> <option value="sw">Kiswahili</option> </select> </div> <button class="icon-btn" onclick="toggleTheme()" aria-label="Toggle dark mode" id="themeBtn">🌙</button> <button class="menu-btn" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false" id="menuBtn">☰</button> </div> </div> </header> <main id="home"> <section class="hero"> <div class="hero-inner"> <div> <div class="eyebrow" data-i18n="eyebrow"> Built for discovering Rwanda </div> <h1 data-i18n="heroTitle"> Everything you need in <span>Rwanda.</span> </h1> <p class="hero-copy" data-i18n="heroCopy"> Find useful places, services, rental houses, offices and opportunities by category and city. Rwanda Connect makes discovery simple, fast and organized. </p> <div class="search-box"> <input id="searchInput" placeholder="Search hotels, hospitals, houses, offices..." oninput="render()" > <select id="cityFilter" onchange="render()"> <option value="all">All cities</option> </select> <button class="btn" onclick="searchNow()" data-i18n="search"> Search 🔎 </button> </div> <p class="muted" style="margin-top:12px" data-i18n="heroNote"> Try a service, place, city or opportunity. </p> </div> <div class="hero-card"> <img src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Kigali_hills.jpg" alt="Kigali morning landscape" > <h3 style="margin-top:14px" data-i18n="nearby"> Discover Rwanda </h3> <p class="muted" data-i18n="nearbyText"> People, places and opportunities across the country. </p> </div> </div> </section> <section class="container" id="categories"> <div class="section-head"> <div> <h2 data-i18n="categoriesTitle">Explore by category</h2> <p class="hint" data-i18n="categoriesSub">Choose what you're looking for.</p> </div> </div> <div class="categories"> <button class="category" onclick="setType('hotels')"> <div class="category-icon">🏨</div> <strong data-i18n="hotels">Hotels</strong> <small>Stay</small> </button> <button class="category" onclick="setType('restaurants')"> <div class="category-icon">🍽️</div> <strong data-i18n="restaurants">Restaurants</strong> <small>Food</small> </button> <button class="category" onclick="setType('healthcare')"> <div class="category-icon">🏥</div> <strong data-i18n="healthcare">Healthcare</strong> <small>Health</small> </button> <button class="category" onclick="setType('transport')"> <div class="category-icon">🚌</div> <strong data-i18n="transport">Transport</strong> <small>Travel</small> </button> <button class="category" onclick="setType('jobs')"> <div class="category-icon">💼</div> <strong data-i18n="jobs">Jobs</strong> <small>Work</small> </button> <button class="category" onclick="setType('businesses')"> <div class="category-icon">🛍️</div> <strong data-i18n="businesses">Businesses</strong> <small>Shopping</small> </button> <button class="category" onclick="setType('rentals')"> <div class="category-icon">🏠</div> <strong data-i18n="rentals">Rental Houses</strong> <small>Homes</small> </button> <button class="category" onclick="setType('offices')"> <div class="category-icon">🏢</div> <strong data-i18n="offices">Offices</strong> <small>Workspace</small> </button> </div> </section> <section class="container" id="discover"> <div class="section-head"> <div> <h2 data-i18n="discoverTitle">Discover places</h2> <p class="hint" id="resultText">Showing featured listings.</p> </div> <button class="btn" onclick="resetFilters" data-i18n="viewAll"> View all </button> </div> <div class="toolbar"> <button class="filter active" onclick="setType('all')" data-filter="all" data-i18n="all">All</button> <button class="filter" onclick="setType('hotels')" data-filter="hotels" data-i18n="hotels">Hotels</button> <button class="filter" onclick="setType('restaurants')" data-filter="restaurants" data-i18n="restaurants">Restaurants</button> <button class="filter" onclick="setType('healthcare')" data-filter="healthcare" data-i18n="healthcare">Healthcare</button> <button class="filter" onclick="setType('transport')" data-filter="transport" data-i18n="transport">Transport</button> <button class="filter" onclick="setType('jobs')" data-filter="jobs" data-i18n="jobs">Jobs</button> <button class="filter" onclick="setType('businesses')" data-filter="businesses" data-i18n="businesses">Businesses</button> <button class="filter" onclick="setType('rentals')" data-filter="rentals" data-i18n="rentals">Rental Houses</button> <button class="filter" onclick="setType('offices')" data-filter="offices" data-i18n="offices">Offices</button> </div> <div class="cards" id="listingGrid"></div> <div class="empty" id="emptyState"> No matching results. </div> </section> <section class="container" id="rentals"> <div class="section-head"> <div> <h2 data-i18n="rentalTitle">Rental Houses</h2> <p class="hint" data-i18n="rentalSub">Example rental listings for discovery.</p> </div> </div> <div class="rental-grid"> <div class="listing-card"> <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=85" alt="Modern family house"> <div class="listing-body"> <h3>Modern family house</h3> <p class="location">Kigali, Rwanda</p> <p class="price">Contact for price</p> </div> </div> <div class="listing-card"> <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85" alt="Furnished rental home"> <div class="listing-body"> <h3>Furnished rental home</h3> <p class="location">Kigali, Rwanda</p> <p class="price">Contact for price</p> </div> </div> <div class="listing-card"> <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85" alt="Contemporary rental home"> <div class="listing-body"> <h3>Contemporary rental home</h3> <p class="location">Kigali, Rwanda</p> <p class="price">Contact for price</p> </div> </div> </div> </section> <section class="container" id="offices"> <div class="section-head"> <div> <h2 data-i18n="officeTitle">Offices</h2> <p class="hint" data-i18n="officeSub">Example office and workspace listings.</p> </div> </div> <div class="office-grid"> <div class="listing-card"> <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=85" alt="Modern office workspace"> <div class="listing-body"> <h3>Modern office workspace</h3> <p class="location">Kigali, Rwanda</p> <p class="price">Contact for price</p> </div> </div> <div class="listing-card"> <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=85" alt="Professional office"> <div class="listing-body"> <h3>Professional office</h3> <p class="location">Kigali, Rwanda</p> <p class="price">Contact for price</p> </div> </div> <div class="listing-card"> <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=85" alt="Business workspace"> <div class="listing-body"> <h3>Business workspace</h3> <p class="location">Kigali, Rwanda</p> <p class="price">Contact for price</p> </div> </div> </div> </section> <section class="container" id="opportunities"> <div class="section-head"> <div> <h2 data-i18n="oppTitle">Opportunities for Rwanda</h2> <p class="hint" data-i18n="oppSub"> Official opportunity areas that can support investment, jobs and development. </p> </div> </div> <div class="opp-grid"> <div class="opportunity"> <div class="category-icon">🌾</div> <h3>Agriculture & Agribusiness</h3> <p class="muted">Agriculture, agro-processing and related value chains.</p> <div class="contact">✓ RDB<br>Tel: 1415<br>+250 727 775 170<br>info@rdb.rw</div> </div> <div class="opportunity"> <div class="category-icon">💻</div> <h3>ICT & Digital Services</h3> <p class="muted">Technology, digital services and innovation opportunities.</p> <div class="contact">✓ RDB<br>Tel: 1415<br>+250 727 775 170<br>info@rdb.rw</div> </div> <div class="opportunity"> <div class="category-icon">🏭</div> <h3>Manufacturing</h3> <p class="muted">Manufacturing and industrial development opportunities.</p> <div class="contact">✓ RDB<br>Tel: 1415<br>+250 727 775 170<br>info@rdb.rw</div> </div> <div class="opportunity"> <div class="category-icon">🏨</div> <h3>Tourism & Hospitality</h3> <p class="muted">Tourism, hospitality and destination development.</p> <div class="contact">✓ RDB<br>Tel: 1415<br>+250 727 775 170<br>info@rdb.rw</div> </div> <div class="opportunity"> <div class="category-icon">⚡</div> <h3>Energy & Clean Energy</h3> <p class="muted">Energy and clean-energy development opportunities.</p> <div class="contact">✓ RDB<br>Tel: 1415<br>+250 727 775 170<br>info@rdb.rw</div> </div> <div class="opportunity"> <div class="category-icon">🌱</div> <h3>Green Economy</h3> <p class="muted">Sustainable and environmentally focused opportunities.</p> <div class="contact">✓ RDB<br>Tel: 1415<br>+250 727 775 170<br>info@rdb.rw</div> </div> <div class="opportunity"> <div class="category-icon">🏗️</div> <h3>Real Estate & Construction</h3> <p class="muted">Real estate, housing, offices and construction opportunities.</p> <div class="contact">✓ RDB<br>Tel: 1415<br>+250 727 775 170<br>ipd@rdb.rw</div> </div> <div class="opportunity"> <div class="category-icon">💰</div> <h3>Financial Services</h3> <p class="muted">Financial and business-service opportunities.</p> <div class="contact">✓ RDB<br>Tel: 1415<br>+250 727 775 170<br>info@rdb.rw</div> </div> <div class="opportunity"> <div class="category-icon">⛏️</div> <h3>Mining</h3> <p class="muted">Mining and mineral-sector opportunities.</p> <div class="contact">✓ RDB<br>Tel: 1415<br>+250 727 775 170<br>info@rdb.rw</div> </div> </div> </section> <section class="container" id="about"> <div class="section-head"> <div> <h2 data-i18n="aboutTitle">About Rwanda Connect</h2> <p class="hint" data-i18n="aboutSub"> A practical directory for discovering Rwanda. </p> </div> <button class="btn" onclick="openRegister()" data-i18n="register"> Register </button> </div> <div class="about-box" style="padding:24px"> <p data-i18n="aboutText"> Rwanda Connect brings people, places, services, rental homes, offices and opportunities together in one simple website. Businesses and organizations can register their information for future inclusion. </p> <div class="cities" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px"> <span class="filter">Kigali</span> <span class="filter">Musanze</span> <span class="filter">Huye</span> <span class="filter">Rubavu</span> <span class="filter">Karongi</span> <span class="filter">Rwamagana</span> <span class="filter">Nyagatare</span> </div> </div> </section> <section class="container"> <div class="cta"> <div> <h2 data-i18n="ctaTitle"> One place. Many possibilities. </h2> <p class="muted" data-i18n="ctaText"> Make discovery across Rwanda simpler. </p> </div> <button class="btn" onclick="openRegister()" data-i18n="registerNow"> Register now </button> </div> </section> </main> <footer> <div class="footer-inner"> <div class="footer-grid"> <div> <img src="rwanda-connect-logo.png" alt="Rwanda Connect" style="width:190px;height:auto" > <p data-i18n="footerDesc"> A modern directory for discovering services and places across Rwanda. </p> </div> <div> <h3 data-i18n="explore">Explore</h3> <p><a href="#categories" data-i18n="categories">Categories</a></p> <p><a href="#rentals" data-i18n="rentals">Rental Houses</a></p> <p><a href="#offices" data-i18n="offices">Offices</a></p> <p><a href="#opportunities" data-i18n="opportunities">Opportunities</a></p> </div> <div> <h3 data-i18n="contact">Contact</h3> <div class="contact-links"> <a class="contact-link" href="tel:+250783740809"> 📞 +250 783 740 809 </a> <a class="contact-link" href="mailto:mukashyakafrancine7@gmail.com"> ✉️ mukashyakafrancine7@gmail.com </a> </div> </div> </div> <p style="border-top:1px solid rgba(255,255,255,.12);margin-top:30px;padding-top:18px"> © 2026 Rwanda Connect. All rights reserved. </p> </div> </footer> <div class="modal" id="modal"> <div class="modal-box"> <button class="close" onclick="closeModal()">×</button> <div id="modalContent"></div> </div> </div> <div class="toast" id="toast"></div> <script> const cities=[ 'Kigali', 'Musanze', 'Huye', 'Rubavu', 'Karongi', 'Rwamagana', 'Nyagatare' ]; const listings=[ ['Kigali Serena Hotel','hotels','Kigali','Kiyovu','🏨'], ['Radisson Blu Hotel & Convention Centre','hotels','Kigali','Kimihurura','🏨'], ['Hôtel des Mille Collines','hotels','Kigali','City centre','🏨'], ['Five Volcanoes Boutique Hotel','hotels','Musanze','Musanze','🏨'], ['Lake Kivu Serena Hotel','hotels','Rubavu','Gisenyi','🏨'], ['Heaven Restaurant','restaurants','Kigali','Kiyovu','🍽️'], ['Question Coffee','restaurants','Kigali','Nyarutarama','☕'], ['University Teaching Hospital of Kigali (CHUK)','healthcare','Kigali','Nyarugenge','🏥'], ['King Faisal Hospital','healthcare','Kigali','Kacyiru','🏥'], ['University Teaching Hospital of Butare (CHUB)','healthcare','Huye','Butare','🏥'], ['Ruhengeri Referral Hospital','healthcare','Musanze','Musanze','🏥'], ['Kigali International Airport','transport','Kigali','Kanombe','✈️'], ['Nyabugogo Taxi Park','transport','Kigali','Nyabugogo','🚌'], ['Rwanda Development Board opportunities','jobs','Kigali','Kigali','💼'], ['Kimironko Market','businesses','Kigali','Kimironko','🛍️'], ['Caplaki Craft Village','businesses','Kigali','Gikondo','🎨'], ['Huye Market','businesses','Huye','Town centre','🛒'], ['Rubavu Waterfront shops','businesses','Rubavu','Lake Kivu','🛍️'], ['Modern family house','rentals','Kigali','Residential area','🏠'], ['Furnished rental home','rentals','Kigali','Furnished','🏠'], ['Modern office workspace','offices','Kigali','Workspace','🏢'], ['Professional office','offices','Kigali','Office district','🏢'] ]; let activeType='all'; const cityFilter=document.getElementById('cityFilter'); cities.forEach(c=>{ let o=document.createElement('option'); o.value=c; o.textContent=c; cityFilter.appendChild(o); }); function render(){ const q=document.getElementById('searchInput').value.toLowerCase().trim(); const city=cityFilter.value; const r=listings.filter(x=> (activeType==='all'||x[1]===activeType)&& (city==='all'||x[2]===city)&& (!q||x.join(' ').toLowerCase().includes(q)) ); document.getElementById('listingGrid').innerHTML=r.map(x=>` <article class="card"> <div class="card-icon">${x[4]}</div> <span class="tag">${x[1]}</span> <h3>${x[0]}</h3> <p class="location"> ${x[3]}, ${x[2]} </p> <div class="card-footer"> <span class="muted">${x[2]}</span> <button class="details" onclick="showDetail('${x[0].replace(/'/g,"\\'")}')"> Details </button> </div> </article> `).join(''); document.getElementById('emptyState').style.display=r.length?'none':'block'; document.getElementById('resultText').textContent= r.length+' result'+(r.length===1?'':'s')+' found.'; document.querySelectorAll('.filter').forEach(b=>{ if(b.dataset.filter) b.classList.toggle('active',b.dataset.filter===activeType); }); } function setType(type){ activeType=type; document.getElementById('discover').scrollIntoView({ behavior:'smooth' }); render(); } function resetFilters(){ activeType='all'; document.getElementById('searchInput').value=''; document.getElementById('cityFilter').value='all'; render(); } function searchNow(){ document.getElementById('discover').scrollIntoView({ behavior:'smooth' }); render(); } function showDetail(name){ const item=listings.find(x=>x[0]===name); if(!item)return; document.getElementById('modalContent').innerHTML=` <h2>${item[0]}</h2> <p class="tag">${item[1]}</p> <p style="margin-top:10px"> 📍 ${item[3]}, ${item[2]} </p> <p class="muted" style="margin-top:15px"> This listing is provided for discovery on Rwanda Connect. </p> `; document.getElementById('modal').classList.add('show'); } function openRegister(){ document.getElementById('modalContent').innerHTML=` <h2 style="margin-bottom:10px">Register</h2> <p class="muted" style="margin-bottom:15px"> Submit your business, service, organization, rental property or office for consideration. </p> <div class="notice"> For privacy, this form does not request a national ID number or identity documents. Location is requested only if you choose to share it. </div> <form id="registerForm" class="form-grid"> <label> Full name <input name="name" required> </label> <label> Phone <input name="phone" required> </label> <label> Email <input name="email" type="email"> </label> <label> Account type <select name="type"> <option>Person</option> <option>Business</option> <option>Organization</option> <option>Rental property</option> <option>Office</option> </select> </label> <label> District <input name="district" placeholder="e.g. Gasabo"> </label> <label> Sector <input name="sector" placeholder="e.g. Kimihurura"> </label> <label class="full"> Business / organization / listing name <input name="listing"> </label> <label class="full"> Description <textarea name="description" rows="4"></textarea> </label> <label class="full"> <span>Optional location permission</span> <button type="button" class="btn" onclick="getLocation()"> Use my current location </button> <input type="hidden" name="lat" id="lat"> <input type="hidden" name="lng" id="lng"> </label> <button class="btn full" type="submit"> Submit registration </button> </form> `; document.getElementById('modal').classList.add('show'); document.getElementById('registerForm').addEventListener('submit',e=>{ e.preventDefault(); const data=Object.fromEntries(new FormData(e.target)); let all=JSON.parse( localStorage.getItem('rwanda_connect_registrations')||'[]' ); all.push({ ...data, createdAt:new Date().toISOString() }); localStorage.setItem( 'rwanda_connect_registrations', JSON.stringify(all) ); closeModal(); toast( 'Registration saved on this device. A real shared database is required for public registration.' ); }); } function getLocation(){ if(!navigator.geolocation){ toast('Location is not available in this browser.'); return; } navigator.geolocation.getCurrentPosition( p=>{ document.getElementById('lat').value=p.coords.latitude; document.getElementById('lng').value=p.coords.longitude; toast('Location permission granted.'); }, ()=>toast('Location permission was not granted.') ); } function closeModal(){ document.getElementById('modal').classList.remove('show'); } document.getElementById('modal').addEventListener('click',e=>{ if(e.target.id==='modal') closeModal(); }); function toast(m){ const t=document.getElementById('toast'); t.textContent=m; t.classList.add('show'); setTimeout( ()=>t.classList.remove('show'), 3000 ); } function toggleMenu(){ const n=document.getElementById('navLinks'); const b=document.getElementById('menuBtn'); const open=n.classList.toggle('open'); b.setAttribute( 'aria-expanded', open?'true':'false' ); } document.querySelectorAll('.nav-links a').forEach(a=> a.addEventListener('click',()=>{ document.getElementById('navLinks').classList.remove('open'); document.getElementById('menuBtn').setAttribute( 'aria-expanded', 'false' ); }) ); document.addEventListener('click',e=>{ if( !e.target.closest('.nav')&& !e.target.closest('.nav-links') ){ document.getElementById('navLinks').classList.remove('open'); document.getElementById('menuBtn').setAttribute( 'aria-expanded', 'false' ); } }); function toggleTheme(){ document.body.classList.toggle('dark'); const dark=document.body.classList.contains('dark'); localStorage.setItem( 'rwandaConnectTheme', dark?'dark':'light' ); document.getElementById('themeBtn').textContent= dark?'☀️':'🌙'; } if(localStorage.getItem('rwandaConnectTheme')==='dark'){ document.body.classList.add('dark'); document.getElementById('themeBtn').textContent='☀️'; } const T={ en:{ home:'Home', categories:'Categories', discover:'Discover', rentals:'Rental Houses', offices:'Offices', opportunities:'Opportunities', about:'About', eyebrow:'Built for discovering Rwanda', heroTitle:'Everything you need in <span>Rwanda.</span>', heroCopy:'Find useful places, services, rental houses, offices and opportunities by category and city. Rwanda Connect makes discovery simple, fast and organized.', search:'Search 🔎', heroNote:'Try a service, place, city or opportunity.', nearby:'Discover Rwanda', nearbyText:'People, places and opportunities across the country.', categoriesTitle:'Explore by category', categoriesSub:"Choose what you're looking for.", hotels:'Hotels', restaurants:'Restaurants', healthcare:'Healthcare', transport:'Transport', jobs:'Jobs', businesses:'Businesses', all:'All', discoverTitle:'Discover places', viewAll:'View all', rentalTitle:'Rental Houses', rentalSub:'Example rental listings for discovery.', officeTitle:'Offices', officeSub:'Example office and workspace listings.', oppTitle:'Opportunities for Rwanda', oppSub:'Official opportunity areas that can support investment, jobs and development.', aboutTitle:'About Rwanda Connect', aboutSub:'A practical directory for discovering Rwanda.', aboutText:'Rwanda Connect brings people, places, services, rental homes, offices and opportunities together in one simple website.', register:'Register', registerNow:'Register now', ctaTitle:'One place. Many possibilities.', ctaText:'Make discovery across Rwanda simpler.', footerDesc:'A modern directory for discovering services and places across Rwanda.', explore:'Explore', contact:'Contact' }, rw:{ home:'Ahabanza', categories:'Ibyiciro', discover:'Shakisha', rentals:'Amazu akodeshwa', offices:'Ibiro', opportunities:'Amahirwe', about:'Abo turi bo', eyebrow:'Yubakiwe gufasha kumenya u Rwanda', heroTitle:'Ibyo ukeneye byose mu <span>Rwanda.</span>', heroCopy:'Shaka ahantu, serivisi, amazu akodeshwa, ibiro n’amahirwe ukurikije icyiciro n’umujyi.', search:'Shakisha 🔎', heroNote:'Gerageza serivisi, ahantu, umujyi cyangwa amahirwe.', nearby:'Menya u Rwanda', nearbyText:'Abantu, ahantu n’amahirwe hirya no hino mu gihugu.', categoriesTitle:'Shakisha ukurikije icyiciro', categoriesSub:'Hitamo icyo ushaka.', hotels:'Amahoteri', restaurants:'Amaresitora', healthcare:'Ubuvuzi', transport:'Ubwikorezi', jobs:'Akazi', businesses:'Ubucuruzi', all:'Byose', discoverTitle:'Shakisha ahantu', viewAll:'Reba byose', rentalTitle:'Amazu akodeshwa', rentalSub:'Urutonde rw’icyitegererezo rwo gufasha gushakisha.', officeTitle:'Ibiro', officeSub:'Urutonde rw’ibiro n’aho gukorera.', oppTitle:'Amahirwe y’u Rwanda', oppSub:'Ibyiciro by’amahirwe bifasha ishoramari, imirimo n’iterambere.', aboutTitle:'Abo turi bo', aboutSub:'Urubuga rwo gufasha kumenya u Rwanda.', aboutText:'Rwanda Connect ihuza abantu, ahantu, serivisi, amazu, ibiro n’amahirwe ahantu hamwe.', register:'Iyandikishe', registerNow:'Iyandikishe ubu', ctaTitle:'Ahantu hamwe. Amahirwe menshi.', ctaText:'Menya serivisi n’amahirwe mu Rwanda mu buryo bworoshye.', footerDesc:'Urubuga rwo kumenya serivisi n’ahantu hatandukanye mu Rwanda.', explore:'Shakisha', contact:'Aho watwandikira' }, fr:{ home:'Accueil', categories:'Catégories', discover:'Découvrir', rentals:'Maisons à louer', offices:'Bureaux', opportunities:'Opportunités', about:'À propos', eyebrow:'Conçu pour découvrir le Rwanda', heroTitle:'Tout ce dont vous avez besoin au <span>Rwanda.</span>', heroCopy:'Trouvez des lieux, services, maisons à louer, bureaux et opportunités par catégorie et par ville.', search:'Rechercher 🔎', heroNote:'Essayez un service, un lieu, une ville ou une opportunité.', nearby:'Découvrir le Rwanda', nearbyText:'Personnes, lieux et opportunités dans tout le pays.', categoriesTitle:'Explorer par catégorie', categoriesSub:'Choisissez ce que vous cherchez.', hotels:'Hôtels', restaurants:'Restaurants', healthcare:'Santé', transport:'Transport', jobs:'Emplois', businesses:'Entreprises', all:'Tout', discoverTitle:'Découvrir des lieux', viewAll:'Tout voir', rentalTitle:'Maisons à louer', rentalSub:'Exemples de locations.', officeTitle:'Bureaux', officeSub:'Exemples de bureaux et espaces de travail.', oppTitle:'Opportunités pour le Rwanda', oppSub:'Domaines officiels pouvant soutenir l’investissement, l’emploi et le développement.', aboutTitle:'À propos de Rwanda Connect', aboutSub:'Un annuaire pratique pour découvrir le Rwanda.', aboutText:'Rwanda Connect rassemble personnes, lieux, services, logements, bureaux et opportunités sur un même site.', register:'S’inscrire', registerNow:'S’inscrire maintenant', ctaTitle:'Un endroit. De nombreuses possibilités.', ctaText:'Simplifiez la découverte du Rwanda.', footerDesc:'Un annuaire moderne pour découvrir les services et lieux du Rwanda.', explore:'Explorer', contact:'Contact' }, sw:{ home:'Nyumbani', categories:'Makundi', discover:'Gundua', rentals:'Nyumba za kukodisha', offices:'Ofisi', opportunities:'Fursa', about:'Kuhusu', eyebrow:'Imeundwa kwa ajili ya kugundua Rwanda', heroTitle:'Kila kitu unachohitaji nchini <span>Rwanda.</span>', heroCopy:'Pata maeneo, huduma, nyumba za kukodisha, ofisi na fursa kulingana na kundi na mji.', search:'Tafuta 🔎', heroNote:'Jaribu huduma, eneo, mji au fursa.', nearby:'Gundua Rwanda', nearbyText:'Watu, maeneo na fursa kote nchini.', categoriesTitle:'Chunguza kwa kundi', categoriesSub:'Chagua unachotafuta.', hotels:'Hoteli', restaurants:'Migahawa', healthcare:'Afya', transport:'Usafiri', jobs:'Ajira', businesses:'Biashara', all:'Zote', discoverTitle:'Gundua maeneo', viewAll:'Ona zote', rentalTitle:'Nyumba za kukodisha', rentalSub:'Mifano ya nyumba za kukodisha.', officeTitle:'Ofisi', officeSub:'Mifano ya ofisi na maeneo ya kazi.', oppTitle:'Fursa kwa Rwanda', oppSub:'Maeneo rasmi ya fursa yanayoweza kusaidia uwekezaji, ajira na maendeleo.', aboutTitle:'Kuhusu Rwanda Connect', aboutSub:'Orodha rahisi ya kugundua Rwanda.', aboutText:'Rwanda Connect inaunganisha watu, maeneo, huduma, nyumba, ofisi na fursa kwenye tovuti moja.', register:'Jisajili', registerNow:'Jisajili sasa', ctaTitle:'Sehemu moja. Uwezekano mwingi.', ctaText:'Rahisisha kugundua Rwanda.', footerDesc:'Orodha ya kisasa ya kugundua huduma na maeneo nchini Rwanda.', explore:'Chunguza', contact:'Mawasiliano' } }; function setLanguage(lang){ const t=T[lang]||T.en; document.documentElement.lang=lang; document.querySelectorAll('[data-i18n]').forEach(el=>{ const k=el.dataset.i18n; if(t[k]!=null) el.innerHTML=t[k]; }); document.getElementById('language').value=lang; localStorage.setItem( 'rwandaConnectLanguage', lang ); } setLanguage( localStorage.getItem('rwandaConnectLanguage')||'en' ); render(); </script> </body> </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Rwanda Connect — verified jobs, businesses, services, rentals, offices and useful places across Rwanda.">
+<meta name="theme-color" content="#0d6b43">
+<title>Rwanda Connect 🇷🇼 | Verified Rwanda Directory</title>
+<style>
+:root{
+  --green:#176b45;--green2:#0b5735;--blue:#0796d2;--gold:#f7c928;
+  --text:#14221b;--muted:#65746d;--bg:#edf7f0;--card:rgba(255,255,255,.94);
+  --border:#d5e6dc;--shadow:0 18px 50px rgba(13,86,53,.14);
+  --glow:0 0 22px rgba(71,255,159,.26),0 0 50px rgba(7,150,210,.10)
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--text);
+  background:var(--bg);line-height:1.55;overflow-x:hidden
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{text-decoration:none;color:inherit}
+body:before{
+  content:"";position:fixed;inset:0;z-index:-3;
+  background:
+    linear-gradient(135deg,rgba(245,255,249,.76),rgba(225,249,240,.40)),
+    url("https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=2200&q=88") center/cover no-repeat fixed;
+  opacity:.82
+}
+body:after{
+  content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background:radial-gradient(circle at 20% 10%,rgba(247,201,40,.12),transparent 30%),
+             linear-gradient(180deg,rgba(248,255,251,.12),rgba(235,248,241,.75))
+}
+body.dark{
+  --text:#edf8f1;--muted:#b7c9bf;--bg:#030a07;--card:rgba(7,20,15,.88);
+  --border:#1e4634;--shadow:0 20px 60px rgba(0,0,0,.50);
+  --glow:0 0 20px rgba(42,255,126,.35),0 0 55px rgba(42,255,126,.16)
+}
+body.dark:before{
+  opacity:.88;
+  background:
+    linear-gradient(180deg,rgba(0,6,4,.20),rgba(0,9,6,.48)),
+    url("https://images.unsplash.com/photo-1603870891993-5f00bca6fca2?auto=format&fit=crop&w=2200&q=90") center/cover no-repeat fixed;
+}
+body.dark:after{
+  background:
+    radial-gradient(circle at 50% 18%,rgba(62,255,140,.10),transparent 26%),
+    radial-gradient(circle at 80% 30%,rgba(0,183,255,.08),transparent 28%),
+    linear-gradient(180deg,rgba(0,7,4,.08),rgba(0,10,7,.74));
+}
+#stars{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;display:none}
+body.dark #stars{display:block}
+.star{
+  position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;
+  box-shadow:0 0 7px 2px rgba(194,255,226,.95);animation:twinkle 2.2s infinite ease-in-out
+}
+@keyframes twinkle{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:1;transform:scale(1.6)}}
+
+.container{max-width:1180px;margin:auto;padding:64px 22px}
+.nav{
+  position:sticky;top:0;z-index:50;background:rgba(255,255,255,.84);
+  backdrop-filter:blur(18px);border-bottom:1px solid var(--border)
+}
+body.dark .nav{background:rgba(1,10,7,.78)}
+.nav-inner{max-width:1180px;margin:auto;padding:12px 22px;display:flex;align-items:center;gap:18px}
+.logo{display:flex;align-items:center;flex-shrink:0}
+.logo img{width:150px;height:52px;object-fit:contain;display:block}
+.nav-links{margin-left:auto;display:flex;gap:18px;align-items:center;font-weight:850}
+.nav-links a:hover{color:var(--green)}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.icon-btn,.menu-btn{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:11px;padding:9px 11px}
+.menu-btn{display:none}
+.lang select{border:1px solid var(--border);background:var(--card);color:var(--text);border-radius:11px;padding:9px}
+
+.hero{
+  min-height:700px;display:grid;place-items:center;border-bottom:1px solid var(--border);
+  position:relative;isolation:isolate
+}
+.hero:before{
+  content:"";position:absolute;inset:10% auto auto 55%;width:340px;height:340px;border-radius:50%;
+  background:radial-gradient(circle,rgba(37,255,131,.16),transparent 68%);filter:blur(8px);z-index:-1
+}
+.hero-inner{max-width:1180px;width:100%;padding:96px 22px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 13px;border-radius:999px;
+  background:var(--card);border:1px solid var(--border);color:var(--green);font-weight:900;box-shadow:var(--glow)
+}
+.eyebrow:before{content:"✓";display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--green);color:#fff;font-size:12px}
+h1{font-size:clamp(42px,6vw,74px);line-height:1.02;letter-spacing:-2px;margin-top:16px}
+h1 span{color:var(--green)}
+.hero-copy{font-size:18px;color:var(--muted);max-width:650px;margin:20px 0 28px}
+.search-box{
+  display:grid;grid-template-columns:1.25fr 1fr 160px 130px;gap:8px;background:var(--card);
+  padding:8px;border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow)
+}
+.search-box input,.search-box select{
+  border:1px solid transparent;outline:0;background:rgba(245,250,247,.92);color:var(--text);
+  border-radius:12px;padding:14px
+}
+body.dark .search-box input,body.dark .search-box select{background:rgba(11,31,23,.96)}
+.btn{
+  border:0;background:var(--green);color:#fff;padding:12px 17px;border-radius:12px;font-weight:900;
+  box-shadow:0 9px 22px rgba(23,107,69,.18);transition:.2s
+}
+.btn:hover{background:var(--green2);transform:translateY(-1px)}
+.btn.secondary{background:transparent;color:var(--green);border:1px solid var(--green)}
+.btn.gold{background:var(--gold);color:#1a1a10}
+.hero-note{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}
+.chip{
+  display:inline-flex;align-items:center;gap:7px;border:1px solid var(--border);border-radius:999px;
+  padding:7px 10px;background:var(--card);color:var(--muted);font-weight:750;font-size:13px
+}
+.hero-card{background:var(--card);border:1px solid var(--border);border-radius:28px;padding:18px;box-shadow:var(--shadow)}
+.hero-card img{width:100%;height:300px;object-fit:cover;border-radius:20px}
+.hero-card .live-pill{
+  margin-top:12px;display:inline-flex;gap:7px;align-items:center;color:var(--green);
+  font-weight:900;font-size:13px
+}
+.live-pill:before{content:"";width:9px;height:9px;background:#32e776;border-radius:50%;box-shadow:0 0 14px #32e776}
+
+.section-head{display:flex;justify-content:space-between;gap:18px;align-items:end;margin-bottom:22px}
+.section-head h2{font-size:32px}
+.hint{color:var(--muted)}
+.categories,.cards,.rental-grid,.office-grid,.opp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.category,.card,.listing-card,.about-box,.opportunity,.form-card,.comment-card{
+  background:var(--card);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow)
+}
+.category{padding:22px;text-align:center;transition:.2s;border-color:transparent}
+.category:hover,.card:hover,.listing-card:hover,.opportunity:hover{transform:translateY(-4px);border-color:rgba(23,107,69,.35)}
+.category-icon{font-size:34px;margin-bottom:8px}
+.category small,.muted{color:var(--muted)}
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.filter{border:1px solid var(--border);background:var(--card);color:var(--text);padding:8px 13px;border-radius:999px;font-weight:800}
+.filter.active{background:var(--green);color:#fff;border-color:var(--green)}
+.cards{grid-template-columns:repeat(3,1fr)}
+.card{padding:0;overflow:hidden}
+.card-media{height:180px;position:relative;background:#dfeee6}
+.card-media img{width:100%;height:100%;object-fit:cover;display:block}
+.card-body{padding:18px}
+.card-icon{font-size:25px}
+.tag{display:inline-block;color:var(--blue);font-size:12px;font-weight:900;text-transform:uppercase;margin:7px 0 5px}
+.location{color:var(--muted);font-size:14px}
+.card-footer{display:flex;justify-content:space-between;align-items:center;margin-top:15px;gap:8px}
+.details{border:0;background:#eaf6ef;color:var(--green);padding:8px 11px;border-radius:10px;font-weight:900}
+body.dark .details{background:#0e2e20}
+.badges{position:absolute;left:12px;top:12px;display:flex;gap:6px;flex-wrap:wrap}
+.badge{
+  background:rgba(255,255,255,.93);color:#143b29;padding:6px 8px;border-radius:999px;font-size:12px;font-weight:900;
+  box-shadow:0 7px 17px rgba(0,0,0,.12)
+}
+body.dark .badge{background:rgba(2,13,8,.90);color:#dfffea}
+.verified-badge{color:#087642}
+.rating{display:flex;align-items:center;gap:7px;font-weight:900}
+.stars{letter-spacing:1px;color:#c7c7c7}
+.stars.active{color:#e2ad00}
+.rank{font-size:12px;color:var(--muted);font-weight:900}
+
+.listing-card{overflow:hidden}
+.listing-card img{width:100%;height:190px;object-fit:cover}
+.listing-body{padding:17px}
+.price{font-weight:900;color:var(--green);margin-top:8px}
+.opportunity{padding:20px}
+.opportunity h3{margin:7px 0}
+.opportunity .contact{margin-top:12px;padding:10px;border-radius:12px;background:rgba(23,107,69,.08);font-size:14px}
+
+.stats{background:linear-gradient(120deg,#0e6f46,#0d7f57);color:#fff;border-radius:25px;padding:26px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px;box-shadow:var(--glow)}
+.stat{text-align:center}.stat strong{font-size:30px;display:block}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.step{background:var(--card);border:1px solid var(--border);padding:22px;border-radius:18px}
+.number{width:40px;height:40px;border-radius:12px;background:#e7f5ed;color:var(--green);display:grid;place-items:center;font-weight:900;margin-bottom:12px}
+.cta{
+  background:linear-gradient(120deg,rgba(223,244,232,.95),rgba(229,247,251,.95));
+  border:1px solid var(--border);border-radius:25px;padding:35px;display:flex;justify-content:space-between;
+  gap:20px;align-items:center
+}
+body.dark .cta{background:rgba(10,36,25,.84)}
+
+footer{background:#0b2117;color:#fff;padding:46px 22px 30px}
+.footer-inner{max-width:1180px;margin:auto}
+.footer-grid{display:grid;grid-template-columns:1.25fr .8fr .95fr;gap:35px}
+.footer-grid p{color:rgba(255,255,255,.72);margin-top:8px}
+.contact-links{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.contact-link{background:rgba(255,255,255,.08);padding:9px 11px;border-radius:10px}
+.comment-box{margin-top:28px;padding-top:28px;border-top:1px solid rgba(255,255,255,.12)}
+.comment-form{display:grid;grid-template-columns:1fr 1fr 160px;gap:8px;margin-top:12px}
+.comment-form input,.comment-form textarea{
+  padding:11px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);color:#fff;border-radius:10px
+}
+.comment-form textarea{grid-column:1/-1;min-height:90px;resize:vertical}
+.comment-list{display:grid;gap:10px;margin-top:15px}
+.comment-card{padding:14px;background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.10);color:#fff;box-shadow:none}
+.comment-meta{font-size:12px;color:rgba(255,255,255,.56);margin-top:4px}
+
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.68);z-index:100;align-items:center;justify-content:center;padding:18px}
+.modal.show{display:flex}
+.modal-box{width:min(720px,100%);max-height:92vh;overflow:auto;background:var(--card);color:var(--text);border-radius:22px;padding:24px}
+.close{float:right;border:0;background:#eef2ef;color:var(--text);border-radius:50%;width:35px;height:35px;font-size:20px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-grid label{display:grid;gap:5px;font-weight:800}
+.form-grid input,.form-grid select,.form-grid textarea{
+  width:100%;padding:11px;border:1px solid var(--border);background:rgba(245,250,247,.85);color:var(--text);border-radius:10px
+}
+.full{grid-column:1/-1}
+.notice{
+  padding:11px;background:rgba(247,201,40,.13);border:1px solid rgba(247,201,40,.35);
+  border-radius:12px;color:var(--muted);font-size:13px;margin-bottom:14px
+}
+.hidden{display:none!important}
+.job-apply-box{
+  margin-top:18px;padding:18px;border-radius:16px;background:linear-gradient(135deg,#e6f8ed,#f4fffa);
+  border:1px solid #9ed8b6
+}
+body.dark .job-apply-box{background:linear-gradient(135deg,#0b2b1d,#0b2118);border-color:#2d704e}
+.cv-label{display:grid;gap:8px;font-weight:900;color:var(--green)}
+.cv-input{display:block;width:100%;padding:13px;border:2px dashed #6db28c;border-radius:12px;background:#fff;color:#29503e}
+body.dark .cv-input{background:#071711;color:#dff7e9}
+.socials{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.socials a{padding:7px 9px;border-radius:9px;background:#ecf7f0;color:var(--green);font-weight:800;font-size:13px}
+body.dark .socials a{background:#0d2b1e}
+.detail-image{width:100%;height:240px;object-fit:cover;border-radius:16px;margin:10px 0 16px}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.detail-box{border:1px solid var(--border);padding:12px;border-radius:13px;background:rgba(23,107,69,.04)}
+.tracker{display:grid;gap:10px;margin:18px 0}
+.track-step{display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:12px;border:1px solid var(--border)}
+.track-icon{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#e9efeb;color:#6b756f;font-weight:900}
+.track-step.active .track-icon{background:var(--green);color:#fff;box-shadow:0 0 15px rgba(23,107,69,.35)}
+.track-step.done .track-icon{background:#2fd77e;color:#062815}
+.track-step.fail .track-icon{background:#bb2e3b;color:#fff}
+.status-card{padding:14px;border-radius:14px;background:rgba(23,107,69,.06);margin-top:10px}
+.toast{position:fixed;right:18px;bottom:18px;background:#0b2117;color:#fff;padding:12px 15px;border-radius:12px;display:none;z-index:120;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.toast.show{display:block}
+.success-overlay{
+  display:none;position:fixed;inset:0;z-index:200;align-items:center;justify-content:center;
+  background:rgba(1,12,7,.80);backdrop-filter:blur(7px)
+}
+.success-overlay.show{display:flex}
+.success-card{text-align:center;color:#fff}
+.big-check{
+  width:130px;height:130px;border-radius:50%;margin:0 auto 16px;background:#28dc78;
+  display:grid;place-items:center;font-size:75px;font-weight:1000;color:#062b17;
+  box-shadow:0 0 30px #28dc78,0 0 100px rgba(40,220,120,.45);
+  animation:pop .38s ease-out
+}
+@keyframes pop{0%{transform:scale(.4);opacity:0}100%{transform:scale(1);opacity:1}}
+.success-card h2{font-size:36px}
+.empty{text-align:center;padding:28px;color:var(--muted);display:none}
+.loading{text-align:center;padding:25px;color:var(--muted)}
+.location-result{
+  margin-top:12px;padding:12px;border:1px dashed var(--border);border-radius:12px;background:var(--card);color:var(--muted)
+}
+
+@media(max-width:1050px){
+  .search-box{grid-template-columns:1fr 1fr}
+  .search-box .search-main{grid-column:1/-1}
+}
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr}
+  .cards,.rental-grid,.office-grid,.opp-grid{grid-template-columns:repeat(2,1fr)}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .nav-links{display:none;position:absolute;top:76px;left:0;right:0;background:var(--card);padding:18px 22px;flex-direction:column;align-items:flex-start;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .menu-btn{display:block}
+  .comment-form{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .logo img{width:125px;height:48px}
+  .hero{min-height:650px}
+  .categories,.cards,.rental-grid,.office-grid,.opp-grid,.steps{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+  .section-head{display:block}
+  .section-head .btn{margin-top:10px}
+  .nav-inner{padding:10px 14px}
+  .search-box{grid-template-columns:1fr}
+  .search-box .search-main{grid-column:auto}
+  .form-grid,.detail-grid{grid-template-columns:1fr}
+  .full{grid-column:auto}
+}
+</style>
+</head>
+<body>
+<div id="stars"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="#home"><img src="rwanda-connect-logo.png" alt="Rwanda Connect logo"></a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#home" data-i18n="home">Home</a>
+      <a href="#categories" data-i18n="categories">Categories</a>
+      <a href="#discover" data-i18n="discover">Discover</a>
+      <a href="#jobs" data-i18n="jobs">Jobs</a>
+      <a href="#rentals" data-i18n="rentals">Rental Houses</a>
+      <a href="#offices" data-i18n="offices">Offices</a>
+      <a href="#opportunities" data-i18n="opportunities">Opportunities</a>
+      <a href="#about" data-i18n="about">About</a>
+    </nav>
+    <div class="nav-actions">
+      <div class="lang">
+        <select id="language" aria-label="Language" onchange="setLanguage(this.value)">
+          <option value="en">English</option>
+          <option value="rw">Kinyarwanda</option>
+          <option value="fr">Français</option>
+          <option value="sw">Kiswahili</option>
+        </select>
+      </div>
+      <button class="icon-btn" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle dark mode">🌙</button>
+      <button class="menu-btn" onclick="toggleMenu()" id="menuBtn" aria-expanded="false" aria-label="Open menu">☰</button>
+    </div>
+  </div>
+</header>
+
+<main id="home">
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow" data-i18n="eyebrow">Verified discovery across Rwanda</div>
+      <h1 data-i18n="heroTitle">Everything you need in <span>Rwanda.</span></h1>
+      <p class="hero-copy" data-i18n="heroCopy">
+        Find verified businesses, services, jobs, rental houses, offices and useful places. Search by need and get nearby results.
+      </p>
+
+      <div class="search-box">
+        <input class="search-main" id="searchInput" placeholder="Search a job, business or service..." oninput="render()">
+        <input id="locationInput" placeholder="Enter district / sector / city">
+        <select id="cityFilter" onchange="render()"><option value="all">All Rwanda</option></select>
+        <button class="btn" onclick="useMyLocation()" data-i18n="nearMe">📍 Near me</button>
+      </div>
+
+      <div class="hero-note">
+        <span class="chip">✓ Verified records</span>
+        <span class="chip">📍 Nearby matching</span>
+        <span class="chip">📨 Automatic email code</span>
+        <span class="chip">📄 Secure CV applications</span>
+      </div>
+      <div id="locationResult" class="location-result hidden"></div>
+    </div>
+
+    <div class="hero-card">
+      <img src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=1500&q=88" alt="Kigali city view">
+      <div class="live-pill">Live directory</div>
+      <h3 style="margin-top:8px">Rwanda Connect</h3>
+      <p class="muted" data-i18n="nearbyText">People, places and opportunities across the country.</p>
+    </div>
+  </div>
+</section>
+
+<section class="container" id="categories">
+  <div class="section-head">
+    <div>
+      <h2 data-i18n="categoriesTitle">Explore by category</h2>
+      <p class="hint" data-i18n="categoriesSub">Choose what you're looking for.</p>
+    </div>
+    <button class="btn secondary" onclick="openRegister()" data-i18n="register">Register</button>
+  </div>
+  <div class="categories">
+    <button class="category" onclick="setType('hotels')"><div class="category-icon">🏨</div><strong data-i18n="hotels">Hotels</strong><br><small>Stay</small></button>
+    <button class="category" onclick="setType('restaurants')"><div class="category-icon">🍽️</div><strong data-i18n="restaurants">Restaurants</strong><br><small>Food</small></button>
+    <button class="category" onclick="setType('healthcare')"><div class="category-icon">🏥</div><strong data-i18n="healthcare">Healthcare</strong><br><small>Health</small></button>
+    <button class="category" onclick="setType('transport')"><div class="category-icon">🚌</div><strong data-i18n="transport">Transport</strong><br><small>Travel</small></button>
+    <button class="category" onclick="setType('jobs')"><div class="category-icon">💼</div><strong data-i18n="jobs">Jobs</strong><br><small>Work</small></button>
+    <button class="category" onclick="setType('businesses')"><div class="category-icon">🛍️</div><strong data-i18n="businesses">Businesses</strong><br><small>Shopping</small></button>
+    <button class="category" onclick="setType('rentals')"><div class="category-icon">🏠</div><strong data-i18n="rentals">Rental Houses</strong><br><small>Homes</small></button>
+    <button class="category" onclick="setType('offices')"><div class="category-icon">🏢</div><strong data-i18n="offices">Offices</strong><br><small>Workspace</small></button>
+    <button class="category" onclick="setType('services')"><div class="category-icon">🛠️</div><strong data-i18n="services">Services</strong><br><small>Help</small></button>
+  </div>
+</section>
+
+<section class="container" id="discover">
+  <div class="section-head">
+    <div>
+      <h2 data-i18n="discoverTitle">Discover</h2>
+      <p class="hint" id="resultText">Loading verified directory records…</p>
+    </div>
+    <button class="btn" onclick="resetFilters()" data-i18n="viewAll">View all</button>
+  </div>
+  <div class="toolbar" id="filters">
+    <button class="filter active" onclick="setType('all')" data-filter="all" data-i18n="all">All</button>
+    <button class="filter" onclick="setType('jobs')" data-filter="jobs" data-i18n="jobs">Jobs</button>
+    <button class="filter" onclick="setType('services')" data-filter="services" data-i18n="services">Services</button>
+    <button class="filter" onclick="setType('businesses')" data-filter="businesses" data-i18n="businesses">Businesses</button>
+    <button class="filter" onclick="setType('healthcare')" data-filter="healthcare" data-i18n="healthcare">Healthcare</button>
+    <button class="filter" onclick="setType('hotels')" data-filter="hotels" data-i18n="hotels">Hotels</button>
+    <button class="filter" onclick="setType('restaurants')" data-filter="restaurants" data-i18n="restaurants">Restaurants</button>
+    <button class="filter" onclick="setType('transport')" data-filter="transport" data-i18n="transport">Transport</button>
+    <button class="filter" onclick="setType('rentals')" data-filter="rentals" data-i18n="rentals">Rental Houses</button>
+    <button class="filter" onclick="setType('offices')" data-filter="offices" data-i18n="offices">Offices</button>
+  </div>
+  <div class="cards" id="listingGrid"><div class="loading">Loading…</div></div>
+  <div class="empty" id="emptyState">No matching results.</div>
+</section>
+
+<section class="container" id="jobs">
+  <div class="section-head">
+    <div><h2 data-i18n="jobTitle">Jobs</h2><p class="hint" data-i18n="jobSub">Only verified/accepted jobs should be published.</p></div>
+  </div>
+  <div class="steps">
+    <div class="step"><div class="number">1</div><h3>Choose a verified job</h3><p class="muted">Open the job to see duties, qualifications, employer details and application rules.</p></div>
+    <div class="step"><div class="number">2</div><h3>Upload your CV</h3><p class="muted">A clean green CV box appears when the employer requires a CV.</p></div>
+    <div class="step"><div class="number">3</div><h3>Apply</h3><p class="muted">Your application is sent to the employer through the Rwanda Connect backend.</p></div>
+  </div>
+</section>
+
+<section class="container" id="rentals">
+  <div class="section-head"><div><h2 data-i18n="rentalTitle">Rental Houses</h2><p class="hint">Listings can be published only after verification.</p></div></div>
+  <div class="rental-grid">
+    <div class="listing-card"><img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=85" alt="Modern family house"><div class="listing-body"><h3>Modern family house</h3><p class="location">Kigali</p><p class="price">Contact owner</p></div></div>
+    <div class="listing-card"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85" alt="Furnished rental home"><div class="listing-body"><h3>Furnished rental home</h3><p class="location">Kigali</p><p class="price">Contact owner</p></div></div>
+    <div class="listing-card"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85" alt="Contemporary rental home"><div class="listing-body"><h3>Contemporary rental home</h3><p class="location">Kigali</p><p class="price">Contact owner</p></div></div>
+  </div>
+</section>
+
+<section class="container" id="offices">
+  <div class="section-head"><div><h2 data-i18n="officeTitle">Offices</h2><p class="hint">Office and workspace listings.</p></div></div>
+  <div class="office-grid">
+    <div class="listing-card"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=85" alt="Modern office"><div class="listing-body"><h3>Modern office workspace</h3><p class="location">Kigali</p><p class="price">Contact provider</p></div></div>
+    <div class="listing-card"><img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1200&q=85" alt="Professional office"><div class="listing-body"><h3>Professional office</h3><p class="location">Kigali</p><p class="price">Contact provider</p></div></div>
+    <div class="listing-card"><img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=85" alt="Business workspace"><div class="listing-body"><h3>Business workspace</h3><p class="location">Kigali</p><p class="price">Contact provider</p></div></div>
+  </div>
+</section>
+
+<section class="container" id="opportunities">
+  <div class="section-head"><div><h2 data-i18n="oppTitle">Opportunities for Rwanda</h2><p class="hint">Use official contacts and sources for opportunity records.</p></div></div>
+  <div class="opp-grid">
+    <div class="opportunity"><div class="category-icon">🌾</div><h3>Agriculture & Agribusiness</h3><p class="muted">Agriculture, agro-processing and related value chains.</p><div class="contact">RDB • 1415 • +250 727 775 170 • info@rdb.rw</div></div>
+    <div class="opportunity"><div class="category-icon">💻</div><h3>ICT & Digital Services</h3><p class="muted">Technology, digital services and innovation opportunities.</p><div class="contact">RDB • 1415 • +250 727 775 170 • info@rdb.rw</div></div>
+    <div class="opportunity"><div class="category-icon">🏭</div><h3>Manufacturing</h3><p class="muted">Manufacturing and industrial development opportunities.</p><div class="contact">RDB • 1415 • +250 727 775 170 • info@rdb.rw</div></div>
+    <div class="opportunity"><div class="category-icon">🏨</div><h3>Tourism & Hospitality</h3><p class="muted">Tourism, hospitality and destination development.</p><div class="contact">RDB • 1415 • +250 727 775 170 • info@rdb.rw</div></div>
+    <div class="opportunity"><div class="category-icon">⚡</div><h3>Energy & Clean Energy</h3><p class="muted">Energy and clean-energy development opportunities.</p><div class="contact">RDB • 1415 • +250 727 775 170 • info@rdb.rw</div></div>
+    <div class="opportunity"><div class="category-icon">🌱</div><h3>Green Economy</h3><p class="muted">Sustainable and environmentally focused opportunities.</p><div class="contact">RDB • 1415 • +250 727 775 170 • info@rdb.rw</div></div>
+    <div class="opportunity"><div class="category-icon">🏗️</div><h3>Real Estate & Construction</h3><p class="muted">Real estate, housing, offices and construction opportunities.</p><div class="contact">RDB • 1415 • +250 727 775 170 • ipd@rdb.rw</div></div>
+    <div class="opportunity"><div class="category-icon">💰</div><h3>Financial Services</h3><p class="muted">Financial and business-service opportunities.</p><div class="contact">RDB • 1415 • +250 727 775 170 • info@rdb.rw</div></div>
+    <div class="opportunity"><div class="category-icon">⛏️</div><h3>Mining</h3><p class="muted">Mining and mineral-sector opportunities.</p><div class="contact">RDB • 1415 • +250 727 775 170 • info@rdb.rw</div></div>
+  </div>
+</section>
+
+<section class="container" id="about">
+  <div class="section-head">
+    <div><h2 data-i18n="aboutTitle">About Rwanda Connect</h2><p class="hint" data-i18n="aboutSub">A practical directory for discovering Rwanda.</p></div>
+    <button class="btn" onclick="openRegister()" data-i18n="registerNow">Register now</button>
+  </div>
+  <div class="about-box" style="padding:24px">
+    <p data-i18n="aboutText">
+      Rwanda Connect brings people, places, jobs and services together in one directory. Verification badges, reviews, rankings and public contacts should come from verified records rather than guessed information.
+    </p>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:16px">
+      <span class="chip">Kigali</span><span class="chip">Musanze</span><span class="chip">Huye</span>
+      <span class="chip">Rubavu</span><span class="chip">Karongi</span><span class="chip">Rwamagana</span>
+      <span class="chip">Nyagatare</span><span class="chip">All Rwanda</span>
+    </div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="stats">
+    <div class="stat"><strong id="statVerified">—</strong><span>Verified listings</span></div>
+    <div class="stat"><strong id="statJobs">—</strong><span>Verified jobs</span></div>
+    <div class="stat"><strong id="statServices">—</strong><span>Services</span></div>
+    <div class="stat"><strong id="statDistricts">—</strong><span>District coverage</span></div>
+  </div>
+</section>
+
+<section class="container">
+  <div class="cta">
+    <div><h2>One place. Real information.</h2><p class="muted">Register a service, job, business, rental or office and let the verification workflow check it.</p></div>
+    <button class="btn" onclick="openRegister()" data-i18n="registerNow">Register now</button>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <img src="rwanda-connect-logo.png" alt="Rwanda Connect" style="width:190px;height:auto">
+        <p>A modern directory for discovering verified services, businesses, jobs and places across Rwanda.</p>
+      </div>
+      <div>
+        <h3 data-i18n="explore">Explore</h3>
+        <p><a href="#categories">Categories</a></p>
+        <p><a href="#discover">Discover</a></p>
+        <p><a href="#jobs">Jobs</a></p>
+        <p><a href="#opportunities">Opportunities</a></p>
+      </div>
+      <div>
+        <h3 data-i18n="contact">Contact</h3>
+        <div class="contact-links">
+          <a class="contact-link" href="tel:+250783740809">📞 +250 783 740 809</a>
+          <a class="contact-link" href="mailto:mukashyakafrancine7@gmail.com">✉️ mukashyakafrancine7@gmail.com</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="comment-box">
+      <h3>Comments</h3>
+      <p class="muted" style="color:rgba(255,255,255,.72)">Tell Rwanda Connect what should be improved.</p>
+      <form class="comment-form" id="commentForm">
+        <input name="name" placeholder="Your name" required>
+        <input name="email" type="email" placeholder="Email (optional)">
+        <button class="btn" type="submit">Post comment</button>
+        <textarea name="comment" placeholder="Write your comment..." required></textarea>
+      </form>
+      <div class="comment-list" id="commentList"></div>
+    </div>
+
+    <p style="border-top:1px solid rgba(255,255,255,.12);margin-top:30px;padding-top:18px;color:rgba(255,255,255,.6)">
+      © 2026 Rwanda Connect. All rights reserved.
+    </p>
+  </div>
+</footer>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <button class="close" onclick="closeModal()">×</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="big-check">✓</div>
+    <h2 id="successTitle">Congratulations!</h2>
+    <p id="successText">Your listing has been accepted and added.</p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const API_BASE = ""; // Same-domain Worker API. Change this only if your API is hosted elsewhere.
+const MAX_CV_BYTES = 4.5 * 1024 * 1024;
+
+const cities = ["Kigali","Musanze","Huye","Rubavu","Karongi","Rwamagana","Nyagatare"];
+const typeImages = {
+  jobs:"https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=86",
+  services:"https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1200&q=86",
+  businesses:"https://images.unsplash.com/photo-1556740749-887f6717d7e4?auto=format&fit=crop&w=1200&q=86",
+  healthcare:"https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=1200&q=86",
+  hotels:"https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=86",
+  restaurants:"https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=86",
+  transport:"https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=86",
+  rentals:"https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=86",
+  offices:"https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=86"
+};
+
+const sampleListings = [
+  {id:"demo-1",name:"Rwanda Development Board",type:"services",city:"Kigali",district:"Gasabo",sector:"Kimihurura",icon:"🏛️",description:"Business registration, investment and tourism-related information.",service:"Investment and business support",verified:true,contacts:{phone:"1415",email:"info@rdb.rw"},socials:{website:"https://rdb.rw"},roleWanted:"Not a job listing.",lat:-1.9439,lng:30.0928},
+  {id:"demo-2",name:"King Faisal Hospital Rwanda",type:"healthcare",city:"Kigali",district:"Gasabo",sector:"Kacyiru",icon:"🏥",description:"Hospital and specialist healthcare services.",service:"Healthcare and medical services",verified:true,contacts:{phone:"+250252576666"},socials:{website:"https://kfh.rw"},roleWanted:"Healthcare services.",lat:-1.9441,lng:30.1017},
+  {id:"demo-3",name:"CHUK",type:"healthcare",city:"Kigali",district:"Nyarugenge",sector:"Kigali",icon:"🏥",description:"University teaching hospital services.",service:"Hospital and emergency healthcare",verified:true,contacts:{phone:"+250788303098"},socials:{},roleWanted:"Healthcare services.",lat:-1.9444,lng:30.0586},
+  {id:"demo-4",name:"Kigali International Airport",type:"transport",city:"Kigali",district:"Kicukiro",sector:"Kanombe",icon:"✈️",description:"Passenger airport and aviation services.",service:"Air transport and travel access",verified:true,contacts:{},socials:{website:"https://www.rwandair.com"},roleWanted:"Transport and aviation services.",lat:-1.9686,lng:30.1395},
+  {id:"demo-5",name:"Heaven Restaurant",type:"restaurants",city:"Kigali",district:"Gasabo",sector:"Kiyovu",icon:"🍽️",description:"Restaurant and hospitality services.",service:"Food and dining",verified:false,contacts:{},socials:{},roleWanted:"Restaurant roles depend on current vacancy.",lat:-1.9500,lng:30.0605},
+  {id:"demo-6",name:"Modern Office Workspace",type:"offices",city:"Kigali",district:"Gasabo",sector:"Nyarutarama",icon:"🏢",description:"Office and coworking workspace listing.",service:"Workspace and office rental",verified:false,contacts:{},socials:{},roleWanted:"Office/workspace rental.",lat:-1.9411,lng:30.1193},
+  {id:"demo-7",name:"Verified Digital Support Service",type:"services",city:"Musanze",district:"Musanze",sector:"Musanze",icon:"🛠️",description:"Example service record awaiting connection to the live directory.",service:"Digital support",verified:false,contacts:{},socials:{},roleWanted:"Service provider profile.",lat:-1.5005,lng:29.6349}
+];
+
+let listings = [...sampleListings];
+let activeType = "all";
+let userLocation = null;
+
+cities.forEach(c => {
+  const o = document.createElement("option");
+  o.value = c; o.textContent = c;
+  document.getElementById("cityFilter").appendChild(o);
+});
+
+function esc(value=""){
+  return String(value).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));
+}
+function distanceKm(a,b,c,d){
+  const R=6371, p1=a*Math.PI/180, p2=c*Math.PI/180, dp=(c-a)*Math.PI/180, dl=(d-b)*Math.PI/180;
+  const x=Math.sin(dp/2)**2+Math.cos(p1)*Math.cos(p2)*Math.sin(dl/2)**2;
+  return +(R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x))).toFixed(1);
+}
+function cardImage(type){return typeImages[type] || typeImages.services}
+function starsHtml(rating){
+  if(!Number.isFinite(Number(rating))) return '<span class="stars">★★★★★</span><span class="muted">No verified rating yet</span>';
+  const n=Math.max(0,Math.min(5,Number(rating)));
+  let s=""; for(let i=1;i<=5;i++) s += i<=Math.round(n)?"★":"☆";
+  return `<span class="stars active">${s}</span><span>${n.toFixed(1)}</span>`;
+}
+function getFiltered(){
+  const q=document.getElementById("searchInput").value.toLowerCase().trim();
+  const city=document.getElementById("cityFilter").value;
+  const loc=document.getElementById("locationInput").value.toLowerCase().trim();
+  const result=listings.filter(x=>{
+    const text=[x.name,x.type,x.city,x.district,x.sector,x.description,x.service,x.roleWanted].join(" ").toLowerCase();
+    return (activeType==="all"||x.type===activeType) &&
+      (city==="all"||x.city===city) &&
+      (!q||text.includes(q)) &&
+      (!loc||text.includes(loc)||x.city.toLowerCase().includes(loc)||x.district.toLowerCase().includes(loc)||x.sector.toLowerCase().includes(loc));
+  });
+  return result.sort((a,b)=>{
+    if(userLocation && a.lat && b.lat){
+      const da=distanceKm(userLocation.lat,userLocation.lng,a.lat,a.lng);
+      const db=distanceKm(userLocation.lat,userLocation.lng,b.lat,b.lng);
+      return da-db;
+    }
+    return Number(b.verified)-Number(a.verified);
+  });
+}
+function render(){
+  const grid=document.getElementById("listingGrid");
+  const r=getFiltered();
+  grid.innerHTML=r.length ? r.map((x,i)=>{
+    const dist=(userLocation&&x.lat&&x.lng)?` • ${distanceKm(userLocation.lat,userLocation.lng,x.lat,x.lng)} km`:"";
+    const verification=x.verified?'<span class="badge verified-badge">✓ Verified</span>':'<span class="badge">Checking</span>';
+    const rank=x.rank?`<span class="rank">Rank #${esc(x.rank)}</span>`:"";
+    return `<article class="card">
+      <div class="card-media">
+        <img src="${esc(x.image||cardImage(x.type))}" alt="${esc(x.name)}">
+        <div class="badges">${verification}</div>
+      </div>
+      <div class="card-body">
+        <span class="tag">${esc(x.type)}</span>
+        <h3>${esc(x.name)}</h3>
+        <p class="location">📍 ${esc(x.sector||"")} ${x.sector?", ":""}${esc(x.district||"")}, ${esc(x.city||"")}${dist}</p>
+        <p class="muted" style="margin-top:8px">${esc(x.service||x.description||"")}</p>
+        <div class="card-footer">
+          <div>
+            <div class="rating">${starsHtml(x.rating)}</div>
+            ${rank}
+          </div>
+          <button class="details" onclick="showDetail('${esc(x.id)}')">Details</button>
+        </div>
+      </div>
+    </article>`;
+  }).join("") : "";
+  document.getElementById("emptyState").style.display=r.length?"none":"block";
+  document.getElementById("resultText").textContent=`${r.length} result${r.length===1?"":"s"} found${userLocation?" near your location":""}.`;
+  document.querySelectorAll(".filter").forEach(b=>{if(b.dataset.filter)b.classList.toggle("active",b.dataset.filter===activeType)});
+}
+function setType(type){
+  activeType=type;
+  document.getElementById("discover").scrollIntoView({behavior:"smooth"});
+  render();
+}
+function resetFilters(){
+  activeType="all"; document.getElementById("searchInput").value=""; document.getElementById("locationInput").value="";
+  document.getElementById("cityFilter").value="all"; userLocation=null;
+  document.getElementById("locationResult").classList.add("hidden");
+  render();
+}
+async function loadDirectory(){
+  try{
+    const r=await fetch(`${API_BASE}/api/directory`,{headers:{"Accept":"application/json"}});
+    if(!r.ok) throw new Error("API unavailable");
+    const data=await r.json();
+    if(Array.isArray(data.items) && data.items.length) listings=data.items;
+    const s=data.stats||{};
+    document.getElementById("statVerified").textContent=s.verified ?? listings.filter(x=>x.verified).length;
+    document.getElementById("statJobs").textContent=s.jobs ?? listings.filter(x=>x.type==="jobs").length;
+    document.getElementById("statServices").textContent=s.services ?? listings.filter(x=>x.type==="services").length;
+    document.getElementById("statDistricts").textContent=s.districts ?? new Set(listings.map(x=>x.district).filter(Boolean)).size;
+  }catch{
+    document.getElementById("statVerified").textContent=listings.filter(x=>x.verified).length;
+    document.getElementById("statJobs").textContent=listings.filter(x=>x.type==="jobs").length;
+    document.getElementById("statServices").textContent=listings.filter(x=>x.type==="services").length;
+    document.getElementById("statDistricts").textContent=new Set(listings.map(x=>x.district).filter(Boolean)).size;
+    toast("Showing the built-in directory preview. Connect the Worker API for the live nationwide directory.");
+  }
+  render();
+}
+function showDetail(id){
+  const item=listings.find(x=>String(x.id)===String(id)); if(!item)return;
+  const c=item.contacts||{}, s=item.socials||{};
+  const socials=Object.entries(s).filter(([,v])=>v).map(([k,v])=>`<a href="${esc(v)}" target="_blank" rel="noopener noreferrer">${esc(k)}</a>`).join("");
+  const contactLinks=[
+    c.phone?`<a class="socials a" href="tel:${esc(c.phone)}">📞 ${esc(c.phone)}</a>`:"",
+    c.email?`<a class="socials a" href="mailto:${esc(c.email)}">✉️ ${esc(c.email)}</a>`:""
+  ].join("");
+  const isJob=item.type==="jobs";
+  document.getElementById("modalContent").innerHTML=`
+    <h2>${esc(item.name)}</h2>
+    <div style="margin-top:6px"><span class="tag">${esc(item.type)}</span>${item.verified?'<span class="chip">✓ Verified</span>':''}</div>
+    <img class="detail-image" src="${esc(item.image||cardImage(item.type))}" alt="${esc(item.name)}">
+    <p class="muted">${esc(item.description||"Verified listing details are shown here.")}</p>
+    <div class="detail-grid">
+      <div class="detail-box"><strong>📍 Location</strong><br>${esc(item.sector||"")} ${item.sector?", ":""}${esc(item.district||"")}, ${esc(item.city||"")}</div>
+      <div class="detail-box"><strong>⭐ Rating</strong><br><span class="rating">${starsHtml(item.rating)}</span></div>
+      <div class="detail-box"><strong>🛠️ Service / role</strong><br>${esc(item.service||item.roleWanted||"Information available from employer/provider.")}</div>
+      <div class="detail-box"><strong>📊 Directory rank</strong><br>${item.rank?`#${esc(item.rank)}`:"Published after verified records are ranked."}</div>
+    </div>
+    ${isJob?`
+      <div class="detail-box" style="margin-top:12px"><strong>What the employer wants</strong><br>${esc(item.roleWanted||"See the job description and qualifications.")}</div>
+      ${item.cvRequired?`
+        <div class="job-apply-box">
+          <h3 style="margin-bottom:6px">Apply with CV</h3>
+          <p class="muted" style="margin-bottom:12px">Choose your CV below. The file will be sent to the employer through the secure Worker endpoint.</p>
+          <form id="applyForm" class="form-grid">
+            <label>Full name<input name="name" required></label>
+            <label>Email<input name="email" type="email" required></label>
+            <label class="full cv-label">Upload CV
+              <input class="cv-input" type="file" name="cv" accept=".pdf,.doc,.docx" required>
+            </label>
+            <input type="hidden" name="jobId" value="${esc(item.id)}">
+            <button class="btn full" type="submit">Send application</button>
+          </form>
+        </div>` : `<div class="job-apply-box"><strong>CV:</strong> Not required for this listing.</div>`}
+    `:""}
+    <div class="detail-box" style="margin-top:12px"><strong>Public contacts</strong><div class="socials">${contactLinks}${socials||"<span class='muted'>Only verified/public contacts are shown.</span>"}</div></div>
+  `;
+  document.getElementById("modal").classList.add("show");
+  const f=document.getElementById("applyForm");
+  if(f) f.addEventListener("submit",submitApplication);
+}
+async function submitApplication(e){
+  e.preventDefault();
+  const form=e.target, fd=new FormData(form), file=fd.get("cv");
+  if(!(file instanceof File)||!file.size){toast("Please select a CV.");return}
+  if(file.size>MAX_CV_BYTES){toast("Please keep the CV under 4.5 MB.");return}
+  const submit=form.querySelector("button[type=submit]"); submit.disabled=true; submit.textContent="Sending…";
+  try{
+    const r=await fetch(`${API_BASE}/api/apply`,{method:"POST",body:fd});
+    const data=await r.json().catch(()=>({}));
+    if(!r.ok) throw new Error(data.error||"Application could not be sent.");
+    closeModal();
+    toast("Application sent to the employer.");
+  }catch(err){
+    toast(err.message||"Connect the Worker API before sending applications.");
+  }finally{submit.disabled=false;submit.textContent="Send application"}
+}
+function openRegister(){
+  document.getElementById("modalContent").innerHTML=`
+    <h2>Register on Rwanda Connect</h2>
+    <p class="muted" style="margin:6px 0 14px">Your submission is automatically checked. The site owner does not need to manually accept each registration.</p>
+    <div class="notice">Privacy: enter only information needed for verification and contact. Do not upload national ID cards or other unnecessary identity documents.</div>
+    <form id="registerForm" class="form-grid">
+      <label>Full name<input name="name" required></label>
+      <label>Phone<input name="phone" required placeholder="+250..."></label>
+      <label>Email<input name="email" type="email" required></label>
+      <label>Type
+        <select name="type" required>
+          <option value="jobs">Job</option><option value="services">Service</option><option value="businesses">Business</option>
+          <option value="healthcare">Healthcare</option><option value="hotels">Hotel</option><option value="restaurants">Restaurant</option>
+          <option value="transport">Transport</option><option value="rentals">Rental House</option><option value="offices">Office</option>
+        </select>
+      </label>
+      <label>City<input name="city" required placeholder="e.g. Kigali"></label>
+      <label>District<input name="district" required placeholder="e.g. Gasabo"></label>
+      <label>Sector<input name="sector" placeholder="e.g. Kimihurura"></label>
+      <label>Listing name<input name="listing" required></label>
+      <label class="full">Service / job title<input name="service" required></label>
+      <label class="full">Description<textarea name="description" rows="4" required></textarea></label>
+      <label>Website URL (optional)<input name="website" type="url" placeholder="https://..."></label>
+      <label>Social links (optional)<input name="socials" placeholder="Facebook, Instagram, LinkedIn..."></label>
+      <label class="full">What worker/client should do<input name="roleWanted" placeholder="For a job: duties and qualifications. For a service: what you provide." required></label>
+      <label class="full"><span>Current location (optional)</span><button class="btn secondary" type="button" onclick="captureRegisterLocation()">📍 Use my location</button></label>
+      <input type="hidden" name="lat" id="regLat"><input type="hidden" name="lng" id="regLng">
+      <label class="full" style="display:flex;gap:8px;align-items:flex-start;font-weight:650"><input type="checkbox" name="emailConsent" required style="width:auto;margin-top:4px"> I agree to receive the automatic verification code and registration status by email.</label>
+      <button class="btn full" type="submit">Start verification</button>
+    </form>
+    <div id="trackerArea"></div>
+  `;
+  document.getElementById("modal").classList.add("show");
+  document.getElementById("registerForm").addEventListener("submit",submitRegistration);
+}
+function trackerHtml(){
+  return `<div class="tracker">
+    <div class="track-step" id="ts1"><span class="track-icon">1</span><div><strong>Email/contact check</strong><div class="muted">Checking supplied contact details.</div></div></div>
+    <div class="track-step" id="ts2"><span class="track-icon">2</span><div><strong>Authenticity check</strong><div class="muted">Checking public/registry verification signals.</div></div></div>
+    <div class="track-step" id="ts3"><span class="track-icon">3</span><div><strong>Publication decision</strong><div class="muted">Only accepted records enter the public directory.</div></div></div>
+  </div>
+  <div id="verifyStatus" class="status-card">Starting verification…</div>`;
+}
+function setTrack(state,message){
+  document.getElementById("trackerArea").innerHTML=trackerHtml();
+  const map={checking:1,auth:2,decision:3};
+  if(state==="declined"){
+    ["ts1","ts2","ts3"].forEach(id=>document.getElementById(id).classList.add("done"));
+    document.getElementById("ts3").classList.add("fail");
+    document.getElementById("verifyStatus").textContent=message;
+    return;
+  }
+  if(state==="accepted") ["ts1","ts2","ts3"].forEach(id=>document.getElementById(id).classList.add("done"));
+  else {
+    const n=map[state]||1;
+    for(let i=1;i<=n;i++) document.getElementById("ts"+i).classList.add(i===n?"active":"done");
+  }
+  document.getElementById("verifyStatus").textContent=message;
+}
+async function submitRegistration(e){
+  e.preventDefault();
+  const form=e.target, data=Object.fromEntries(new FormData(form));
+  const tracker=document.getElementById("trackerArea");
+  tracker.innerHTML=trackerHtml();
+  const b=form.querySelector("button[type=submit]"); b.disabled=true; b.textContent="Checking…";
+  try{
+    let r=await fetch(`${API_BASE}/api/register`,{
+      method:"POST",headers:{"Content-Type":"application/json","Accept":"application/json"},body:JSON.stringify(data)
+    });
+    const result=await r.json().catch(()=>({}));
+    if(r.status===202 && result.status==="verification_code_sent"){
+      setTrack("checking","A verification code was sent to the email you entered. Enter it below to continue.");
+      showCodeStep(result.registrationId,data.email);
+      b.disabled=false; b.textContent="Start verification"; return;
+    }
+    if(result.status==="accepted"){
+      const accepted={...result.item,image:result.item.image||cardImage(result.item.type),verified:true};
+      listings=[accepted,...listings];
+      closeModal(); render(); updateStatsLocal();
+      showSuccess("Congratulations!","Your verified listing has been accepted and added.");
+      return;
+    }
+    if(result.status==="declined"){
+      setTrack("declined",result.reason||"The registration did not pass the authenticity checks, so it was declined.");
+      b.disabled=false; b.textContent="Start verification"; return;
+    }
+    throw new Error(result.error||"The verification service is not connected.");
+  }catch(err){
+    setTrack("decision","The live verification service is not connected yet. No listing was marked as real or published.");
+    toast(err.message||"Connect the Worker API.");
+    b.disabled=false; b.textContent="Start verification";
+  }
+}
+function showCodeStep(registrationId,email){
+  const area=document.getElementById("trackerArea");
+  area.insertAdjacentHTML("beforeend",`
+    <div class="detail-box" style="margin-top:12px">
+      <h3>Email verification code</h3><p class="muted">Enter the code sent to ${esc(email)}.</p>
+      <form id="codeForm" style="display:flex;gap:8px;margin-top:10px">
+        <input name="code" inputmode="numeric" maxlength="6" placeholder="6-digit code" required style="flex:1;padding:11px;border:1px solid var(--border);border-radius:10px;background:var(--card);color:var(--text)">
+        <button class="btn" type="submit">Verify</button>
+      </form>
+    </div>
+  `);
+  document.getElementById("codeForm").addEventListener("submit",async ev=>{
+    ev.preventDefault();
+    setTrack("auth","Checking the verification code and authenticity signals…");
+    const code=new FormData(ev.target).get("code");
+    try{
+      const r=await fetch(`${API_BASE}/api/verify-code`,{
+        method:"POST",headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({registrationId,code})
+      });
+      const data=await r.json().catch(()=>({}));
+      if(data.status==="accepted"){
+        listings=[{...data.item,image:data.item.image||cardImage(data.item.type),verified:true},...listings];
+        closeModal(); render(); updateStatsLocal();
+        showSuccess("Congratulations!","Your verified listing has been accepted and added.");
+      }else if(data.status==="declined"){
+        setTrack("declined",data.reason||"The listing could not be verified, so it was declined.");
+      }else{
+        setTrack("auth",data.message||"The code was not accepted. Please check the code and try again.");
+      }
+    }catch(err){toast("The verification endpoint is unavailable.")}
+  });
+}
+function captureRegisterLocation(){
+  if(!navigator.geolocation){toast("Location is not available in this browser.");return}
+  navigator.geolocation.getCurrentPosition(p=>{
+    document.getElementById("regLat").value=p.coords.latitude;
+    document.getElementById("regLng").value=p.coords.longitude;
+    toast("Location captured for the registration.");
+  },()=>toast("Location permission was not granted."));
+}
+function useMyLocation(){
+  if(!navigator.geolocation){toast("Location is not available in this browser.");return}
+  navigator.geolocation.getCurrentPosition(p=>{
+    userLocation={lat:p.coords.latitude,lng:p.coords.longitude};
+    const text=`Latitude ${p.coords.latitude.toFixed(4)}, longitude ${p.coords.longitude.toFixed(4)}. Nearby results are now sorted by distance.`;
+    const box=document.getElementById("locationResult"); box.textContent=text; box.classList.remove("hidden");
+    render();
+    document.getElementById("discover").scrollIntoView({behavior:"smooth"});
+  },()=>toast("Location permission was not granted."));
+}
+function toggleTheme(){
+  document.body.classList.toggle("dark");
+  const dark=document.body.classList.contains("dark");
+  localStorage.setItem("rwandaConnectTheme",dark?"dark":"light");
+  document.getElementById("themeBtn").textContent=dark?"☀️":"🌙";
+}
+if(localStorage.getItem("rwandaConnectTheme")==="dark"){document.body.classList.add("dark");document.getElementById("themeBtn").textContent="☀️"}
+function toggleMenu(){
+  const n=document.getElementById("navLinks"),b=document.getElementById("menuBtn");
+  const open=n.classList.toggle("open");b.setAttribute("aria-expanded",open?"true":"false");
+}
+document.querySelectorAll(".nav-links a").forEach(a=>a.addEventListener("click",()=>{
+  document.getElementById("navLinks").classList.remove("open");
+  document.getElementById("menuBtn").setAttribute("aria-expanded","false");
+}));
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+document.getElementById("modal").addEventListener("click",e=>{if(e.target.id==="modal")closeModal()});
+function toast(m){
+  const t=document.getElementById("toast");t.textContent=m;t.classList.add("show");
+  clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove("show"),3500);
+}
+function showSuccess(title,text){
+  document.getElementById("successTitle").textContent=title;
+  document.getElementById("successText").textContent=text;
+  const o=document.getElementById("successOverlay");o.classList.add("show");
+  setTimeout(()=>o.classList.remove("show"),3000);
+}
+function updateStatsLocal(){
+  document.getElementById("statVerified").textContent=listings.filter(x=>x.verified).length;
+  document.getElementById("statJobs").textContent=listings.filter(x=>x.type==="jobs"&&x.verified).length;
+  document.getElementById("statServices").textContent=listings.filter(x=>x.type==="services"&&x.verified).length;
+  document.getElementById("statDistricts").textContent=new Set(listings.map(x=>x.district).filter(Boolean)).size;
+}
+async function loadComments(){
+  try{
+    const r=await fetch(`${API_BASE}/api/comments`);
+    const data=await r.json();
+    if(Array.isArray(data.items)) return renderComments(data.items);
+  }catch{}
+  renderComments(JSON.parse(localStorage.getItem("rwanda_connect_comments")||"[]"));
+}
+function renderComments(items){
+  document.getElementById("commentList").innerHTML=items.slice(0,8).map(c=>`
+    <div class="comment-card"><strong>${esc(c.name||"Anonymous")}</strong><p style="margin-top:4px">${esc(c.comment||"")}</p>
+    <div class="comment-meta">${esc(c.createdAt?new Date(c.createdAt).toLocaleString():"")}</div></div>`).join("");
+}
+document.getElementById("commentForm").addEventListener("submit",async e=>{
+  e.preventDefault(); const data=Object.fromEntries(new FormData(e.target));
+  try{
+    const r=await fetch(`${API_BASE}/api/comments`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(data)});
+    if(!r.ok) throw new Error();
+    e.target.reset();loadComments();toast("Comment posted.");
+  }catch{
+    const arr=JSON.parse(localStorage.getItem("rwanda_connect_comments")||"[]");
+    arr.unshift({...data,createdAt:new Date().toISOString()});localStorage.setItem("rwanda_connect_comments",JSON.stringify(arr));
+    e.target.reset();renderComments(arr);toast("Comment saved in this browser.");
+  }
+});
+
+const T={
+en:{home:"Home",categories:"Categories",discover:"Discover",jobs:"Jobs",rentals:"Rental Houses",offices:"Offices",opportunities:"Opportunities",about:"About",services:"Services",businesses:"Businesses",hotels:"Hotels",restaurants:"Restaurants",healthcare:"Healthcare",transport:"Transport",all:"All",eyebrow:"Verified discovery across Rwanda",heroTitle:"Everything you need in <span>Rwanda.</span>",heroCopy:"Find verified businesses, services, jobs, rental houses, offices and useful places. Search by need and get nearby results.",nearMe:"📍 Near me",nearbyText:"People, places and opportunities across the country.",categoriesTitle:"Explore by category",categoriesSub:"Choose what you're looking for.",discoverTitle:"Discover",viewAll:"View all",jobTitle:"Jobs",jobSub:"Only verified/accepted jobs should be published.",rentalTitle:"Rental Houses",officeTitle:"Offices",oppTitle:"Opportunities for Rwanda",aboutTitle:"About Rwanda Connect",aboutSub:"A practical directory for discovering Rwanda.",aboutText:"Rwanda Connect brings people, places, jobs and services together in one directory.",register:"Register",registerNow:"Register now",explore:"Explore",contact:"Contact"},
+rw:{home:"Ahabanza",categories:"Ibyiciro",discover:"Shakisha",jobs:"Akazi",rentals:"Amazu akodeshwa",offices:"Ibiro",opportunities:"Amahirwe",about:"Abo turi bo",services:"Serivisi",businesses:"Ubucuruzi",hotels:"Amahoteri",restaurants:"Amaresitora",healthcare:"Ubuvuzi",transport:"Ubwikorezi",all:"Byose",eyebrow:"Shakisha amakuru yagenzuwe mu Rwanda",heroTitle:"Ibyo ukeneye byose mu <span>Rwanda.</span>",heroCopy:"Shaka ubucuruzi, serivisi, akazi, amazu, ibiro n’ahantu hagenzuwe. Shakisha ukurikije icyo ukeneye n’aho uri.",nearMe:"📍 Ahandi ndi",nearbyText:"Abantu, ahantu n'amahirwe hirya no hino mu gihugu.",categoriesTitle:"Shakisha ukurikije icyiciro",categoriesSub:"Hitamo icyo ushaka.",discoverTitle:"Shakisha",viewAll:"Reba byose",jobTitle:"Akazi",jobSub:"Akazi kagenzuwe ni ko kagomba kugaragara ku rubuga.",rentalTitle:"Amazu akodeshwa",officeTitle:"Ibiro",oppTitle:"Amahirwe y’u Rwanda",aboutTitle:"Abo turi bo",aboutSub:"Urubuga rwo gufasha kumenya u Rwanda.",aboutText:"Rwanda Connect ihuza abantu, ahantu, akazi na serivisi ahantu hamwe.",register:"Iyandikishe",registerNow:"Iyandikishe ubu",explore:"Shakisha",contact:"Aho watwandikira"},
+fr:{home:"Accueil",categories:"Catégories",discover:"Découvrir",jobs:"Emplois",rentals:"Maisons à louer",offices:"Bureaux",opportunities:"Opportunités",about:"À propos",services:"Services",businesses:"Entreprises",hotels:"Hôtels",restaurants:"Restaurants",healthcare:"Santé",transport:"Transport",all:"Tout",eyebrow:"Découverte vérifiée au Rwanda",heroTitle:"Tout ce dont vous avez besoin au <span>Rwanda.</span>",heroCopy:"Trouvez des entreprises, services, emplois, logements, bureaux et lieux vérifiés. Recherchez par besoin et par proximité.",nearMe:"📍 Près de moi",nearbyText:"Personnes, lieux et opportunités dans tout le pays.",categoriesTitle:"Explorer par catégorie",categoriesSub:"Choisissez ce que vous cherchez.",discoverTitle:"Découvrir",viewAll:"Tout voir",jobTitle:"Emplois",jobSub:"Seuls les emplois vérifiés doivent être publiés.",rentalTitle:"Maisons à louer",officeTitle:"Bureaux",oppTitle:"Opportunités pour le Rwanda",aboutTitle:"À propos de Rwanda Connect",aboutSub:"Un annuaire pratique pour découvrir le Rwanda.",aboutText:"Rwanda Connect rassemble personnes, lieux, emplois et services dans un même annuaire.",register:"S’inscrire",registerNow:"S’inscrire maintenant",explore:"Explorer",contact:"Contact"},
+sw:{home:"Nyumbani",categories:"Makundi",discover:"Gundua",jobs:"Ajira",rentals:"Nyumba za kukodisha",offices:"Ofisi",opportunities:"Fursa",about:"Kuhusu",services:"Huduma",businesses:"Biashara",hotels:"Hoteli",restaurants:"Migahawa",healthcare:"Afya",transport:"Usafiri",all:"Zote",eyebrow:"Ugunduzi uliothibitishwa nchini Rwanda",heroTitle:"Kila kitu unachohitaji nchini <span>Rwanda.</span>",heroCopy:"Pata biashara, huduma, ajira, nyumba, ofisi na maeneo yaliyothibitishwa. Tafuta kulingana na mahitaji na ukaribu.",nearMe:"📍 Karibu nami",nearbyText:"Watu, maeneo na fursa kote nchini.",categoriesTitle:"Chunguza kwa kundi",categoriesSub:"Chagua unachotafuta.",discoverTitle:"Gundua",viewAll:"Ona zote",jobTitle:"Ajira",jobSub:"Ajira zilizothibitishwa pekee ndizo zinapaswa kuchapishwa.",rentalTitle:"Nyumba za kukodisha",officeTitle:"Ofisi",oppTitle:"Fursa kwa Rwanda",aboutTitle:"Kuhusu Rwanda Connect",aboutSub:"Orodha rahisi ya kugundua Rwanda.",aboutText:"Rwanda Connect inaunganisha watu, maeneo, ajira na huduma kwenye orodha moja.",register:"Jisajili",registerNow:"Jisajili sasa",explore:"Chunguza",contact:"Mawasiliano"}
+};
+function setLanguage(lang){
+  const t=T[lang]||T.en;
+  document.documentElement.lang=lang;
+  document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n;if(t[k]!=null)el.innerHTML=t[k]});
+  document.getElementById("language").value=lang;
+  localStorage.setItem("rwandaConnectLanguage",lang);
+}
+setLanguage(localStorage.getItem("rwandaConnectLanguage")||"en");
+
+for(let i=0;i<90;i++){
+  const s=document.createElement("span");s.className="star";
+  s.style.left=(Math.random()*100)+"%";s.style.top=(Math.random()*100)+"%";
+  s.style.animationDelay=(Math.random()*2.5)+"s";s.style.opacity=(.15+Math.random()*.75).toFixed(2);
+  document.getElementById("stars").appendChild(s);
+}
+loadDirectory(); loadComments();
+</script>
+</body>
+</html>
